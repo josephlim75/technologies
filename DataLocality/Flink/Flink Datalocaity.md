@@ -1,0 +1,8 @@
+## Flink Batch Data Local Planning
+
+https://stackoverflow.com/questions/38672091/flink-batch-data-local-planning-on-hdfs
+
+Flink uses a different approach for local input split processing than Hadoop and Spark. Hadoop creates for each input split a Map task which is preferably scheduled to a node that hosts the data referred by the split.
+In contrast, Flink uses a fixed number of data source tasks, i.e., the number of data source tasks depends on the configured parallelism of the operator and not on the number of input splits. These data source tasks are started on some node in the cluster and start requesting input splits from the master (JobManager). In case of input splits for files in an HDFS, the JobManager assigns the input splits with locality preference. So there is locality-aware reading from HDFS. However, if the number of parallel tasks is much lower than the number of HDFS nodes, many splits will be remotely read, because, source tasks remain on the node on which they were started and fetch one split after the other (local ones first, remote ones later). Also race-conditions may happen if your splits are very small as the first data source task might rapidly request and process all splits before the other source tasks do their first request.
+IIRC, the number of local and remote input split assignments is written to the JobManager logfile and might also be displayed in the web dashboard. That might help to debug the issue further. In case you identify a problem that does not seem to match with what I explained above, it would be great if you could get in touch with the Flink community via the user mailing list to figure out what the problem is.
+

@@ -1,0 +1,7 @@
+In the context of Big Data, data is often too big that it is more appropriate to move the `executed program` to the data, not the other way round.
+
+People think that it is faster to process data locally than to process it remotely from a remote node. The term data locality refers that tasks are executed on the node that stores the data. To optimize for data locality, Hadoop provides a few ways (Ha Son Hai's answer to How does Hadoop attempt to maximize data locality?).
+
+However, I think people now are steadily moving away from data locality because they think that network is not the bottleneck anymore. One paper [1] has shown that, if the cluster is provided with good network setup. Data locality is irrelevant. We now see more data are put on Amazon S3, on Swift, or on other distributed FS since it is more convenient (and also because people think network and disk I/O is not the bottleneck anymore [2,3]). For example with Swift on OpenStack, or S3 with Amazon MapReduce, users can easily pin up a computing cluster to process the data which is already stored somewhere, then release it. If the computing layer and the data layer are combined together, people will have to deal with migrating the data to the new pinned-up cluster and then moving the output data out when the cluster finishes.
+
+Just a 2 cents thought.
