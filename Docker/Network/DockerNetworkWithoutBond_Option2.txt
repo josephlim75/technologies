@@ -1,0 +1,184 @@
+
+[root@ziondoc1 ~]# docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+00b002b30181        bridge              bridge              local
+30f3fea2d334        docker_gwbridge     bridge              local
+8c15acc3c381        host                host                local
+8u4olfrur0og        ingress             overlay             swarm
+da5e2cdfa1eb        none                null                local
+z4cf9he2o562        swarm-macvlan       macvlan             swarm
+a90bb8afec50        zionnet             null                local
+
+
+[root@ziondoc1 ~]# docker network inspect zionnet
+[
+    {
+        "Name": "zionnet",
+        "Id": "a90bb8afec50f6814bebad1824c64e52f3b5d8792cf3068f33bcc95c25885dee",
+        "Created": "2018-01-10T21:19:59.265517907+05:30",
+        "Scope": "local",
+        "Driver": "null",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "100.100.128.0/18",
+                    "IPRange": "100.100.176.1/21",
+                    "Gateway": "100.100.128.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": true,
+        "Containers": {},
+        "Options": {
+            "parent": "eno1"
+        },
+        "Labels": {}
+    }
+]
+
+[root@ziondoc1 ~]# docker network inspect swarm-macvlan
+[
+    {
+        "Name": "swarm-macvlan",
+        "Id": "z4cf9he2o562r3ubq9a1vvhcz",
+        "Created": "2018-01-10T21:22:13.171682535+05:30",
+        "Scope": "swarm",
+        "Driver": "macvlan",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "100.100.128.0/18",
+                    "IPRange": "100.100.176.1/21",
+                    "Gateway": "100.100.128.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": "zionnet"
+        },
+        "ConfigOnly": false,
+        "Containers": {
+        },
+        "Options": {
+            "parent": "eno1"
+        },
+        "Labels": {},
+        "Peers": [
+            {
+                "Name": "0e73ff812a58",
+                "IP": "100.100.129.23"
+            }
+        ]
+    }
+]
+
+
+[root@ziondoc1 ~]# ifconfig
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:a0ff:fe0c:4a67  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:a0:0c:4a:67  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 13  bytes 1170 (1.1 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker_gwbridge: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.18.0.1  netmask 255.255.0.0  broadcast 172.18.255.255
+        inet6 fe80::42:4bff:fe9c:3584  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:4b:9c:35:84  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 60  bytes 4384 (4.2 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 100.100.129.23  netmask 255.255.192.0  broadcast 100.100.191.255
+        inet6 fe80::402:97cf:d2a1:6a4c  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:1e:b2:cd:70  txqueuelen 1000  (Ethernet)
+        RX packets 40597  bytes 2920134 (2.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4615  bytes 5700940 (5.4 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 107  memory 0x95000000-957fffff
+
+eno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 100.100.129.10  netmask 255.255.192.0  broadcast 100.100.191.255
+        inet6 fe80::d0ff:d99e:54c2:5744  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:1e:b2:cd:72  txqueuelen 1000  (Ethernet)
+        RX packets 305564  bytes 394449343 (376.1 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 144094  bytes 10833876 (10.3 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 118  memory 0x94000000-947fffff
+
+eno3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 100.100.129.21  netmask 255.255.192.0  broadcast 100.100.191.255
+        inet6 fe80::e69e:c06d:c0d4:315c  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:1e:b2:cd:74  txqueuelen 1000  (Ethernet)
+        RX packets 39363  bytes 3024087 (2.8 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 58  bytes 3661 (3.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 118  memory 0x93000000-937fffff
+
+eno4: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 100.100.129.22  netmask 255.255.192.0  broadcast 100.100.191.255
+        inet6 fe80::cee6:35e5:3c41:bf52  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:1e:b2:cd:76  txqueuelen 1000  (Ethernet)
+        RX packets 40279  bytes 2668879 (2.5 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 58  bytes 3661 (3.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 143  memory 0x92000000-927fffff
+
+enp10s0f0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether f4:e9:d4:8a:22:70  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 154  memory 0x97800000-97ffffff
+
+enp10s0f1: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether f4:e9:d4:8a:22:72  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 165  memory 0x96800000-96ffffff
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 5  bytes 560 (560.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 5  bytes 560 (560.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth0589d31: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::409a:42ff:fe71:4110  prefixlen 64  scopeid 0x20<link>
+        ether 42:9a:42:71:41:10  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 60  bytes 4384 (4.2 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+

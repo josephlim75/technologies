@@ -1,0 +1,199 @@
+
+[root@ziondoc1 ~]# docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+507991490a95        bridge              bridge              local
+b065cf45cfc8        docker_gwbridge     bridge              local
+8a13e1b1acb2        host                host                local
+dka97y08qepm        ingress             overlay             swarm
+c63f481708ff        zionnet               null                local
+68c59aad60b0        none                null                local
+tf00c4190m3l        swarm-macvlan         macvlan             swarm
+
+
+[root@ziondoc1 ~]# docker network inspect zionnet
+[
+    {
+        "Name": "zionnet",
+        "Id": "c63f481708ff2af274600e9a125008f637dd91cd52eea0bf1fb66bdd9089884a",
+        "Created": "2018-01-09T11:44:19.973236533+05:30",
+        "Scope": "local",
+        "Driver": "null",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "100.100.128.0/18",
+                    "IPRange": "100.100.176.1/21",
+                    "Gateway": "100.100.128.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": true,
+        "Containers": {},
+        "Options": {
+            "parent": "bond0"
+        },
+        "Labels": {}
+    }
+]
+
+[root@ziondoc1 ~]# docker network inspect swarm-macvlan
+[
+    {
+        "Name": "swarm-macvlan",
+        "Id": "tf00c4190m3lghm2xdrz9gaey",
+        "Created": "2018-01-09T17:28:31.851991232+05:30",
+        "Scope": "swarm",
+        "Driver": "macvlan",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "100.100.128.0/18",
+                    "IPRange": "100.100.176.1/21",
+                    "Gateway": "100.100.128.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": "zionnet"
+        },
+        "ConfigOnly": false,
+        "Containers": {
+        },
+        "Options": {
+            "parent": "bond0"
+        },
+        "Labels": {},
+        "Peers": [        
+	    {
+                "Name": "68f3aa51fc5f",
+                "IP": "100.100.138.107"
+            },
+
+        ]
+    }
+]
+
+[root@ziondoc1 ~]# ifconfig
+bond0: flags=5443<UP,BROADCAST,RUNNING,PROMISC,MASTER,MULTICAST>  mtu 1500
+        inet 100.100.138.107  netmask 255.255.192.0  broadcast 100.100.191.255
+        inet6 fe80::2a1c:f733:630e:8d47  prefixlen 64  scopeid 0x20<link>
+        ether 00:0e:1e:96:be:42  txqueuelen 1000  (Ethernet)
+        RX packets 6522998  bytes 1122578674 (1.0 GiB)
+        RX errors 0  dropped 334104  overruns 0  frame 0
+        TX packets 3774873  bytes 596745094 (569.1 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:65ff:fe83:2ceb  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:65:83:2c:eb  txqueuelen 0  (Ethernet)
+        RX packets 12426  bytes 669407 (653.7 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 14595  bytes 38178865 (36.4 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker_gwbridge: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.18.0.1  netmask 255.255.0.0  broadcast 172.18.255.255
+        inet6 fe80::42:71ff:feee:f986  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:71:ee:f9:86  txqueuelen 0  (Ethernet)
+        RX packets 966  bytes 99247 (96.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 966  bytes 99247 (96.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eno1: flags=6211<UP,BROADCAST,RUNNING,SLAVE,MULTICAST>  mtu 1500
+        ether 00:0e:1e:96:be:40  txqueuelen 1000  (Ethernet)
+        RX packets 974829  bytes 267230357 (254.8 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 679455  bytes 101953535 (97.2 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 107  memory 0x95000000-957fffff
+
+eno2: flags=6211<UP,BROADCAST,RUNNING,SLAVE,MULTICAST>  mtu 1500
+        ether 00:0e:1e:96:be:42  txqueuelen 1000  (Ethernet)
+        RX packets 3598231  bytes 594037756 (566.5 MiB)
+        RX errors 0  dropped 5261  overruns 0  frame 0
+        TX packets 1217650  bytes 205006154 (195.5 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 118  memory 0x94000000-947fffff
+
+eno3: flags=6211<UP,BROADCAST,RUNNING,SLAVE,MULTICAST>  mtu 1500
+        ether 00:0e:1e:96:be:44  txqueuelen 1000  (Ethernet)
+        RX packets 925644  bytes 89697555 (85.5 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1079300  bytes 167492084 (159.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 118  memory 0x93000000-937fffff
+
+eno4: flags=6211<UP,BROADCAST,RUNNING,SLAVE,MULTICAST>  mtu 1500
+        ether 00:0e:1e:96:be:46  txqueuelen 1000  (Ethernet)
+        RX packets 1024294  bytes 171613006 (163.6 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 798468  bytes 122293321 (116.6 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 143  memory 0x92000000-927fffff
+
+enp10s0f0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether f4:e9:d4:8a:0e:60  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 154  memory 0x9a000000-9a7fffff
+
+enp10s0f1: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether f4:e9:d4:8a:0e:62  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 165  memory 0x99000000-997fffff
+
+enp11s0f0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether f4:e9:d4:8a:1f:f0  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 176  memory 0x97800000-97ffffff
+
+enp11s0f1: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether f4:e9:d4:8a:1f:f2  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 143  memory 0x96800000-96ffffff
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 966  bytes 99247 (96.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 966  bytes 99247 (96.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethcdbcbad: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::981a:95ff:fe3a:4c21  prefixlen 64  scopeid 0x20<link>
+        ether 9a:1a:95:3a:4c:21  txqueuelen 0  (Ethernet)
+        RX packets 28  bytes 2098 (2.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 150  bytes 10822 (10.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+

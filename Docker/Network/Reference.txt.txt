@@ -1,0 +1,6 @@
+https://access.redhat.com/solutions/3130631
+https://blog.scottlowe.org/2016/01/28/docker-macvlan-interfaces/
+https://github.com/docker/distribution/issues/2488
+https://docs.docker.com/v17.09/engine/userguide/networking/get-started-macvlan/#dual-stack-ipv4-ipv6-macvlan-bridge-mode
+https://unix.stackexchange.com/questions/381581/script-to-create-macvlan-bridge-on-the-host-doesnt-work-unless-its-run-twice
+https://www.furorteutonicus.eu/2013/08/04/enabling-host-guest-networking-with-kvm-macvlan-and-macvtap/

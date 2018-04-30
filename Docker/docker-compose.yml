@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  test:
+    image: alpine
+    command: tail -f /dev/null
+    networks:
+      tedp_internal:
+
+networks:
+  tedp_internal:
+    external:
+      name: host
