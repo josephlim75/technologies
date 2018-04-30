@@ -1,0 +1,44 @@
+FROM centos/systemd
+
+COPY ./maprtech.repo /etc/yum.repos.d/
+
+RUN yum install -y \
+    bind-utils \
+    dmidecode \
+    net-tools \
+    syslinux \
+    curl \
+    device-mapper \
+    iputils \
+    openssl \
+    python-devel \
+    which \
+    wget \
+    hdparm \
+    sdparm \
+    rpcbind \
+    atop \
+    dstat \
+    git \
+    htop \
+    iftop \
+    iotop \
+    jq \
+    lsof \
+    nc \
+    patch \
+    vim \
+    xml2 \
+    java-1.8.0-openjdk-devel \
+    clustershell \
+    mapr-zookeeper mapr-cldb mapr-historyserver mapr-webserver mapr-resourcemanager mapr-nodemanager \
+    mapr-hive \
+    mapr-hiveserver2 \
+    mapr-hivemetastore \
+    MariaDB-server
+
+
+
+VOLUME [ "/sys/fs/cgroup" ]
+
+CMD ["/usr/lib/systemd/systemd"]

@@ -1,0 +1,3 @@
+http://cuddletech.com/?p=959
+https://hackernoon.com/vault-as-ca-with-pki-backend-bbcfc315f06f
+https://wiki.onap.org/display/DW/Signing+certificates+using+Vault+provided+CA%2C+and+the+CA+imported+into+Vault
