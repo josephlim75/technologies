@@ -3,27 +3,25 @@
 - Get from centos/systemd images
 - Run to remove unwanted systemd unit
 
-	FROM centos:centos7
+  FROM centos:centos7
 
-	# Fix incompatibility between Docker and systemd
-	# copy/paste from https://forums.docker.com/t/systemctl-status-is-not-working-in-my-docker-container/9075/4
-	# additional steps from https://github.com/CentOS/sig-cloud-instance-images/issues/41
-	RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-		rm -f /lib/systemd/system/multi-user.target.wants/*; \
-		rm -f /etc/systemd/system/*.wants/*; \
-		rm -f /lib/systemd/system/local-fs.target.wants/*; \
-		rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-		rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-		rm -f /lib/systemd/system/basic.target.wants/*; \
-		rm -f /lib/systemd/system/anaconda.target.wants/*; \
-		mkdir -p /etc/selinux/targeted/contexts/ &&\
-		echo '<busconfig><selinux></selinux></busconfig>' > /etc/selinux/targeted/contexts/dbus_contexts
+  # Fix incompatibility between Docker and systemd
+  # copy/paste from https://forums.docker.com/t/systemctl-status-is-not-working-in-my-docker-container/9075/4	
+  # additional steps from https://github.com/CentOS/sig-cloud-instance-images/issues/41
+  RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+     rm -f /lib/systemd/system/multi-user.target.wants/*; \
+     rm -f /etc/systemd/system/*.wants/*; \
+     rm -f /lib/systemd/system/local-fs.target.wants/*; \
+     rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+     rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+     rm -f /lib/systemd/system/basic.target.wants/*; \
+     rm -f /lib/systemd/system/anaconda.target.wants/*; \
+     mkdir -p /etc/selinux/targeted/contexts/ &&\
+     echo '<busconfig><selinux></selinux></busconfig>' > /etc/selinux/targeted/contexts/dbus_contexts
 
-	VOLUME [ "/sys/fs/cgroup" ]
-
-	CMD ["/usr/lib/systemd/systemd"]
-
-	ENV TERM=xterm
+   VOLUME [ "/sys/fs/cgroup" ]
+   CMD ["/usr/lib/systemd/systemd"]
+   ENV TERM=xterm
 
 - Alternative Systemd container
 
