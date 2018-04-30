@@ -5,7 +5,7 @@
   ```
 	FROM centos:centos7
 
-  	#Fix incompatibility between Docker and systemd
+	#Fix incompatibility between Docker and systemd
 	#copy/paste from https://forums.docker.com/t/systemctl-status-is-not-working-in-my-docker-container/9075/4
 	#additional steps from https://github.com/CentOS/sig-cloud-instance-images/issues/41
   
