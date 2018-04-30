@@ -9,7 +9,7 @@
 	#copy/paste from https://forums.docker.com/t/systemctl-status-is-not-working-in-my-docker-container/9075/4
 	#additional steps from https://github.com/CentOS/sig-cloud-instance-images/issues/41
   
-  	RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+	RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 	     rm -f /lib/systemd/system/multi-user.target.wants/*; \
 	     rm -f /etc/systemd/system/*.wants/*; \
 	     rm -f /lib/systemd/system/local-fs.target.wants/*; \
