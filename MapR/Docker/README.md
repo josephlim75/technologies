@@ -2,7 +2,7 @@
 
 - Get from centos/systemd images
 - Run to remove unwanted systemd unit
-  	
+  ```
 	FROM centos:centos7
 
   	#Fix incompatibility between Docker and systemd
@@ -23,7 +23,7 @@
 	VOLUME [ "/sys/fs/cgroup" ]
 	CMD ["/usr/lib/systemd/systemd"]
 	ENV TERM=xterm
-
+```
 - Alternative Systemd container
 
 	FROM centos:centos7
