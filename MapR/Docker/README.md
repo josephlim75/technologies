@@ -24,8 +24,9 @@
 	CMD ["/usr/lib/systemd/systemd"]
 	ENV TERM=xterm
 ```
-- Alternative Systemd container
+## Alternative Systemd container
 
+```
 	FROM centos:centos7
 	MAINTAINER Marcel Wysocki "maci.stgn@gmail.com"
 	ENV container docker
@@ -53,12 +54,13 @@
 	VOLUME ["/run"]
 
 	CMD  ["/usr/lib/systemd/systemd"]
+```
 
+## Remove /etc/init.d/network
 
-- Remove /etc/init.d/network
+### Docker Mapr Init script /usr/bin/init-script
 
-## Docker Mapr Init script /usr/bin/init-script
-
+```
 	#/bin/bash
 
 	service sshd start
@@ -98,11 +100,10 @@
 	do
 	sleep 5
 	done
-
-
+```
 
 ## MapR Repository
-
+```
 	[maprtech]
 	name=MapR Technologies
 	baseurl=http://package.mapr.com/releases/v6.0.1/redhat/
@@ -116,9 +117,11 @@
 	enabled=1
 	gpgcheck=0
 	protect=1
+```
 
 ## Docker Command
 
+```
 	yum install -y mapr-zookeeper mapr-cldb mapr-fileserver mapr-resourcemanager mapr-nodemanager mapr-apiserver mapr-historyserver
 
 	strings libstdc++.so.6|grep GLIBC	
@@ -161,3 +164,4 @@
 		mapr.cluster.root,mapr.cluster3.macvlan.local.audit,mapr.cluster3.macvlan.local.logs,mapr.cluster3.macvlan.local.mapred,mapr.cluster3.macvlan.local.metrics,mapr.configuration,mapr.metrics,mapr.monitoring,mapr.monitoring.streams,mapr.opt,mapr.resourcemanager.volume,mapr.tmp,mapr.var,users -minreplication 1 -nsminreplication 1 -replication 1 -nsreplication 1
 
 	maprcli volume modify -name mapr.apps,mapr.cldb.internal -minreplication 1 -nsminreplication 1 -replication 1 -nsreplication 1
+```
