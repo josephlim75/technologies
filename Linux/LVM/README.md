@@ -62,4 +62,54 @@ If the disk is installed in the server, but still unknown, the LVM meta data may
         # vgchange -ay ops
         # fsck /dev/ops/
 
-NOTE: Make sure you use the correct UUID, as displayed by pvscan. Otherwise, the vgcfgrestore may fail.          
+NOTE: Make sure you use the correct UUID, as displayed by pvscan. Otherwise, the vgcfgrestore may fail. 
+
+### LVM Performance
+
+https://unix.stackexchange.com/questions/7122/does-lvm-impact-performance
+
+LVM is designed in a way that keeps it from really getting in the way very much. From the userspace point of view, it looks like another layer of "virtual stuff" on top of the disk, and it seems natural to imagine that all of the I/O has to now pass through this before it gets to or from the real hardware.
+
+But it's not like that. The kernel already needs to have a mapping (or several layers of mapping actually) which connects high level operations like "write this to a file" to the device drivers which in turn connect to actual blocks on disk.
+
+When LVM is in use, that lookup is changed, but that's all. (Since it has to happen anyway, doing it a bit differently is a negligible performance hit.) When it comes to actually writing the file, the bits take as direct a path to the physical media as they would otherwise.
+
+There are cases where LVM can cause performance problems. You want to make sure the LVM blocks are aligned properly with the underlying system, which should happen automatically with modern distributions. And make sure you're not using old kernels subject to bugs like this one. Oh, and using LVM snapshots degrades performance (and increasingly so with each active snapshot). But mostly, the impact should be very small.
+
+As for the last: how can you test? The standard disk benchmarking tool is bonnie++. Make a partition with LVM, test it, wipe that out and (in the same place, to keep other factors identical) create a plain filesystem and benchmark again. They should be close to identical.
+
+
+
+LVM, like everything else, is a mixed blessing.
+
+With respect to performance, LVM will hinder you a little bit because it is another layer of abstraction that has to be worked out before bits hit (or can be read from) the disk. In most situations, this performance hit will be practically unmeasurable.
+
+The advantages of LVM include the fact that you can add more storage to existing filesystems without having to move data around. Most people like it for this advantage.
+
+One disadvantage of LVM used in this manner is that if your additional storage spans disks (ie involves more than one disk) you increase the likelyhood that a disk failure will cost you data. If your filesystem spans two disks, and either of them fails, you are probably lost. For most people, this is an acceptable risk due to space-vs-cost reasons (ie if this is really important there will be a budget to do it correctly) -- and because, as they say, backups are good, right?
+
+For me, the single reason to not use LVM is that disaster recovery is not (or at least, was not) well defined. A disk with LVM volumes that had a scrambled OS on it could not trivially be attached to another computer and the data recovered from it; many of the instructions for recovering LVM volumes seemed to include steps like go back in time and run vgcfgbackup, then copy the resulting /etc/lvmconf file to the system hosting your hosed volume. Hopefully things have changed in the three or four years since I last had to look at this, but personally I never use LVM for this reason.
+
+That said.
+
+In your case, I would presume that the VMs are going to be relatively small as compared to the host system. This means to me you are more likely to want to expand storage in a VM later; this is best done by adding another virtual disk to the VM and then growing the affected VM filesystems. You don't have the spanning-multiple-disks vulnerability because the virtual disks will quite likely be on the same physical device on the host system.
+
+If the VMs are going to have any importance to you at all, you will be RAID'ing the host system somehow, which will reduce flexibility for growing storage later. So the flexibility of LVM is probably not going to be required.
+
+So I would presume you would not use LVM on the host system, but would install VMs to use LVM.
+
+In general: If you add a new layer of complexity ("aka more to do") nothing will be faster. Note: You only add work and not 'change' they way the work is done.
+
+How can you measure something? Well, you create one partition with LVM and one without, then use a normal benchmark and just run it. Like the folks at
+
+http://www.umiacs.umd.edu/~toaster/lvm-testing/
+
+As it seems, only slightly impact to the speed. That seems to by in sync with the findings of someone else who ran a benchmark:
+
+http://lists-archives.org/linux-kernel/27323152-ext4-is-faster-with-lvm-than-without-and-other-filesystem-benchmarks.html
+
+But just benchmark it on your own and see if your hardware and the OS you want to use behave the same and if you can ignore the (maybe slightly) impact of an additional layer of complexity which gives you elastic storage.
+
+Should you add LVM to the guest OS: That depends on if you need the guest OS to have elastic storage as well, doesn't it? Your needs dictate what you have to deploy.
+
+
