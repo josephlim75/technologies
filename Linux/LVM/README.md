@@ -1,3 +1,9 @@
+## Reference
+
+http://unixadminschool.com/blog/2012/01/linux-lvm-cleaning-up-stale-storage-devices-from-lvm-after-storage-reclaim/
+
+Device not found or rejected by filter - https://www.centos.org/forums/viewtopic.php?t=61324
+
 ## Remove Volume Group
 
 You cannot use --removemissing or force delete VG if metadata area equal zero as in my case.
