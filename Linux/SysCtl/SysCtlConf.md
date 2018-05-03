@@ -2,7 +2,7 @@
 
 Add the following to /etc/sysctl.conf: `net.ipv4.ip_forward = 1`
 
-Apply the sysctl settings: sysctl -p
+Apply the sysctl settings: `sysctl -p`
 
 Add direct rules to firewalld. Add the --permanent option to keep these rules across restarts.
 	
