@@ -45,3 +45,23 @@ Mount it:
     $ sudo mount /dev/VolGroup00/LogVol00 /mnt/fcroot -o ro,user
 
 You're done, navigate to /mnt/fcroot and copy the files and paste somewhere else.
+
+
+## Script to mount
+
+Here's another way to mount it I found handy:
+
+    DISK=mydisk
+
+    lvdisplay | grep $DISK | grep "LV Path" | sed 's/.* //g'
+    LV_DISK=$(lvdisplay | grep $DISK | grep "LV Path" | sed 's/.* //g')
+
+    fdisk -l $LV_DISK
+    fdisk -lu $LV_DISK | sed -n '/lv[0-9]p[1-3]/ p' | grep p1 | awk '{print $2}'
+
+    OFFSET=$(fdisk -lu $LV_DISK | sed -n '/lv[0-9]p[1-3]/ p' | grep p1 | awk '{print $2}')
+    OFFSET=$((OFFSET * 512))
+
+    MOUNT=/mnt/$DISK
+    mkdir -p $MOUNT
+    mount -o loop,offset=$OFFSET $LV_DISK $MOUNT
