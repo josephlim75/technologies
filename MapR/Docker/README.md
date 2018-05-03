@@ -145,9 +145,9 @@
 	mysql root/joseph6728
 
 
-	docker run --rm -ti --privileged --cap-add SYS_ADMIN -p 8080:8080 -p 8443:8443 -h cluster3.macvlan --net macvlan -v /sys/fs/cgroup:/sys/fs/cgroup:ro tedp-mapr-control:1.4.0
+	docker run --rm -ti --cap-add SYS_RESOURCE --cap-add SYS_ADMIN -p 8080:8080 -p 8443:8443 -h cluster3.macvlan --net macvlan -v /sys/fs/cgroup:/sys/fs/cgroup:ro tedp-mapr-control:1.4.0
 	/opt/mapr/server/configure.sh -C cluster3:7222 -Z cluster3:5181 -HS cluster3 -N cluster3  --isvm
-
+	/opt/mapr/server/configure.sh -C cluster3:7222 -Z cluster3:5181 -HS cluster3 -N cluster3  --isvm
 
 	CREATE EXTERNAL TABLE text_tab (
 		username string)
