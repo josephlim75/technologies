@@ -1,10 +1,12 @@
 ## Delete Block
 
 - Display line numbers, set start and end line number to delete
-    
+
+```
     :set nu
-    :<start>,<end>d
     
+    :<start>,<end>d
+```
 
 - Vim, use visual line mode:
 
