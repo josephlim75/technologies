@@ -1,3 +1,10 @@
+## Removing Bridge
+
+    $ifconfig <bridge name> down
+    
+    $ sudo ip link delete br0 type bridge
+	
+
 PreRequisites
 	yum install bridge-utils libvirt
 ------------------------------------------------------------------------------------------------------------------------------------------
