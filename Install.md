@@ -11,6 +11,29 @@
     sudo lvcreate -L 300G -n lv_docker vg_sys
     sudo lvextend -L+20G vg_sys/lv_docker
 
+## Resizing LVM
+
+### Unmount the volume
+
+    # umount /var/lib/docker
+    
+### Reduce The Partition Size
+
+    # lvreduce -L 400M /dev/vg00/lv00
+
+### Format The Partition With XFS Filesystem
+
+    # mkfs.xfs -f /dev/vg00/lv00
+
+### Remount the Parition
+
+    # mount /dev/vg00/lv00 /test
+
+### Optional Backup / Restore
+    Backup Data
+    # xfsdump -f /tmp/test.dump /test
+    Restore Data
+    # xfsrestore -f /tmp/test.dump /test
 
 ## Mount LVM
 
