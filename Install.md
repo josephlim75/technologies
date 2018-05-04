@@ -6,12 +6,14 @@
     ansible-playbook -i <inventory> playbooks/host-repository.yml
   
 
-## Create and Extend LVM
+## Extend LVM
 
     sudo lvcreate -L 300G -n lv_docker vg_sys
     sudo lvextend -L+20G vg_sys/lv_docker
-
-## Resizing LVM
+    
+    sudo xfs_growsfs /dev/mapper/vg_sys-lv_docker
+    
+## Reduzing LVM
 
 ### Unmount the volume
 
