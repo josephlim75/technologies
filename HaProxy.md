@@ -1,3 +1,5 @@
+## SSL Passthrough
+
 February 21, 2017 10.5k views  NGINX UBUNTU DEBIAN
 How does one set up HAproxy for multiple domains, to multiple backends while passing through SSL? I would also be open to an nginx solution
 
@@ -35,3 +37,11 @@ backend backend_domain_b
 In others words, I want Haxproxy to not terminate the SSL.
 
 I initially wanted to do this with Nginx but apparently it can't act as a non-terminating point while reading the host details (though might be available in future versions with ssl preread)
+
+## High Performance HAProxy (NBProc)
+
+Multicore usage
+
+https://medium.freecodecamp.org/how-we-fine-tuned-haproxy-to-achieve-2-000-000-concurrent-ssl-connections-d017e61a4d27
+
+
