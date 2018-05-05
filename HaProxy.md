@@ -42,6 +42,8 @@ I initially wanted to do this with Nginx but apparently it can't act as a non-te
 
 Multicore usage
 
+https://trick77.com/dns-unblocking-using-dnsmasq-haproxy/
+
 https://medium.freecodecamp.org/how-we-fine-tuned-haproxy-to-achieve-2-000-000-concurrent-ssl-connections-d017e61a4d27
 
 
