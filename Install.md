@@ -8,10 +8,16 @@
 
 ## Extend LVM
 
+    # Set size to 300G
     sudo lvcreate -L 300G -n lv_docker vg_sys
+    
+    # +20G add 20G on top of existing size. Eg existing 10G, +20G = 30G
     sudo lvextend -L+20G vg_sys/lv_docker
     
-    sudo xfs_growsfs /dev/mapper/vg_sys-lv_docker
+    sudo xfs_growfs /dev/mapper/vg_sys-lv_docker
+    
+    # Extend and resize at the same time
+    sudo lvresize --resizefs -L 100G /dev/mapper/vg_sys-lv_docker
     
 ## Reduzing LVM
 
