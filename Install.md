@@ -49,4 +49,16 @@
     sudo mkfs.xfs /dev/vg_sys/lv_docker; \
     sudo mount /dev/vg_sys/lv_docker /var/lib/docker
     
+# Example
+    # Find any process using the mount point
+    sudo lsof | grep ' /opt'
+    # Backup the mount point
+    sudo xfsdump -f /var/opt.dump /opt; \
+    sudo umount /opt; \
+    sudo lvreduce -L 9.8G /dev/vg_sys/lv_opt; \
+    sudo mkfs.xfs -f /dev/vg_sys/lv_opt; \
+    sudo mount /dev/vg_sys/lv_opt /opt; \
+    sudo xfsrestore -f /var/opt.dump /opt; \
+    sudo rm -rf /var/opt.dump
+
     
