@@ -48,6 +48,7 @@ https://medium.freecodecamp.org/how-we-fine-tuned-haproxy-to-achieve-2-000-000-c
 
 ## MapR HAProxy
 
+```
 #---------------------------------------------------------------------
 # Global settings
 #---------------------------------------------------------------------
@@ -340,3 +341,4 @@ listen stats *:1936
     stats uri /
     stats hide-version
 stats auth openvpn:mapr
+```
