@@ -2,6 +2,7 @@
 
 http://apetec.com/support/generatesan-csr.htm
 
+```
   [req]
   distinguished_name = req_distinguished_name
   req_extensions = v3_req
@@ -23,6 +24,7 @@ http://apetec.com/support/generatesan-csr.htm
   DNS.2 = 127.0.0.1
   DNS.3 = *.tsysdev.net
   DNS.4 = *.tsysecom.org
+```
 
 ### Generate a private key
 
