@@ -46,6 +46,10 @@ Then the CSR is generated using:
 
     openssl x509 -req -days 3650 -in san_domain_com.csr -signkey san_domain_com.key -out san_domain_com.crt -extensions v3_req -extfile openssl.cnf
   
+### Print CERT Info
+
+    openssl x509 -in san_domain_com.crt -text -noout
+
 ### Package the key and cert in PLCS12 file
 
 The easiest way to install this into IIS is to first use openssl’s pkcs12 command to export both the private key and the certificate into a pkcs12 file:
