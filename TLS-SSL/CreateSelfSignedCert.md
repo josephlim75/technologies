@@ -12,9 +12,9 @@ http://apetec.com/support/generatesan-csr.htm
   countryName = US
   stateOrProvinceName = GA
   localityName = Columbus
-  organizationalUnitName  = TEDP
-  commonName = TEDP
-  emailAddress = edp.support@tsys.com
+  organizationalUnitName  = <name>
+  commonName = <name>
+  emailAddress = <email>
 
   [v3_req]
   subjectAltName = @alt_names
@@ -22,8 +22,7 @@ http://apetec.com/support/generatesan-csr.htm
   [alt_names]
   DNS.1 = localhost
   DNS.2 = 127.0.0.1
-  DNS.3 = *.tsysdev.net
-  DNS.4 = *.tsysecom.org
+  DNS.3 = *.<domain>
 ```
 
 ### Generate a private key
