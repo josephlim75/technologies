@@ -1,3 +1,7 @@
+## Kill Supervisord process
+
+    kill -s SIGTERM <supervisord pid>
+        
 ## Controlling App with Supervisord
 
 Is there a way to "gracefully" shutdown tomcat when controlling via supervisor?
