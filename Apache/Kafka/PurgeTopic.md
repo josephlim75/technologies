@@ -21,7 +21,7 @@ Here are the steps I follow to delete a topic named MyTopic:
 
 - Run with kafka tools :
 
-    kafka-configs.sh --alter --entity-type topics --zookeeper zookeeper01.kafka.com --add-config    retention.ms=1 --entity-name <topic-name>
+      kafka-configs.sh --alter --entity-type topics --zookeeper zookeeper01.kafka.com --add-config    retention.ms=1 --entity-name <topic-name>
 
 - Run on Schema registry node:
 
