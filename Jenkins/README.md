@@ -16,6 +16,25 @@
   BD_CREDENTIAL_USR
   BD_CREDENTIAL_PSW
   
+## Switch Case
+
+  script {
+    switch("${ANSIBLE_INVENTORY}") {
+      case "qa":
+        result = "qa"
+        break
+      case ["prodred", "prodgreen"]:
+        result = "prod"
+        break
+      case ["uatred", "uatgreen"]:
+        result = "uat"
+        break
+      default:
+        result = "dev"
+        break
+    }
+  }
+        
 ## Jenkins Configuration
 
 ```
