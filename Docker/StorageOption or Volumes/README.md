@@ -5,3 +5,8 @@
 ## Set storage driver options per container
 
 	$ docker run -it --storage-opt size=120G fedora /bin/bash
+  
+  
+## XFS volume storage options
+
+https://github.com/cirocosta/xfsvol  
