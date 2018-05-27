@@ -16,12 +16,13 @@ URL can be invoked by a Remote API.
 
 Using wget:
 
-$ wget --user=<user> --password=<password> http://<jenkins.server>/restart
-$ wget --user=<user> --password=<password> http://<jenkins.server>/safeRestart
-$ wget --user=<user> --password=<password> http://<jenkins.server>/exit
-$ wget --user=<user> --password=<password> http://<jenkins.server>/safeExit
-$ wget --user=<user> --password=<password> http://<jenkins.server>/quietDown
-$ wget --user=<user> --password=<password> http://<jenkins.server>/cancelQuietDown
+  $ wget --user=<user> --password=<password> http://<jenkins.server>/restart
+  $ wget --user=<user> --password=<password> http://<jenkins.server>/safeRestart
+  $ wget --user=<user> --password=<password> http://<jenkins.server>/exit
+  $ wget --user=<user> --password=<password> http://<jenkins.server>/safeExit
+  $ wget --user=<user> --password=<password> http://<jenkins.server>/quietDown
+  $ wget --user=<user> --password=<password> http://<jenkins.server>/cancelQuietDown
+
 Using cURL:
 
 $ curl -X POST -u <user>:<password> http://<jenkins.server>/restart
