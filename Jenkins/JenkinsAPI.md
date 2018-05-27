@@ -25,19 +25,22 @@ Using wget:
 
 Using cURL:
 
-$ curl -X POST -u <user>:<password> http://<jenkins.server>/restart
-$ curl -X POST -u <user>:<password> http://<jenkins.server>/safeRestart
-$ curl -X POST -u <user>:<password> http://<jenkins.server>/exit
-$ curl -X POST -u <user>:<password> http://<jenkins.server>/safeExit
-$ curl -X POST -u <user>:<password> http://<jenkins.server>/quietDown
-$ curl -X POST -u <user>:<password> http://<jenkins.server>/cancelQuietDown
+  $ curl -X POST -u <user>:<password> http://<jenkins.server>/restart
+  $ curl -X POST -u <user>:<password> http://<jenkins.server>/safeRestart
+  $ curl -X POST -u <user>:<password> http://<jenkins.server>/exit
+  $ curl -X POST -u <user>:<password> http://<jenkins.server>/safeExit
+  $ curl -X POST -u <user>:<password> http://<jenkins.server>/quietDown
+  $ curl -X POST -u <user>:<password> http://<jenkins.server>/cancelQuietDown
+
 Jenkins CLI:
-$ java -jar jenkins-cli.jar -s http://<jenkins-server>/ restart
-$ java -jar jenkins-cli.jar -s http://<jenkins-server>/ safe-restart
-$ java -jar jenkins-cli.jar -s http://<jenkins-server>/ shutdown
-$ java -jar jenkins-cli.jar -s http://<jenkins-server>/ safe-shutdown
-$ java -jar jenkins-cli.jar -s http://<jenkins-server>/ quiet-down
-$ java -jar jenkins-cli.jar -s http://<jenkins-server>/ cancel-quiet-down
+
+  $ java -jar jenkins-cli.jar -s http://<jenkins-server>/ restart
+  $ java -jar jenkins-cli.jar -s http://<jenkins-server>/ safe-restart
+  $ java -jar jenkins-cli.jar -s http://<jenkins-server>/ shutdown
+  $ java -jar jenkins-cli.jar -s http://<jenkins-server>/ safe-shutdown
+  $ java -jar jenkins-cli.jar -s http://<jenkins-server>/ quiet-down
+  $ java -jar jenkins-cli.jar -s http://<jenkins-server>/ cancel-quiet-down
+
 System Administration
 It is obviously possible to administrate the Jenkins process itself. This is the case, for example, when a machine needs to be restarted or upgraded. It is worth to mention that quiet-down is not available in that case. Only user with the required system permissions should be able to run the following commands.
 
