@@ -3,8 +3,9 @@
 - Credential id: tedp_svc_blackduck
 
 ### Option 1
-    withCredentials([usernamePassword(credentialsId: 'tedp_svc_blackduck', usernameVariable: 'BD_HUB_USER', passwordVariable: 'BD_HUB_PASS')]) {
-
+    withCredentials([usernamePassword(credentialsId: 'tedp_svc_blackduck', 
+    usernameVariable: 'BD_HUB_USER', passwordVariable: 'BD_HUB_PASS')]) 
+    {
     }         
 
 ### Option 2
