@@ -9,6 +9,9 @@
     
     ansible-playbook -i <inventory> playbooks/mapr-kafka.yml --tags umount/mount \
       --user mapr -e "@@credential.json"
+      
+    ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml -e "packages=hive,oozie" \
+      --user mapr -e "@@credential.json"      
 
 ## Extend LVM
 
