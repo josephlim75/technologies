@@ -2,9 +2,16 @@
 
     ./add-host-sudoer.sh
     ansible-playbook -i <inventory> playbooks/host-partitions.yml
-    ansible-playbook -i <inventory> playbooks/host-initialize.yml --skip-tags mapr-init,docker-init
+    ansible-playbook -i <inventory> playbooks/host-initialize.yml \
+      --skip-tags mapr-init,docker-init
+      
     ansible-playbook -i <inventory> playbooks/host-repository.yml
-  
+    
+    ansible-playbook -i <inventory> playbooks/mapr-kafka.yml --tags umount/mount \
+      --user mapr -e "@@credential.json"
+      
+    ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml -e "packages=hive,oozie" \
+      --user mapr -e "@@credential.json"      
 
 ## Extend LVM
 
