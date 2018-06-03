@@ -12,6 +12,8 @@
       
     ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml -e "packages=hive,oozie" \
       --user mapr -e "@@credential.json"      
+      
+    ansible-playbook -i <inventory> --limit 'all:!localhost' --user xx -e "@@creds.json" playbooks/ops-config.yml --tags config --ask-vault-pass
 
 ## Extend LVM
 
