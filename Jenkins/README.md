@@ -1,7 +1,10 @@
 ## Color Ansible Output
     
-    https://major.io/2014/06/25/get-colorful-ansible-output-in-jenkins/
-    
+- https://major.io/2014/06/25/get-colorful-ansible-output-in-jenkins/
+- https://github.com/jenkinsci/ansicolor-plugin/issues/104
+- https://wiki.jenkins.io/display/JENKINS/AnsiColor+Plugin
+- https://issues.jenkins-ci.org/browse/JENKINS-38390
+
     export ANSIBLE_FORCE_COLOR=true
     ansible-playbook -i hosts site.yml
 
