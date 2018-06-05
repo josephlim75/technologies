@@ -1,3 +1,10 @@
+## Color Ansible Output
+    
+    https://major.io/2014/06/25/get-colorful-ansible-output-in-jenkins/
+    
+    export ANSIBLE_FORCE_COLOR=true
+    ansible-playbook -i hosts site.yml
+
 ## Jenkins Credential
 
 - Credential id: tedp_svc_blackduck
