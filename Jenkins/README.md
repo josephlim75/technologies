@@ -4,10 +4,10 @@
 - https://github.com/jenkinsci/ansicolor-plugin/issues/104
 - https://wiki.jenkins.io/display/JENKINS/AnsiColor+Plugin
 - https://issues.jenkins-ci.org/browse/JENKINS-38390
-
-
+```
     export ANSIBLE_FORCE_COLOR=true
     ansible-playbook -i hosts site.yml
+```
 
 ## Jenkins Credential
 
