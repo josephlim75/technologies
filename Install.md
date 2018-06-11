@@ -19,6 +19,11 @@
     playbooks/ops-config.yml \
     --tags config --ask-vault-pass
 
+## Update Certificate
+    ansible-playbook -i inventory/<env>  \
+    -e "@@creds.json" -e "nodes=node10,node12" -u mapr \
+    playbooks/ops-certs-config.yml --ask-vault-pass
+
 ## Extend LVM
 
     # Set size to 300G
