@@ -1,4 +1,8 @@
 
+https://www.voxxed.com/2015/01/use-container-sidecar-microservices/
+https://konghq.com/kong-community-edition/
+
+
 ## AWS
 
 - m4.2xlarge
