@@ -76,7 +76,9 @@
 - https://coredns.io/explugins/forward/
 - https://blog.hypriot.com/
 - https://coredns.io/plugins/metrics/
-- 
+- https://github.com/coredns/coredns/tree/master/plugin/hosts
+- https://github.com/coredns/coredns/issues/1125
+- https://jpmens.net/2017/09/09/coredns/
  
  
 ## Kafka
