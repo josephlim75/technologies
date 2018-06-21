@@ -44,6 +44,9 @@
 - https://medium.com/@basi/docker-swarm-metrics-in-prometheus-e02a6a5745a
 - https://howchoo.com/g/zwjhogrkywe/how-to-add-a-health-check-to-your-docker-container 
 
+# Sidecar container
+- https://blog.openshift.com/kerberos-sidecar-container/
+
 # Fonts
 - https://google-webfonts-helper.herokuapp.com/fonts/roboto?subsets=latin
 - https://github.com/majodev/google-webfonts-helper
