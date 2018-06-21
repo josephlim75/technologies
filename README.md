@@ -1,3 +1,6 @@
+- docker-plugin-metrics-opentsdb - https://github.com/qnib/docker-plugin-metrics-opentsdb
+- https://github.com/OpenTSDB/tcollector/tree/master/collectors/0
+- http://www.qnib.org/2017/07/13/docker-metrics-plugin-opentsdb/
 
 - https://www.voxxed.com/2015/01/use-container-sidecar-microservices/
 - https://konghq.com/kong-community-edition/
