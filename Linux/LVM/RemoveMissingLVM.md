@@ -10,7 +10,12 @@ Couldn't find device or unknow physical volume
 ```      
 
 Removing missing or unknow volume
-
+- Option 1
+```
+# vgreduce <volume_group_name> --removemissing
+Note : Do not use --force option.
+```
+- Option 2
 ```
 # pvdisplay
 Couldn't find device with uuid EvbqlT-AUsZ-MfKi-ZSOz-Lh6L-Y3xC-KiLcYx.
