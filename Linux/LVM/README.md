@@ -4,6 +4,12 @@ http://unixadminschool.com/blog/2012/01/linux-lvm-cleaning-up-stale-storage-devi
 
 Device not found or rejected by filter - https://www.centos.org/forums/viewtopic.php?t=61324
 
+## Reactivate LVM volume
+
+When running `lvdisplay` shows LV exists but status as `NOT available`, this required to reactivate the volume group after attaching it.  To activate all the inactive volumes on the system, the command is
+
+    vgchange -a y
+
 ## Remove Volume Group
 
 You cannot use --removemissing or force delete VG if metadata area equal zero as in my case.
