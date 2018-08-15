@@ -24,6 +24,12 @@
     -e "@@creds.json" -e "nodes=node10,node12" -u mapr \
     playbooks/ops-certs-config.yml --ask-vault-pass
 
+## Reactivate LVM volume
+
+When running `lvdisplay` shows LV exists but status as `NOT available`, this required to reactivate the volume group after attaching it.  To activate all the inactive volumes on the system, the command is
+
+    vgchange -a y
+
 ## Extend LVM
 
     # Set size to 300G
