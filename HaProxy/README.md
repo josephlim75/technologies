@@ -4,7 +4,7 @@
 
 ## Backend with SNI
 - https://www.haproxy.com/blog/enhanced-ssl-load-balancing-with-server-name-indication-sni-tls-extension/
-
+{code}
     # Adjust the timeout to your needs
     defaults
       timeout client 30s
@@ -107,7 +107,7 @@
       option ssl-hello-chk
       server server1 10.0.0.11:443 check
       server server2 10.0.0.12:443 check
-
+{code}
 
 ## Backend Config
     backend app
