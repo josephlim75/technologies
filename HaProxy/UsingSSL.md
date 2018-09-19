@@ -25,7 +25,7 @@ There is a combination of the two strategies, where SSL connections are terminat
 
   *An older article of mine on the consequences and gotchas of using load balancers explains these issues (and more) as well.*
 
-HAProxy with SSL Termination
+### HAProxy with SSL Termination
 
 We'll cover the most typical use case first - SSL Termination. As stated, we need to have the load balancer handle the SSL connection. This means having the SSL Certificate live on the load balancer server.
 
@@ -36,7 +36,7 @@ First, we'll create a self-signed certificate for *.xip.io, which is handy for d
 
 I use the xip.io service as it allows us to use a hostname rather than directly accessing the servers via an IP address, all without having to edit my computers' Host file.
 As this process is outlined in a passed edition on SSL certificates, I'll simple show the steps to generate a self-signed certificate here:
-
+```
 $ sudo mkdir /etc/ssl/xip.io
 $ sudo openssl genrsa -out /etc/ssl/xip.io/xip.io.key 1024
 $ sudo openssl req -new -key /etc/ssl/xip.io/xip.io.key \
@@ -55,30 +55,35 @@ $ sudo openssl req -new -key /etc/ssl/xip.io/xip.io.key \
 $ sudo openssl x509 -req -days 365 -in /etc/ssl/xip.io/xip.io.csr \
                     -signkey /etc/ssl/xip.io/xip.io.key \
                     -out /etc/ssl/xip.io/xip.io.crt
+```
+
 This leaves us with a xip.io.csr, xip.io.key and xip.io.crt file.
 
 Next, after the certificates are created, we need to create a pem file. A pem file is essentially just the certificate, the key and optionally certificate authorities concatenated into one file. In our example, we'll simply concatenate the certificate and key files together (in that order) to create a xip.io.pem file. This is HAProxy's preferred way to read an SSL certificate.
-
+```
 $ sudo cat /etc/ssl/xip.io/xip.io.crt /etc/ssl/xip.io/xip.io.key \
            | sudo tee /etc/ssl/xip.io/xip.io.pem
+```         
 When purchasing a real certificate, you won't necessarily get a concatenated "bundle" file. You may have to concatenate them yourself. However, many do provide a bundle file. If you do, it might not be a pem file, but instead be a bundle, cert, cert, key file or some similar name for the same concept. This Stack Overflow answer explains that nicely.
 In any case, once we have a pem file for HAproxy to use, we can adjust our configuration just a bit to handle SSL connections.
 
 We'll setup our application to accept both http and https connections. In the last edition on HAProxy, we had this frontend:
-
+```
 frontend localnodes
     bind *:80
     mode http
     default_backend nodes
+```
 To terminate an SSL connection in HAProxy, we can now add a binding to the standard SSL port 443, and let HAProxy know where the SSL certificates are:
-
+```
 frontend localhost
     bind *:80
     bind *:443 ssl crt /etc/ssl/xip.io/xip.io.pem
     mode http
     default_backend nodes
+```
 In the above example, we're using the backend "nodes". The backend, luckily, doesn't really need to be configured in any particular way. In the previous edition on HAProxy, we had the backend like so:
-
+```
 backend nodes
     mode http
     balance roundrobin
@@ -89,22 +94,23 @@ backend nodes
     server web03 172.17.0.3:9002 check
     http-request set-header X-Forwarded-Port %[dst_port]
     http-request add-header X-Forwarded-Proto https if { ssl_fc }
+```
 Because the SSL connection is terminated at the Load Balancer, we're still sending regular HTTP requests to the backend servers. We don't need to change this configuration, as it works the same!
 
-SSL Only
+### SSL Only
 
 If you'd like the site to be SSL-only, you can add a redirect directive to the frontend configuration:
-
+```
 frontend localhost
     bind *:80
     bind *:443 ssl crt /etc/ssl/xip.io/xip.io.pem
     redirect scheme https if !{ ssl_fc }
     mode http
     default_backend nodes
+```
 Above, we added the redirect directive, which will redirect from "http" to "https" if the connection was not made with an SSL connection. More information on ssl_fc is available here.
 
-
-HAProxy with SSL Pass-Through
+### HAProxy with SSL Pass-Through
 
 With SSL Pass-Through, we'll have our backend servers handle the SSL connection, rather than the load balancer.
 
@@ -113,25 +119,27 @@ The job of the load balancer then is simply to proxy a request off to its config
 In this setup, we need to use TCP mode over HTTP mode in both the frontend and backend configurations. HAProxy will treat the connection as just a stream of information to proxy to a server, rather than use its functions available for HTTP requests.
 
 First, we'll tweak the frontend configuration:
-
+```
 frontend localhost
     bind *:80
     bind *:443
     option tcplog
     mode tcp
     default_backend nodes
+```
 This still binds to both port 80 and port 443, giving the opportunity to use both regular and SSL connections.
 
 As mentioned, to pass a secure connection off to a backend server without encrypting it, we need to use TCP mode (mode tcp) instead. This also means we need to set the logging to tcp instead of the default http (option tcplog). Read more on log formats here to see the difference between tcplog and httplog.
 
 Next, we need to tweak our backend configuration. Notably, we once again need to change this to TCP mode, and we remove some directives to reflect the loss of ability to edit/add HTTP headers:
-
+```
 backend nodes
     mode tcp
     balance roundrobin
     option ssl-hello-chk
     server web01 172.17.0.3:443 check
     server web02 172.17.0.4:443 check
+```
 As you can see, this is set to mode tcp - Both frontend and backend configurations need to be set to this mode.
 
 We also remove option forwardfor and the http-request options - these can't be used in TCP mode, and we couldn't inject headers into a request that's encrypted anyway.
