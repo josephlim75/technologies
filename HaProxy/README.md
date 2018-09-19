@@ -1,4 +1,5 @@
 ## Reference Site
+- http://www.haproxy.org/download/1.8/doc/configuration.txt
 - https://pierrevillard.com/tag/haproxy/
 - https://blog.bluematador.com/posts/running-haproxy-docker-containers-kubernetes/
 
