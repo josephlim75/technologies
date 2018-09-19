@@ -10,7 +10,14 @@
       server  server2 192.168.1.13:80 check inter 2000 rise 2 fall 5
 
 Meaning that the backend will only be used if the host header starts with external-service-1-0.
+    
     use_backend be_external-service-1-0 if { hdr_beg(host) -i external-service-1-0 }
+
+But I also need to make sure HTTP is redirected to HTTPS. When I use:
+
+    redirect scheme https if !{ ssl_fc }
+
+in my HTTP frontend section of HAProxy config, I get all requests redireted to default backend, so the above-mentioned acl rules are ignored if the request is redirected from redirect scheme.
 
 ## Config Example
 
