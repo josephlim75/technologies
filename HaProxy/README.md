@@ -267,3 +267,41 @@ in my HTTP frontend section of HAProxy config, I get all requests redireted to d
         stats show-desc Workaround haproxy for SSL
         stats auth admin:ifIruledTheWorld
         stats admin if TRUE
+### Example 4        
+```
+global
+  maxconn 2000
+  pidfile /var/run/haproxy.pid
+  log     127.0.0.1 local0
+  log     127.0.0.1 local1 notice
+
+  # echo "" | nc -U /var/run/haproxy.sock
+  stats   socket /var/run/haproxy.sock mode 777
+
+resolvers tedpdns
+  nameserver dns "${HAPROXY_DNS_ADDR}:${HAPROXY_DNS_PORT}"
+
+defaults
+  log         global
+  mode        http
+  option      dontlognull
+  option      forwardfor
+  option      httpclose
+  option      httplog
+  retries     3
+  timeout     check    5s
+  timeout     client   5s
+  timeout     connect  10s
+  timeout     server   10s
+
+frontend web
+  bind   *:80
+  mode   http
+  option http-server-close
+  option forceclose
+
+  default_backend docker_app
+
+backend docker_app
+  server app app.mynetwork:8080 check resolvers tedpdns resolve-prefer ipv4
+```
