@@ -2,6 +2,36 @@
 - https://pierrevillard.com/tag/haproxy/
 - https://blog.bluematador.com/posts/running-haproxy-docker-containers-kubernetes/
 
+## Weight
+```
+frontend http-in
+    bind *:80
+
+    #python
+    acl acl_python hdr(host) -i python.service.consul
+    use_backend backend_python if acl_python
+
+    #python-smooth
+    acl acl_python-smooth hdr(host) -i python-smooth.service.consul
+    use_backend backend_python-smooth if acl_python-smooth
+
+    backend backend_python
+        balance roundrobin
+        option http-server-close
+        server standalone_31005 192.168.10.10:31005 maxconn 32  weight 1
+        server standalone_31003 192.168.10.10:31003 maxconn 32  weight 100
+        server standalone_31002 192.168.10.10:31002 maxconn 32  weight 100
+        server standalone_31006 192.168.10.10:31006 maxconn 32  weight 1
+
+
+    backend backend_python-smooth
+        balance roundrobin
+        option http-server-close
+        server standalone_31000 192.168.10.10:31000 maxconn 32  weight 100
+        server standalone_31004 192.168.10.10:31004 maxconn 32  weight 1
+        server standalone_31001 192.168.10.10:31001 maxconn 32  weight 100
+```
+
 ## Backend with SNI
 - https://www.haproxy.com/blog/enhanced-ssl-load-balancing-with-server-name-indication-sni-tls-extension/
 ```
