@@ -31,6 +31,23 @@ frontend http-in
         server standalone_31004 192.168.10.10:31004 maxconn 32  weight 1
         server standalone_31001 192.168.10.10:31001 maxconn 32  weight 100
 ```
+## SSL Configuraiton
+```
+listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/gogs.imperial-legion.fr/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/gogs.imperial-legion.fr/privkey.pem; # managed by Certbot
+    ssl_session_cache shared:le_nginx_SSL:1m; # managed by Certbot
+    ssl_session_timeout 1440m; # managed by Certbot
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # managed by Certbot
+    ssl_prefer_server_ciphers on; # managed by Certbot
+
+    ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256 ECDHE-ECDSA-AES256-GCM-SHA384 ECDHE-ECDSA-AES128-SHA ECDHE-ECDSA-AES256-SHA ECDHE-ECDSA-AES128-SHA256 ECDHE-ECDSA-AES256-SHA384 ECDHE-RSA-AES$
+
+if ($scheme != "https") {
+    return 301 https://$host$request_uri;
+} # managed by Certbot
+```
 
 ## Backend with SNI
 - https://www.haproxy.com/blog/enhanced-ssl-load-balancing-with-server-name-indication-sni-tls-extension/
