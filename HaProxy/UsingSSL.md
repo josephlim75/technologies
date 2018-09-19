@@ -5,25 +5,25 @@
 
 If your application makes use of SSL certificates, then some decisions need to be made about how to use them with a load balancer.
 
-A simple setup of one server usually sees a client's SSL connection being decrypted by the server receiving the request. Because a load balancer sits between a client and one or more servers, where the SSL connection is decrypted becomes a concern.
+A simple setup of **one** server usually sees a client's SSL connection being decrypted by the server receiving the request. Because a load balancer sits between a client and one or more servers, where the SSL connection is decrypted becomes a concern.
 
 There are two main strategies.
 
-*SSL Termination* is the practice of terminating/decrypting an SSL connection at the load balancer, and sending unencrypted connections to the backend servers.
+**SSL Termination** is the practice of terminating/decrypting an SSL connection at the load balancer, and sending unencrypted connections to the backend servers.
 
 This means the load balancer is responsible for decrypting an SSL connection - a slow and CPU intensive process relative to accepting non-SSL requests.
 
-This is the opposite of SSL Pass-Through, which sends SSL connections directly to the proxied servers.
+This is the opposite of **SSL Pass-Through**, which sends SSL connections directly to the proxied servers.
 
 With SSL-Pass-Through, the SSL connection is terminated at each proxied server, distributing the CPU load across those servers. However, you lose the ability to add or edit HTTP headers, as the connection is simply routed through the load balancer to the proxied servers.
 
 This means your application servers will lose the ability to get the X-Forwarded-* headers, which may include the client's IP address, port and scheme used.
 
-Which strategy you choose is up to you and your application needs. SSL Termination is the most typical I've seen, but pass-thru is likely more secure.
+**Which strategy you choose** is up to you and your application needs. SSL Termination is the most typical I've seen, but pass-thru is likely more secure.
 
 There is a combination of the two strategies, where SSL connections are terminated at the load balancer, adjusted as needed, and then proxied off to the backend servers as a new SSL connection. This may provide the best of both security and ability to send the client's information. The trade off is more CPU power being used all-around, and a little more complexity in configuration.
 
-An older article of mine on the consequences and gotchas of using load balancers explains these issues (and more) as well.
+  *An older article of mine on the consequences and gotchas of using load balancers explains these issues (and more) as well.*
 
 HAProxy with SSL Termination
 
