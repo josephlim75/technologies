@@ -38,6 +38,7 @@ When running `lvdisplay` shows LV exists but status as `NOT available`, this req
     # +20G add 20G on top of existing size. Eg existing 10G, +20G = 30G
     sudo lvextend -L+20G vg_sys/lv_docker
     
+    # Resize the file system
     sudo xfs_growfs /dev/mapper/vg_sys-lv_docker
     
     # Extend and resize at the same time
