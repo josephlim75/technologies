@@ -15,7 +15,9 @@
     /etc/fstab
 
 ## Bootstrapping 
-
+- List the hosts under group cluster
+           # ansible -i inventory/qa cluster --list-hosts
+    
     ./add-host-sudoer.sh
     ansible-playbook -i <inventory> playbooks/host-partitions.yml
     ansible-playbook -i <inventory> playbooks/host-initialize.yml \
