@@ -24,9 +24,10 @@
          # ansible -i inventory/qa cluster --list-hosts
     
 - Running playbook 
+        
         # ansible-playbook -i inventory/qa -e "@@creds.json" -u mapr playbooks/mi.yml
         
-        ./add-host-sudoer.sh
+        # ./add-host-sudoer.sh
         
         ansible-playbook -i <inventory> playbooks/host-partitions.yml
         
