@@ -17,16 +17,19 @@
 ## Bootstrapping 
 - Set ANSIBLE_CONFIG
 
-        echo ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg
+        export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg
         
 - List the hosts under group cluster
          
          # ansible -i inventory/qa cluster --list-hosts
     
 - Running playbook 
-
+        # ansible-playbook -i inventory/qa -e "@@creds.json" -u mapr playbooks/mi.yml
+        
         ./add-host-sudoer.sh
+        
         ansible-playbook -i <inventory> playbooks/host-partitions.yml
+        
         ansible-playbook -i <inventory> playbooks/host-initialize.yml \
           --skip-tags mapr-init,docker-init
 
