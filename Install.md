@@ -14,6 +14,20 @@
     
     /etc/fstab
 
+## Update MapR Vault
+```
+# Compress
+tar czf mapr.tar.gz mapr.login.conf maprserverticket mapruserticket ssl_keystore ssl_truststore
+
+# Convert to encoded text
+xxd -p mapr.tar.gz > mapr.txt
+
+# Copy encoded text from Vault to input.txt.  Replace input.txt \n to newline
+sed -i 's/\\n/\n/g' input.txt
+xxd -r -p input.txt mapr.tar.gz
+
+```
+
 ## Bootstrapping 
 - Create `@creds.json` file containing password
 
