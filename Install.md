@@ -12,7 +12,17 @@
     mkdir -p /var/lib/docker
     mount /dev/vg_docker/lv_var /var/lib/docker
     
+    # Make permanent mount point after reboot
     /etc/fstab
+    
+- Add into `/etc/docker/daemon.json` 
+
+    {
+      "storage-driver": "overlay2",
+      "storage-opts": [
+        "overlay2.override_kernel_check=true"
+      ]
+    }
 
 ## Update MapR Vault
 ```
