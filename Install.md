@@ -15,6 +15,12 @@
     /etc/fstab
 
 ## Bootstrapping 
+- Create `@creds.json` file containing password
+
+        }
+          "ansible_ssh_pass": "xxxxxx"
+        }
+
 - Set ANSIBLE_CONFIG
 
         export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg
