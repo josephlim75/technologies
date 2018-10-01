@@ -61,9 +61,9 @@ xxd -r -p input.txt mapr.tar.gz
 
         ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml \
            -l '!localhost' \
-           -e "access_region=dev hashivault_token=xxxxxxxxxxx" \
+           -e "access_region=dev hashivault_token=xxxxxxxxxxx mapr_pass=xxxx" \
            -e "packages=hive,oozie" \
-          --user mapr -e "@@credential.json"      
+          --user mapr -e "@@credential.json"
 
         ansible-playbook -i <inventory> --limit 'all:!localhost' \
         --user xx \
