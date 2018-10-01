@@ -17,7 +17,7 @@
 ## Bootstrapping 
 - Create `@creds.json` file containing password
 
-        }
+        {
           "ansible_ssh_pass": "xxxxxx"
         }
 
