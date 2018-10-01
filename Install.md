@@ -59,11 +59,15 @@ xxd -r -p input.txt mapr.tar.gz
         ansible-playbook -i <inventory> playbooks/mapr-kafka.yml --tags umount/mount \
           --user mapr -e "@@credential.json"
 
+- Installing Hive requires `mapr_pass` and `mariadb_hive_pass` values
+
         ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml \
            -l '!localhost' \
            -e "access_region=dev hashivault_token=xxxxxxxxxxx mapr_pass=xxxx" \
            -e "packages=hive,oozie" \
           --user mapr -e "@@credential.json"
+
+- Add operation configuration to host
 
         ansible-playbook -i <inventory> --limit 'all:!localhost' \
         --user xx \
