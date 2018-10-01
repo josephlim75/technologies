@@ -60,7 +60,7 @@ xxd -r -p input.txt mapr.tar.gz
           --user mapr -e "@@credential.json"
 
 - Installing Hive requires `mapr_pass` and `mariadb_hive_pass` values
--- Test
+
         ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml \
            -e "access_region=dev hashivault_token=xxxxxxxxxxx" \
            -e "packages=hive,oozie" \
