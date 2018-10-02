@@ -11,4 +11,4 @@ https://maprdocs.mapr.com/home/AdministratorGuide/ClstrAdminOverview.html
 
 ## MapR Installation
 
-(https://mapr.com/docs/home/InteropMatrix/r_os_matrix_6.x.html)[OS Support Matrix]
+[OS Support Matrix](https://mapr.com/docs/home/InteropMatrix/r_os_matrix_6.x.html)
