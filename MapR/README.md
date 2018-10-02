@@ -13,10 +13,10 @@ https://maprdocs.mapr.com/home/AdministratorGuide/ClstrAdminOverview.html
 
 [MapR OS Support Matrix](https://mapr.com/docs/home/InteropMatrix/r_os_matrix_6.x.html)
 
-OS Version|MapR 6.1.0|MapR 6.0.1|MapR 6.0.0|MapR 5.2.2
----|---|---|---
-RHEL 7.5|Yes|No|No|Yes
-RHEL 7.4|Yes|Yes|Yes|Yes
+OS Version | MapR 6.1.0 | MapR 6.0.1 | MapR 6.0.0 | MapR 5.2.2
+--- | --- | --- | ---
+RHEL 7.5 |Yes |No | No | Yes
+RHEL 7.4 |Yes |Yes |Yes | Yes
 
 Markdown | Less | Pretty
 --- | --- | ---
