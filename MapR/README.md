@@ -8,3 +8,7 @@ https://maprdocs.mapr.com/home/AdministratorGuide/ClstrAdminOverview.html
     "mfs.feature.db.ace.support":"0",
     
     # maprcli config save -values '{"mfs.feature.db.ace.support":"1"}'  
+
+## MapR Installation
+
+(https://mapr.com/docs/home/InteropMatrix/r_os_matrix_6.x.html)[OS Support Matrix]
