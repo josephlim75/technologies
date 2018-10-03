@@ -1,18 +1,18 @@
 ## Docker Overlay2
 - Creating overlay2 lvm mount
 
-    # sudo echo 'overlay' >> /etc/modules-load.d/overlay.conf
-    # modprobe overlay
-    # lsmod | grep overlay
-    pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1
+        # sudo echo 'overlay' >> /etc/modules-load.d/overlay.conf
+        # modprobe overlay
+        # lsmod | grep overlay
+        pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1
 
-    vgcreate vg_docker /dev/sdb1
-    vgextend vg_docker /dev/sdc1
-    vgextend vg_docker /dev/sdd1
-    lvcreate -l+100%FREE -n lv_var vg_docker
-    mkfs.xfs -n ftype=1 /dev/vg_docker/lv_var
-    mkdir -p /var/lib/docker
-    mount /dev/vg_docker/lv_var /var/lib/docker
+        vgcreate vg_docker /dev/sdb1
+        vgextend vg_docker /dev/sdc1
+        vgextend vg_docker /dev/sdd1
+        lvcreate -l+100%FREE -n lv_var vg_docker
+        mkfs.xfs -n ftype=1 /dev/vg_docker/lv_var
+        mkdir -p /var/lib/docker
+        mount /dev/vg_docker/lv_var /var/lib/docker
     
     # Make permanent mount point after reboot
     /etc/fstab
