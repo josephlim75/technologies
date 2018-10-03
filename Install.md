@@ -116,7 +116,7 @@ When running `lvdisplay` shows LV exists but status as `NOT available`, this req
     # Extend and resize at the same time
     sudo lvresize --resizefs -L 100G /dev/mapper/vg_sys-lv_docker
     
-## Reduzing LVM
+## Reducing LVM
 
 ### Unmount the volume
 
