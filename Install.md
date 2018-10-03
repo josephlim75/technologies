@@ -14,8 +14,8 @@
         mkdir -p /var/lib/docker
         mount /dev/vg_docker/lv_var /var/lib/docker
     
-    # Make permanent mount point after reboot
-    /etc/fstab
+        # Make permanent mount point after reboot
+        /etc/fstab
     
 - Add into `/etc/docker/daemon.json` 
 
