@@ -1,4 +1,6 @@
 ## Docker Overlay2
+- Creating overlay2 lvm mount
+
     # sudo echo 'overlay' >> /etc/modules-load.d/overlay.conf
     # modprobe overlay
     # lsmod | grep overlay
