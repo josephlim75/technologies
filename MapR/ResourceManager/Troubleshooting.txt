@@ -1,0 +1,13 @@
+The configured nodemanager group 1535138087 is different from the group of the executable 0
+2017-10-19 08:50:26,621 INFO org.apache.hadoop.service.AbstractService: Service NodeManager failed in state INITED; cause: org.apache.hadoop.yarn.exceptions.YarnRuntimeException: Failed to initialize contain$
+org.apache.hadoop.yarn.exceptions.YarnRuntimeException: Failed to initialize container executor
+
+/opt/mapr/hadoop/hadoop-2.7.0/etc/hadoop
+
+container-executor.cfg file owner needs to match
+
+
+
+---------------------------------------------------------------------------------------------------------------
+chown root:mapr /opt/mapr/hadoop/hadoop-2.7.0/bin/container-executor 
+chmod 6050 /opt/mapr/hadoop/hadoop-2.7.0/bin/container-executor

@@ -1,0 +1,70 @@
+---------------------------------------------------------------------------------------------------------------------------------
+Checking Region splitting
+=========================
+maprcli table region list -path <table> -json |grep primarynode |sort |uniq  -c
+
+Create table with permissions
+=============================
+maprcli table create -regionsizemb 8192 -path /perf/marpdb -tabletype -json -adminaccessperm packperm
+maprcli table of edit -cfname "default" -readperm p -writeperm p -traverseperm p -path /perf/maprdb
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Hello,
+
+Maybe this command is an easier way to count the number of rows in a table:
+
+/> maprcli table region list -path /tsys/refined/02220/datasets/tables/ts2/core/consumer/ims/tran_detail
+---------------------------------------------------------------------------------------------------------------------------------
+
+http://maprdocs.mapr.com/home/ReferenceGuide/table-edit.html#tableedit
+http://doc.mapr.com/display/MapR/table+cf+edit
+https://maprdocs.mapr.com/52/MapR-DB/setting_permissions_on_tables.html
+
+To run this command, your user ID must have the following permissions:
+>> readAce and writeAce on the volume
+>> lookupdir on directories in the path
+>> adminaccessperm on the table
+
+maprcli table cf edit -path /tables/CP_DATA -cfname A -readperm 'p'
+maprcli table cf colperm set -path /tables/CP_DATA -cfname A -name column1 -readperm 'p'
+maprcli table cf colperm set -path /tables/CP_DATA -cfname A -name column2 -readperm 'p'
+maprcli table cf colperm set -path /tables/CP_DATA -cfname A -name column3 -readperm 'p'
+
+maprcli table create -path /user/jlim/tbl1 -adminaccessperm "u:mapr|u:jlim"
+
+maprcli table edit -path /tsys/edp/datasets/tables/authorizations -adminaccessperm u:mapr
+maprcli table edit -path /tsys/edp/datasets/tables/authorizations -adminaccessperm "u:mapr|u:jlim"
+maprcli table cf edit -path /tsys/edp/datasets/tables/authorizations -cfname "default" -readperm "g:datalake_dev_users"
+maprcli table cf edit -path /tsys/edp/datasets/tables/authorizations -cfname "default" -readperm "p" 
+
+maprcli table edit
+-path <path >
+[ -audit true|false ]
+[ -autosplit <Auto Split table> ]
+[ -regionsizemb <Region Size in MB> ]
+[ -bulkload <Bulk load> ]
+[ -deletettl <delete TTL in secs> ]
+[ -packperm <Pack Permission settings> ]
+[ -bulkloadperm <Bulk load Permission settings> ]
+[ -splitmergeperm <Split and Merge Permission settings>]
+[ -createrenamefamilyperm <Add/Rename Family Permission settings> ]
+[ -deletefamilyperm <Delete Family Permission settings> ]
+[ -adminaccessperm <Ace Admin Permission settings> ]
+[ -replperm <Replication Admin Permission settings> ]
+[ -defaultversionperm <CF Versions Default Permission> ]
+[ -defaultcompressionperm <CF Compression Default Permission> ]
+[ -defaultmemoryperm <CF Memory Default Permission> ]
+[ -defaultreadperm <CF Read Default Permission> ]
+[ -defaultwriteperm <CF Write Default Permission> ]
+[ -defaulttraverseperm <CF Traverse Default Permission> ]
+[ -defaultappendperm <CF Append Default Permission> ]
+
+
+Changes the value of regionsizemb for the mytable table:
+	CLI
+	 >> maprcli table edit -path /volume1/mytable -regionsizemb 8192
+	 >> maprcli table cf edit -path /my.cluster.com/volume1/mytable -cfname mycf -newcfname mynewcfname -ttl 86400
+	REST
+	 >> https://r1n1.sj.us:8443/rest/table/edit?path=%2Fvolume1%2Fmytable&regionsizemb=8192
+	 >> https://r1n1.sj.us:8443/rest/table/cf/edit?path=%2Fmy.cluster.com%2Fvolume1%2Fmytable&cfname=mycf&newcfname=mynewcfname&ttl=86400

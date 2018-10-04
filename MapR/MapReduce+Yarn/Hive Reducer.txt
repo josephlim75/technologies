@@ -1,0 +1,51 @@
+mapred-site.xml
+>>>>>>>>>>>>>>>
+map-mb : 4096 opts:-Xmx3072m
+reduce-mb : 8192 opts:-Xmx6144m
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+yarn-site.xml
+>>>>>>>>>>>>>>>
+resource memory-mb : 40GB
+min allocation-mb : 1GB
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Number of reducers depends also on size of the input file
+
+By default it is 1GB (1000000000 bytes). You could change that by setting the property hive.exec.reducers.bytes.per.reducer:
+
+either by changing hive-site.xml
+<property>
+   <name>hive.exec.reducers.bytes.per.reducer</name>
+   <value>1000000</value>
+</property>
+or using set
+
+$ hive -e "set hive.exec.reducers.bytes.per.reducer=1000000"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+mapred.max.split.size     (MR1)
+or 
+mapreduce.input.fileinputformat.split.maxsize ( in yarn/MR2);
+
+
+Split the file lesser then default value is not a efficient solution. 
+Spliting is basically used during dealing with large dataset. Default value is itself a small size so its not worth to split it again.
+
+I would recommend following configuration before your query.  You can apply it based upon your input data.
+
+set hive.merge.mapfiles=false;
+set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
+
+set mapred.map.tasks = XX;
+If you want to assign number of reducer also then you can use below configuration
+
+set mapred.reduce.tasks = XX;
+Note that on Hadoop 2 (YARN), the mapred.map.tasks and mapred.reduce.tasks are deprecated and are replaced by other variables:
+
+mapred.map.tasks     -->    mapreduce.job.maps
+mapred.reduce.tasks  -->    mapreduce.job.reduces

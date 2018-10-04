@@ -1,0 +1,10 @@
+Username: tsys 
+Password: 2Ng1KHCH 
+
+To access MapR's File Sharing server you can do one of the following: 
+
+1. Secure Web Browser 
+
+Point your browser to https://sftp.mapr.com and login with the above informaion. 
+
+Note - If uploads larger than 1GB use the "FTP Voyager JV" (JAVA client) or use the command line SFTP. 

@@ -1,0 +1,166 @@
+Grant root to full rights to everything and remote access
+=============================================================
+    mysql> SELECT User,Host,Password FROM mysql.user;                 (Show user)
+    mysql> UPDATE mysql.user SET Password=PASSWORD('newPassWord') WHERE User="demo-user"; (Update password)
+    
+    mysql> GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'tedpuser' WITH GRANT OPTION; FLUSH PRIVILEGES;
+
+    Grant user to mydb database with SELECT, INSERT
+    mysql> GRANT SELECT, INSERT ON mydb.* TO 'someuser'@'somehost';
+
+    CREATE USER IF NOT EXISTS 'local_user1'@'localhost' IDENTIFIED BY 'mypass'; (Remote connection restricted for this user)
+    CREATE USER IF NOT EXISTS 'remote_user1'@'%' IDENTIFIED BY 'mypass';         (Remote connection allow % for any source)
+    RENAME USER 'abc'@'localhost' TO 'xyz'@'%';
+    DROP IF EXISTS USER 'remote_user1'@'%’;
+    ALTER USER IF EXISTS 'remote_user1'@'%' IDENTIFIED BY 'mypass';
+    ALTER USER IF EXISTS 'remote_user1'@'%' PASSWORD EXPIRE;
+    ALTER USER IF EXISTS 'remote_user1'@'%' ACCOUNT LOCK;
+    GRANT ALL PRIVILEGES ON db1.* TO 'remote_user1'@'%';    (Grant all privileges)
+    GRANT SELECT, INSERT, UPDATE, DELETE ON db1.* TO 'remote_user1'@'%';   (Grant a certain privileges)
+
+Check User Privileges using SHOW GRANTS command:
+    SHOW GRANTS FOR 'mysqldba'@'localhost';
+    SHOW GRANTS; (It will display the privileges granted to the current account)
+    SHOW GRANTS FOR 'remote_user1'@'%';
+
+Create TABLE
+================================
+CREATE IF NOT EXISTS DATABASE:
+CREATE IF NOT EXISTS  DATABASE test_db ;
+Use test_db ;
+CREATE IF NOT EXISTS TABLE t1 (id int(11) primary key auto_incremnet ,uname varchar(50), comments text);
+INSERT INTO t1 (id, uname, comments) VALUES(101,’lalit’,’mysql DBA’);
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Monitoring MySQL/MariaDB
+========================
+https://lalitvc.wordpress.com/2017/04/02/basics-of-mysql-administration-and-best-practices/
+
+MySQL monitoring
+
+Check database size:
+
+Information_schema (Metadata)
+
+    SELECT table_schema "Data Base Name",    sum( data_length + index_length ) / 1024 / 1024 "Data Base Size in MB",    sum( data_free )/ 1024 / 1024 "Free Space in MB"FROM information_schema.TABLESGROUP BY table_schema ;
+
+Check Active users:
+
+    show processlist ;
+
+InnoDB Engine Status:
+
+    SHOW STATUS;
+
+    SHOW ENGINE INNODB STATUS;
+
+    
+Performance schema: Live statistics
+Example:
+
+– Enable Locking related instruments (if it’s not enabled):
+
+    UPDATE performance_schema.setup_instruments SET ENABLED=’YES’, TIMED=’YES’ WHERE NAME=’wait/lock/metadata/sql/mdl’;
+
+    SELECT * FROM performance_schema.metadata_locks WHERE OBJECT_SCHEMA=’test’ AND OBJECT_NAME LIKE ‘t_’;
+
+MySQL Enterprise monitor
+Customized scripts
+Check Database objects info:
+
+Databases:
+
+SHOW DATABASES;
+Select Database:
+
+Use db_name;
+Tables in Database:
+
+SHOW TABLES;
+
+SELECT TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA = 'test_db';
+ROUTINES:
+
+select * from ROUTINES where ROUTINE_SCHEMA='db_name’;
+INDEX:
+
+select TABLE_NAME,INDEX_NAME,COLUMN_NAME,INDEX_TYPE  from information_schema.STATISTICS where TABLE_SCHEMA = 'db_name';
+View:
+
+select * from information_schema.VIEWS where TABLE_SCHEMA = 'db_name';
+Mysqldump  Backup-Restore:
+
+Require privileges: mysqldump requires at least the SELECT privilege for dumped tables, SHOW VIEW for dumped views, TRIGGER for dumped triggers, and LOCK TABLES if the –single-transaction option is not used. Certain options might require other privileges as noted in the option descriptions.
+
+Backup:
+
+Full Database backup:
+
+mysqldump -u root  -p --single-transaction --databases db1  --routines > db1_fullbkp.sql
+ OR
+
+mysqldump -u root  -p --single-transaction  --databases db1 --routines | gzip >  db1_fullbkp.sql.gz
+ 
+
+Single table backup:
+
+mysqldump -u  -h  -p --single-transaction db_name table_name --routines > db1_full.sql
+Ref : http://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+
+Restore:
+
+To reload a dump file, you must have the privileges required to execute the statements that it contains, such as the appropriate CREATE privileges for objects created by those statements.
+
+mysql -u username -p db_name < db1_fullbkp.sql
+OR
+
+gunzip < db1_fullbkp.sql.gz | mysql -u username -p db_name
+MySQL Replication:
+
+Create replication user on MASTER with replication privileges.
+CREATE USER [IF NOT EXISTS] 'rpluser'@'%' IDENTIFIED BY 'rpluser1234';GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'rpluser'@'%';
+On SLAVE: setup replication as follows:
+CHANGE MASTER TO MASTER_HOST='<MASTER_IP',MASTER_USER='rpluser',MASTER_PASSWORD='rpluser1234',MASTER_PORT=3306,MASTER_AUTO_POSITION=1;
+Start slave
+START SLAVE;
+Check slave status
+SHOW SLAVE STATUS;
+Slave_IO_Running and Slave_SQL_Running column value should be ‘YES’
+
+MYSQL service [Linux]
+
+MySQL SHUTDOWN steps:
+
+shell> sudo service mysqld stop
+MySQL STARTUP steps:
+
+shell> sudo service mysqld start
+All Set !!
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Hardening MySQL/MariaDB
+========================
+https://www.digitalocean.com/community/tutorials/how-to-secure-mysql-and-mariadb-databases-in-a-linux-vps
+http://www.hexatier.com/mysql-database-security-best-practices-2/
+
+Change root username and password
+The default administrator username on the MySQL server is “root”. Hackers often attempt to gain access to its permissions. To make this task harder, rename “root” to something else and provide it with a long, complex alphanumeric password.
+
+To rename the administrator’s username, use the rename command in the MySQL console:
+
+    mysql> RENAME USER root TO new_user;
+
+The MySQL “RENAME USER” command first appeared in MySQL version 5.0.2. If you use an older version of MySQL, you can use other commands to rename a user:
+
+    mysql> use mysql;
+    mysql> update user set user="new_user" where user="root";
+    mysql> flush privileges;
+
+To change a user’s password, use the following command-line command:
+
+    mysql> SET PASSWORD FOR 'username'@'%hostname' = PASSWORD('newpass');
+
+It is also possible to change the password using the “mysqladmin” utility:
+
+    shell> mysqladmin -u username -p password newpass

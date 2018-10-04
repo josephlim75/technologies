@@ -1,0 +1,10 @@
+ADD JAR /mnt/hgfs/hostshared/CobolSerde.jar;
+USE ta_demo;
+CREATE EXTERNAL TABLE tatrxn
+ROW FORMAT SERDE 'com.savy3.hadoop.hive.serde3.cobol.CobolSerDe' 
+STORED AS
+INPUTFORMAT 'org.apache.hadoop.mapred.FixedLengthInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+LOCATION '/tsys/raw/tatrxn/data'
+TBLPROPERTIES ('cobol.layout.url'='/tsys/raw/tatrxn/copybook/tatrxn.cbl',
+                      'fb.length'='41');

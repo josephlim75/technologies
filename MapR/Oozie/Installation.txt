@@ -1,0 +1,123 @@
+## MapR Oozie Installation
+
+## Oozie example test
+
+cd /opt/mapr/oozie/oozie-<version>
+tar xvfz ./oozie-examples.tar.gz -C /opt/mapr/oozie/oozie-<version>/
+
+https://maprdocs.mapr.com/home/Oozie/SetupandRunOozieExamples.html
+
+/opt/mapr/oozie/oozie-/bin/oozie job -oozie="http://localhost:<oozie_port_number>/oozie" -config job.properties -run
+
+IMPORTANT 
+
+When Oozie Client connecting to Oozie server, the URL endpoint needs to match the SSL for handshake purpose.
+To view MapR keystore
+  sudo keytool -list -v -keystore /opt/mapr/conf/ssl_keystore
+  Password: mapr123
+  
+To view oozie status
+  OOZIE_HOME/oozied.sh status
+    Setting OOZIE_HOME:          /opt/mapr/oozie/oozie-4.3.0
+    Setting OOZIE_CONFIG:        /opt/mapr/oozie/oozie-4.3.0/conf
+    Sourcing:                    /opt/mapr/oozie/oozie-4.3.0/conf/oozie-env.sh
+      setting CATALINA_OPTS="$CATALINA_OPTS -Xmx1024m"
+      setting OOZIE_HTTPS_PORT=11443
+      setting OOZIE_HTTPS_KEYSTORE_FILE=/opt/mapr/conf/ssl_keystore
+      setting OOZIE_HTTPS_KEYSTORE_PASS=mapr123
+    Setting OOZIE_CONFIG_FILE:   oozie-site.xml
+    Setting OOZIE_DATA:          /opt/mapr/oozie/oozie-4.3.0/data
+    Setting OOZIE_LOG:           /opt/mapr/oozie/oozie-4.3.0/logs
+    Setting OOZIE_LOG4J_FILE:    oozie-log4j.properties
+    Setting OOZIE_LOG4J_RELOAD:  10
+    Setting OOZIE_HTTP_HOSTNAME: lxvdatlkdarg02
+    Setting OOZIE_HTTP_PORT:     11000
+    Setting OOZIE_ADMIN_PORT:     11001
+    Using   OOZIE_HTTPS_PORT:     11443
+    Setting OOZIE_BASE_URL:      http://lxvdatlkdarg02:11000/oozie
+    Setting CATALINA_BASE:       /opt/mapr/oozie/oozie-4.3.0/oozie-server
+    Using   OOZIE_HTTPS_KEYSTORE_FILE:     /opt/mapr/conf/ssl_keystore
+    Using   OOZIE_HTTPS_KEYSTORE_PASS:     mapr123
+    Setting OOZIE_INSTANCE_ID:       lxvdatlkdarg02
+    Setting CATALINA_OUT:        /opt/mapr/oozie/oozie-4.3.0/logs/catalina.out
+    Setting CATALINA_PID:        /opt/mapr/oozie/oozie-4.3.0/oozie-server/temp/oozie.pid
+    MapR: Adding /opt/mapr/bin to PATH
+
+
+### Links
+https://www.ibm.com/support/knowledgecenter/en/SSPT3X_4.1.0/com.ibm.swg.im.infosphere.biginsights.admin.doc/doc/admin_ssl_oozie.html
+
+[Enabling the Oozie Web UI](https://maprdocs.mapr.com/51/Oozie/ManageOozieServicesandInt_30377526-d3e208.html)
+
+[Configuring Oozie on a Secure Cluster](https://maprdocs.mapr.com/60/Oozie/ConfiguringOozieonaSecureCluster.html)
+
+Need sudo to perform yum install
+
+    mapr-oozie --> SERVER will install mapr-oozie and mapr-oozie-internal
+
+If only CLIENT, then install mapr-oozie-internal only
+
+Once completed, 
+
+### Enabling Ooozie Web UI in secure cluster (Run as SUDO)
+
+- Copy ext-2.2.zip into /opt/mapr/oozie/oozie-<version>/libext
+- chown owner to mapr
+- Configure.sh -R   (This is to make sure Oozie service appears in warden)
+
+
+If configure.sh -R already run, then stop oozie SERVER 
+
+maprcli node services -name oozie -action stop -nodes <space delimited list of nodes>
+- Copy the ext-2.2.zip to all server.  In theory, only SERVER will also work because UI only runs in SERVER
+
+## Secure Cluster
+
+- Shutdown oozie IF ALREADY STARTED: maprcli node services -name oozie -action stop -nodes <space delimited list of nodes>
+
+By running sudo, it will change oozie folder owner to mapr:mapr even is executing as sudo root
+- # sudo /opt/mapr/oozie/oozie-4.3.0/bin/oozie-setup.sh -hadoop 2.7.0 /opt/mapr/hadoop/hadoop-2.7.0 -secure
+  
+- (Not necessary) Start oozie: maprcli node services -name oozie -action start -nodes <space delimited list of nodes>
+
+- (Not necessary) Restart Oozie. After the restart, Oozie listens on port 11443 instead of 11000. Change the value of the OOZIE_URL environment variable by running the following command:
+  $ export OOZIE_URL="https://<fqdn>:11443/oozie"  <--- This is not neccessarily needed.
+
+- Modify /opt/mapr/conf/mapr.login.conf
+
+MAPR_WEBSERVER_KERBEROS {
+      com.sun.security.auth.module.Krb5LoginModule required
+      refreshKrb5Config=true
+      doNotPrompt=true
+      useKeyTab=true
+      storeKey=true
+      isInitiator=false
+      keyTab="/opt/mapr/conf/mapr.keytab"
+      principal="HTTP/rh-11.example.com";
+};
+Modify it to remove the "principal" line and add semi colon to the current last line. 
+
+MAPR_WEBSERVER_KERBEROS {
+      com.sun.security.auth.module.Krb5LoginModule required
+      refreshKrb5Config=true
+      doNotPrompt=true
+      useKeyTab=true
+      storeKey=true
+      isInitiator=false
+      keyTab="/opt/mapr/conf/mapr.keytab";
+  };
+
+- Restart the affected service(RM/Oozie/JT etc..). For example: 
+# maprcli node services -name oozie -action restart -nodes 10.32.49.11 10.32.49.12
+
+
+## Non-secure cluster
+
+/opt/mapr/oozie/oozie-<version>/bin/oozie-setup.sh -hadoop <version> /opt/mapr/hadoop/hadoop-<version>
+
+maprcli node services -name oozie -action start -nodes <space delimited list of nodes>
+
+
+
+
+  

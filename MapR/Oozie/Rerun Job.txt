@@ -1,0 +1,9 @@
+Rerun Job
+
+oozie job -rerun 0000042-18001239023922003-oozie-mapr-W -D oozie.wf.rerun.failnodes=true 
+-oozie="https
+
+oozie job -info
+
+
+/opt/mapr/oozie/oozie-4.3.0/bin/oozie job -oozie="https://lxvdatlkdarg01:11443/oozie" -rerun 0000047-180125011551149-oozie-mapr-W -D oozie.wf.rerun.failnodes=true

@@ -1,0 +1,17 @@
+ drill.exec: {
+    cluster-id: "",
+    zk.connect: "",
+    impersonation: {
+      enabled: true,
+      max_chained_user_hops: 3
+    },
+    security: {          
+            auth.mechanisms : ["MAPRSASL", "PLAIN"],
+             },
+    security.user.auth: {
+            enabled: true,
+            packages += "org.apache.drill.exec.rpc.user.security",
+            impl: "pam4j",
+            pam_profiles: [ "sudo", "login" ]
+     }
+   }

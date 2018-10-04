@@ -1,0 +1,153 @@
+Hive shell MR
+=============
+hive -hiveconf hive.execution.engine=mr -e "my sql"
+
+Hive ADMIN Roles
+==========================
+sudo su --> Change to root user access
+maprlogin password -user mapr
+grant admin role to user <users>
+
+Login to <users>
+hive> set ADMIN role;
+
+
+Hive ACcess Exception
+==========================
+show role grant user jtamilselwan;
+
+grant all on table table_name to role os_user_name with grant option
+
+Beeline Access
+==============
+
+$ hive --service beeline OR $ beeline
+beeline> !connect jdbc:hive2://10.32.49.12:10000
+
+
+Hive JDBC
+=============
+Need hive mapr jdbc standalone jar from /opt/mapr/hive/hive-2.1/jdbc
+Mapr hadoop-common jar /opt/mapr/hadoop/hadoop-2.7.0/lib
+
+-----------------------------------------------------------------------------------------------------------------
+IMPORTANT: Hive Authorization
+https://community.mapr.com/docs/DOC-1278
+https://community.mapr.com/thread/8454
+http://doc.mapr.com/display/MapR/Configure+Hive+Metastore+to+Use+Storage-Based+Authorization
+
+    grant all on table <tablename> to role <role = public>
+
+IMPORTANT:  In order to allow mapr (superuser) to impersonate anyone, the following have to be 
+
+Set the following properties in the /opt/mapr/hive/<version>/conf/hive-site.xml file on the nodes where HiveServer2 is installed:
+<property>
+  <name>hive.server2.enable.doAs</name>
+  <value>true</value>
+  <description>Set this property to enable impersonation in Hive Server 2</description>
+</property>
+<property>
+  <name>hive.metastore.execute.setugi</name>
+  <value>true</value>
+  <description>Set this property to enable Hive Metastore service impersonation in unsecure mode. In unsecure mode, setting this property to true will cause the metastore to execute DFS operations using the client's reported user and group permissions. Note that this property must be set on both the client and server sides. If the client sets it to true and the server sets it to false, the client setting will be ignored.</description>
+</property>
+
+THE SETUP BELOW NEEDS TO BE IN RESOURCE MANAGER NODE
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Set the following properties in the /opt/mapr/hadoop/hadoop-<version>/etc/hadoop/core-site.xml file: 
+    <property>
+      <name>hadoop.proxyuser.mapr.groups</name>
+      <value>*</value>
+      <description>Allow the superuser mapr to impersonate any member of any group</description>
+    </property>
+    <property>
+      <name>hadoop.proxyuser.mapr.hosts</name>
+      <value>*</value>
+      <description>The superuser can connect from any host to impersonate a user</description>
+    </property>
+
+Create a file at $MAPR_HOME/conf/proxy/<username> for each user to impersonate.
+For example, to enable HiveServer2 to submit jobs to the MapR cluster as the user juser, run the following command as root on each node where HiveServer 2 is installed:
+# mkdir $MAPR_HOME/conf/proxy
+# chmod 755 $MAPR_HOME/conf/proxy
+# touch $MAPR_HOME/conf/proxy/juser
+
+https://maprdocs.mapr.com/51/Hive/InstallingHiveManually.html
+https://maprdocs.mapr.com/52/AdvancedInstallation/InstallingHive.html
+https://maprdocs.mapr.com/51/Hive/HiveUserImpersonation.html
+https://community.mapr.com/thread/21756-hivemeta-service-down
+https://mapr.com/blog/setting-hiveserver2-authentication-using-pam-2/    (Beeline)
+https://maprdocs.mapr.com/52/Hive/2.1-NewFeatures.html
+
+Mapr does not suppport : https://maprdocs.mapr.com/52/Hive/HiveandTez.html#concept_gsg_5tp_cz
+
+-----------------------------------------------------------------------------------------------------------------
+
+Configure TEZ engine
+=======================
+https://maprdocs.mapr.com/52/Hive/HiveandTez-Config.html
+
+maprcli node services -name hivemeta -action start -nodes <space delimited list of nodes>
+maprcli node services -name hs2 -action start -nodes <space delimited list of nodes>
+
+-----------------------------------------------------------------------------------------------------------------
+Installation
+================
+
+-  install mapr-hive, mapr-hiveserver2, mapr-hivemetastore
+-  set HIVE_HOME and HCAT_HOME and PATH in /etc/profile.d/tedp-env.sh
+-  configuration :
+      Configure hive-site.xml
+      Configure hplsql-site.xml
+      ln -s /opt/mapr/hive/hive-2.1/bin/hplsql /usr/bin/hplsql
+-  sudo /opt/mapr/server/configure.sh -R
+-  sudo service  mapr-warden restart
+
+IMPORTANT: Each user needs a DFS /user/<userid>/hive/logs
+The user directory has to be exists, otherwise, hive shell will failed
+Each user needs to have writes access into /user/hive/warehouse/
+
+https://maprdocs.mapr.com/52/Hive/Config-MySQLForHiveMetastore.html
+https://maprdocs.mapr.com/51/Hive/HiveUserImpersonation-ToE_29655350-d3e79.html
+
+HiveServer2 High Availability
+https://maprdocs.mapr.com/60/Hive/HighAvailability-HiveServer2-Example.html
+
+-----------------------------------------------------------------------------------------------------------------
+## Start Hive shell with debugging mode
+    
+    hive -hiveconf hive.root.logger=DEBUG,console
+    
+-----------------------------------------------------------------------------------------------------------------
+## Error for user running hive
+    
+    Users that runs command line hive needs to have user directory in DFS /user/<userid> 
+
+    Exception in thread "main" java.lang.RuntimeException: org.apache.hadoop.security.AccessControlException: User jlim(user id 2042807228)  has been denied access to create hive
+        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:591)
+        at org.apache.hadoop.hive.ql.session.SessionState.beginStart(SessionState.java:531)
+        at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:720)
+        at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:652)
+        at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:647)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+        at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+Caused by: org.apache.hadoop.security.AccessControlException: User jlim(user id 2042807228)  has been denied access to create hive
+        at com.mapr.fs.MapRFileSystem.makeDir(MapRFileSystem.java:1313)
+        at com.mapr.fs.MapRFileSystem.mkdirs(MapRFileSystem.java:1330)
+        at org.apache.hadoop.hive.ql.exec.Utilities.createDirsWithPermission(Utilities.java:3245)
+        at org.apache.hadoop.hive.ql.session.SessionState.createRootHDFSDir(SessionState.java:693)
+        at org.apache.hadoop.hive.ql.session.SessionState.createSessionDirs(SessionState.java:635)
+        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:563)
+        
+        
+-----------------------------------------------------------------------------------------------------------------
+        
+The metastore does not add any scale. The only thing it actually does is prevents your hive client from neededing to talk directly to 
+the database where you meta information is. So basically it hides the password from people you do not need your dbhost/port/pass in 
+hive-site.xml only your metastore host port (and the metastore has the database password).
+
+I never run the metastore server. It is waste of memory and basically one more thing to break.        

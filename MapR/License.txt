@@ -1,0 +1,20 @@
+Get clustername
+
+# Original "name": "cluster-name",
+# cut delimiter ":" and take field (2) = "cluser-name",
+# sed to replace quotes(") and commas (,) to empty string
+maprcli dashboard info -json | grep name | cut -d":" -f2 | sed -e 's/"//g' -e 's/,//g'
+maprcli license showid | tail -1
+
+
+https://mapr-installer-dialhome.appspot.com/lic?license_type=m5trial&user_id=55144&cluster_id=<cluster_id>&cluster_name=<cluster_name>
+
+wget --no-check-certificate -O license.json "https://mapr-installer-dialhome.appspot.com/lic?license_type=m5trial&user_id=55144&cluster_id=1152317376849297434&cluster_name=mapr-cluster" 
+
+
+wget --no-check-certificate \
+-O license.json \
+"https://mapr-installer-dialhome.appspot.com/lic?license_type=m5trial&user_id=55144&cluster_id=7302539039992181994&cluster_name=mapr-cluster" 
+
+
+cat license.json | sed -e 's|\\r||g' -e 's|\\"|"|g' -e 's|\\n|\n|g' -e 's|^*-----BEGIN SIGNED|-----BEGIN SIGNED|' -e 's|-----END SIGNATURE-----.*|-----END SIGNATURE-----\n|g' > license.lic

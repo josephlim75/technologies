@@ -1,0 +1,6 @@
+https://maprdocs.mapr.com/60/Sqoop/Sqoop.html
+
+mapr-sqoop - just command line
+
+mapr-sqoop2-server -- will install server and client
+mapr-sqoop2-client -- will install client that does not require hadoop

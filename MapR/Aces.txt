@@ -1,0 +1,51 @@
+The path is MaprFS path
+
+Clear ACES
+=============
+hadoop mfs -delace -R <DFS fullpath>
+
+hadoop mfs -getace -R /user/hive
+
+ 
+sudo hadoop mfs -setace -R -aces "rf:g:datalake_qa_app_devs|g:datalake_qa_services,wf:g:datalake_qa_app_devs|g:datalake_qa_services,ef:g:datalake_qa_app_devs|g:datalake_qa_services,ld:g:datalake_qa_app_devs|g:datalake_qa_services,rd:g:datalake_qa_app_devs|g:datalake_qa_services,dc:g:datalake_qa_app_devs|g:datalake_qa_services,ac:g:datalake_qa_app_devs|g:datalake_qa_services" /tsys
+
+hadoop mfs -setace -R \
+  -readfile 'u:mapr' \
+  -writefile 'u:mapr' \
+  -executefile 'u:mapr' \
+  -lookupdir 'u:mapr' \
+  -addchild 'u:mapr' \
+  -deletechild 'u:mapr' /data/userdata
+
+  
+  
+hadoop mfs -setace -R \
+  -readfile 'g:datalake_qa_services|u:tedp' \
+  -writefile 'g:datalake_qa_services|u:tedp' \
+  -executefile 'g:datalake_qa_services|u:tedp' \
+  -lookupdir 'g:datalake_qa_services|u:tedp' \
+  -addchild 'g:datalake_qa_services|u:tedp' \
+  -deletechild 'g:datalake_qa_services|u:tedp' /tsys/product/tdap/databases
+  
+
+hadoop mfs -setace -R \
+  -readfile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
+  -writefile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
+  -executefile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
+  -lookupdir 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
+  -addchild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
+  -deletechild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' /user/hive
+
+  
+hadoop mfs -setace -readfile 'u:mapr|u:cmatta' /data/users.view.drill
+
+https://community.mapr.com/docs/DOC-1544
+=============================================
+
+hadoop mfs -delace -R /user/hive
+hadoop mfs -setace -R -aces "rf:g:1015,,wf:g:1015,ef:g:1015,ld:g:1015,rd:g:1015,dc:g:1015,ac:g:1015" /tsys/landing
+
+hadoop mfs -setace -R -aces "rf:g:datalake_qa_app_devs,wf:g:datalake_qa_app_devs,ef:g:datalake_qa_app_devs,ld:g:datalake_qa_app_devs,rd:g:datalake_qa_app_devs,dc:g:datalake_qa_app_devs,ac:g:datalake_qa_app_devs" /user/hive
+hadoop mfs -setace -R -aces "rf:g:datalake_qa_services,wf:g:datalake_qa_services,ef:g:datalake_qa_services,ld:g:datalake_qa_services,rd:g:datalake_qa_services,dc:g:datalake_qa_services,ac:g:datalake_qa_services" /user/hive
+hadoop mfs -setace -R -aces "rf:u:sqoop,wf:u:sqoop,ef:u:sqoop,ld:u:sqoop,rd:u:sqoop,dc:u:sqoop,ac:u:sqoop" /user/hive
+hadoop mfs -setace -R -aces "rf:u:flink,wf:u:flink,ef:u:flink,ld:u:flink,rd:u:flink,dc:u:flink,ac:u:flink" /user/spingale/streams/demo

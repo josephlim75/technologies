@@ -1,0 +1,17 @@
+sudo /opt/mapr/server/mrconfig sp list -v
+  ListSPs resp: status 0:1
+  No. of SPs (1), totalsize 296358 MB, totalfree 290885 MB
+  SP 0: name SP1, Online, size 296358 MB, free 290885 MB, path /dev/sdf, 
+
+
+
+  sudo /opt/mapr/server/fsck -d -r -m 4096 -n SP1
+  sudo /opt/mapr/server/mrconfig sp refresh                --> This will bring the disk ONLINE
+
+if not ONLINE, try forcing it 
+  sudo /opt/mapr/server/mrconfig sp online /dev/sdc
+
+
+Take pool disk offline
+======================
+/opt/mapr/server/mrconfig sp offline /dev/sdc

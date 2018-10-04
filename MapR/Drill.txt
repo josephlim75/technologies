@@ -1,0 +1,19 @@
+Storage Plugin HBase
+======================
+{
+   "type": "hbase",
+   "config": {
+      "hbase.zookeeper.quorum": "localhost",
+      "hbase.zookeeper.property.clientPort": "2181"
+    },
+    "size.calculator.enabled": false,
+    "enabled": false
+}
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+sqlline -u jdbc:drill:zk=10.32.48.134:5181,10.32.48.135:5181
+sqlline -u jdbc:drill:zk=10.32.49.11:5181
+
+SELECT * FROM cp.`employee.json` LIMIT 20;

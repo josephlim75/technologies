@@ -1,0 +1,25 @@
+- Disk Distribution --> Why not even
+- Disk and Role Balancer.  Should i enabled ?
+- Does CLDB node take on data as well ?
+- SWAP disk
+- PAM mapr-admin, 
+- How to setup non mapr user as admin
+- Network heartbeat are slow
+- Api server invalid username and password
+- SQoop username ambiguity
+- Volume replication is low
+- CorePresents ADCLIENT
+- Api server error log 
+    2018-03-05 08:50:59,669 ERROR AclCommands
+    2018-03-05 08:50:59,669 ERROR AclCommands
+    2018-03-05 08:50:59,952 ERROR ServerCommands Formatting information about 558531543463992228
+    2018-03-05 08:50:59,952 ERROR ServerCommands Formatting information about 558531543463992228
+    2018-03-05 08:51:26,078 ERROR CLIBaseClass Invalid parameters: [filter, columns]
+    2018-03-05 08:51:26,084 ERROR ServerCommands Formatting information about 0
+    2018-03-05 08:53:08,252 INFO  RequestFilter POST /login
+    2018-03-05 08:53:08,433 ERROR PamAuthenticationProvider PAM auth failed for user jlim
+    2018-03-05 08:53:08,435 INFO  GlobalExceptionMapper POST /login: AuthenticationServiceException: PAM auth failed for user jlim
+    2018-03-05 08:53:08,450 INFO  session Session node0txllk8nlbr071vo4yyy3apdo233 already being invalidated
+    2018-03-05 08:53:13,146 INFO  RequestFilter GET /
+    
+    

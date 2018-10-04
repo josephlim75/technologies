@@ -1,0 +1,23 @@
+https://mapr.com/blog/getting-started-sample-programs-mapr-streams/
+https://community.mapr.com/community/exchange/blog/2017/02/15/mapr-streams-cli-tutorial#jive_content_id_Security_in_Streams
+
+Run the following command, as mapr user, on your MapR cluster:
+
+$ maprcli stream create -path  /user/jlim/test -produceperm p -consumeperm p -topicperm p
+
+$ maprcli stream create -path /sample-stream
+By default, the produce and consume topic permissions are defaulted to the creator of the streams—the unix user you are using to run the maprcli command. It is possible to configure the permission by editing the streams. For example, to make all of the topics available to anybody (public permission), you can run the following command:
+
+$ maprcli stream edit -path /sample-stream -produceperm p -consumeperm p -topicperm p
+Step 2: Create the topics
+We need two topics for the example program, which we can be created using maprcli:
+
+$ maprcli stream topic create -path /sample-stream  -topic fast-messages
+
+$ maprcli stream topic create -path /sample-stream  -topic summary-markers
+These topics can be listed using the following command:
+
+$ maprcli stream topic list -path /sample-stream
+topic            partitions  logicalsize  consumers  maxlag  physicalsize
+fast-messages    1           0            0          0       0
+summary-markers  1           0            0          0       0

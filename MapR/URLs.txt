@@ -1,0 +1,2 @@
+https://<server>:19890/             (JobHistory Servers)
+https://10.32.48.147:8090/cluster   (Resource Manager)

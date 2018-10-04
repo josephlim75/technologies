@@ -1,0 +1,14 @@
+gid=1535138087(mapr) groups=1535138087(mapr),1535179008(datalake_qa_devops),
+1535179012(datalake_qa_services),1535179009(datalake_qa_sysadmins),5000(mapr),6003(shadow)
+
+
+sudo service mapr-warden stop; sudo service mapr-zookeeper stop
+
+export MAPR_USER=mapr
+
+sudo /opt/mapr/server/config-mapr-user.sh -u $MAPR_USER
+
+sudo service mapr-zookeeper start; sudo service mapr-warden start
+
+
+https://10.32.48.134:8443

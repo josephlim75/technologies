@@ -1,0 +1,4 @@
+ADD JAR /mnt/hgfs/hostshared/CobolSerde.jar;
+USE ta_demo;
+select * from tatrxn;
+

@@ -1,0 +1,28 @@
+1. maprcli config load -json | grep cldb.mapr.user.uid
+   maprcli config load -json | grep cldb.mapr.user.gid
+2. /opt/mapr/conf/daemon.conf from both nodes
+3. "id mapr" on both nodes
+Like • Show 0 Likes0  Actions 
+
+
+RUN yum -y install java-1.8.0-openjdk-devel \
+    mapr-cldb \
+    mapr-core \
+    mapr-fileserver \
+    mapr-gateway \
+    mapr-hbase \
+    mapr-hbasethrift \
+    mapr-hbase-master \
+    mapr-hbase-regionserver \
+    mapr-hbase-rest \
+    mapr-historyserver \
+    mapr-hive \
+    mapr-hiveserver2 \
+    mapr-httpfs \
+    mapr-kafka \
+    mapr-nodemanager \
+    mapr-resourcemanager \
+    mapr-spark \
+    mapr-webserver \
+    mapr-zookeeper \
+    mysql-server

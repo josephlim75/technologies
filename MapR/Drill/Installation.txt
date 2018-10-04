@@ -1,0 +1,18 @@
+# MapRFS / DFS must have write access to /user/mapr/drill
+
+# mapruserticket, ssl_truststore, mapr.login.conf must exists in /opt/mapr/conf
+
+
+ https://drill.apache.org/docs/configuring-web-ui-and-rest-api-security/>
+> > > > > >
+> > > > > > I didn't set the http settings you list in drill-override.conf,
+> > > > instead i
+> > > > > > added this to drill-env.sh
+> > > > > > export DRILL_JAVA_OPTS="$DRILL_JAVA_OPTS
+> > > > > > -Ddrill.exec.http.ssl_enabled=true"
+> > > > > >
+> > > > > > Also make sure to add some admin users and groups.
+> > > > > > 1. alter system set `security.admin.users`='admin1,admin2,...';
+> > > > > > 2. alter system set `security.admin.user_groups`='mapr, datalake_qa_devops, datalake_qa_services, datalake_qa_sysadmins,datalake_qa_app_devs';
+> and
+> > > add
