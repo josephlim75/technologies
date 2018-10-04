@@ -1,0 +1,6 @@
+- name: create password file in secure location
+  blockinfile:
+    block: "{{item}}"
+    create: yes
+    dest: /mapr/{{mapr_cluster_name}}/apps/secrets/.passwd
+  no_log: True

@@ -1,0 +1,14 @@
+When gathering facts hang, most probably is the filesystem is unable to list
+
+ls /  --> Face hanging here
+
+Ansible cannot quickly gather facts
+
+The setup module (when run automatically at the beginning of an ansible-playbook run, or when run manually as 
+ansible -m setup <host>) can often hang when gathering hardware facts (e.g. if getting disk information from hosts with high i/o, bad mount entries, etc.).
+
+Solution: try running 
+
+$ ansible -m setup -a gather_subset=!all <destination>. If this works, you should consider setting this line in your ansible.cfg:
+
+gather_subset=!hardware

@@ -1,0 +1,32 @@
+
+
+playbook/abc.yml
+
+  host1
+  --tags 
+      - install
+      - configure
+  --role --> role1.yml
+      
+  host2
+  --tags 
+      - install
+      - configure      
+  --role --> role2.yml
+  
+  
+  
+role2.yml
+task1 -- tag install
+task2 -- tag configure
+
+
+
+EXECUTE: ansible --tags configure   
+
+If playbook do not have TAGS, then none of the task will be execute, 
+if the playbook is calling a role, and the role has a tag, then the TAGS will
+be transferred into the roles
+
+IMPORTANT: All tags will passed into roles in playbook.  Even playbook tag does not match, doesn't mean the task will not execute
+because the tags will be passed into the role of the task

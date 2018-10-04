@@ -1,0 +1,6 @@
+You have to store the content as a fact:
+https://stackoverflow.com/questions/36059804/ansible-store-commands-stdout-in-new-variable
+
+- set_fact:
+    string_to_echo: "{{ command_output.stdout }}"
+shareeditflag

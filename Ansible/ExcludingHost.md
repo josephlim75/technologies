@@ -1,0 +1,1 @@
+  ansible-playbook --limit 'all:!bad_host' playbook.yml

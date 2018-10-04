@@ -1,0 +1,727 @@
+- debug:
+    msg: "{{hostvars[item]}}"
+  with_items:
+    - "{{ groups['nodemanager'] }}"
+  when: inventory_hostname == groups['nodemanager'][0]
+  
+- debug:
+    msg: "{{ groups['nodemanager'] | map('extract', hostvars, ['ansible_hostname']) | join(' ') }}"
+    msg: "{{ groups['nodemanager'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(' ') }}"
+  when: inventory_hostname == groups['nodemanager'][0]
+  
+  
+----------------------------------------- DATA ---------------------------------------------------------------------  
+    "docker_tls_ca_pass": "tedpuser",
+        "docker_tls_ca_user": "docker_tls_ca",
+        "docker_tls_cert_basepath": "/etc/docker",
+        "docker_tls_cert_path": "/etc/docker/cert",
+        "docker_tls_expiration": 3650,
+        "docker_tls_subject": "/C=US/ST=GA/L=COLUMBUS/O=TSYS/OU=DATALAKE",
+        "docker_user": "docker",
+        "docker_version": "",
+        "docker_volume_name": "vg_docker",
+        "drill_pass": "6RZy49zN",
+        "drill_user": "drill",
+        "flink_pass": "D@t@lak3!",
+        "flink_user": "flink",
+        "group_names": [
+            "cluster",
+            "data",
+            "dev",
+            "docker-cluster",
+            "docker-swarm-worker",
+            "hive",
+            "hiveserver2",
+            "nfs",
+            "node5",
+            "nodemanager",
+            "oozie-client",
+            "sqoop1",
+            "sqoop2client"
+        ],
+        "groups": {
+            "all": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06",
+                "lxvdatlkdmprn02"
+            ],
+            "cldb": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02"
+            ],
+            "clush": [
+                "lxvdatlkdmprn01"
+            ],
+            "cluster": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02",
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "data": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "dev": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02",
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "docker-cluster": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02",
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "docker-swarm-manager": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02"
+            ],
+            "docker-swarm-worker": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "historyserver": [
+                "lxvdatlkdmprn01"
+            ],
+            "hive": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "hivemetastore": [
+                "lxvdatlkdmprn06"
+            ],
+            "hiveserver2": [
+                "lxvdatlkdmprn05"
+            ],
+            "mysql": [],
+            "nfs": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02",
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "node1": [
+                "lxvdatlkdmprn01"
+            ],
+            "node2": [
+                "lxvdatlkdmprn02"
+            ],
+            "node3": [
+                "lxvdatlkdmprn03"
+            ],
+            "node4": [
+                "lxvdatlkdmprn04"
+            ],
+            "node5": [
+                "lxvdatlkdmprn05"
+            ],
+            "node6": [
+                "lxvdatlkdmprn06"
+            ],
+            "nodemanager": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "oozie-client": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "oozie-server": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02"
+            ],
+            "resourcemanager": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02"
+            ],
+            "sqoop1": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "sqoop2client": [
+                "lxvdatlkdmprn03",
+                "lxvdatlkdmprn04",
+                "lxvdatlkdmprn05",
+                "lxvdatlkdmprn06"
+            ],
+            "sqoop2server": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02"
+            ],
+            "ungrouped": [],
+            "webserver": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02"
+            ],
+            "zookeeper": [
+                "lxvdatlkdmprn01",
+                "lxvdatlkdmprn02",
+                "lxvdatlkdmprn03"
+            ]
+        },
+        "hive_pass": "6RZy49zN",
+        "hive_user": "hive",
+        "hivesitecfg": {
+            "changed": false,
+            "skip_reason": "Conditional result was False",
+            "skipped": true
+        },
+        "host_domain": "tsysdev.net",
+        "host_nodemanager": {
+            "changed": false,
+            "msg": "All items completed",
+            "results": [
+                {
+                    "_ansible_item_result": true,
+                    "_ansible_no_log": false,
+                    "changed": false,
+                    "item": "lxvdatlkdmprn03",
+                    "skip_reason": "Conditional result was False",
+                    "skipped": true
+                },
+                {
+                    "_ansible_item_result": true,
+                    "_ansible_no_log": false,
+                    "changed": false,
+                    "item": "lxvdatlkdmprn04",
+                    "skip_reason": "Conditional result was False",
+                    "skipped": true
+                },
+                {
+                    "_ansible_item_result": true,
+                    "_ansible_no_log": false,
+                    "changed": false,
+                    "item": "lxvdatlkdmprn05",
+                    "skip_reason": "Conditional result was False",
+                    "skipped": true
+                },
+                {
+                    "_ansible_item_result": true,
+                    "_ansible_no_log": false,
+                    "changed": false,
+                    "item": "lxvdatlkdmprn06",
+                    "skip_reason": "Conditional result was False",
+                    "skipped": true
+                }
+            ]
+        },
+        "inventory_dir": "/home/jenkins/workspace/tedp-devops/provisioning/edp-ansible/inventory/dev",
+        "inventory_file": null,
+        "inventory_hostname": "lxvdatlkdmprn05",
+        "inventory_hostname_short": "lxvdatlkdmprn05",
+        "java_build": "",
+        "java_version": "1.8.0",
+        "jenkins_pass": "6RZy49zN",
+        "jenkins_user": "jenkins",
+        "mapr_cluster_name": "mapr-cluster",
+        "mapr_device": "/dev/sdc",
+        "mapr_disk_size": "100%FREE",
+        "mapr_disks": [
+            "/dev/sdd",
+            "/dev/sde",
+            "/dev/sdf"
+        ],
+        "mapr_eco_version": "4.0.0",
+        "mapr_ee_repo": "http://10.32.48.173/packages/mapr",
+        "mapr_gid": "1535138087",
+        "mapr_hadoop_version": "2.7.0",
+        "mapr_hive": {
+            "admin_role_users": "hive,admin",
+            "hiveserver2_ha": false,
+            "hiveserver2_host": "10.32.48.136",
+            "impersonate_target_hosts": "*",
+            "impersonate_target_users": "*",
+            "metastore_db": "metastore",
+            "metastore_host": "10.32.48.137",
+            "metastore_port": 3306,
+            "metastore_usr": "hive",
+            "proxy_usr": "mapr",
+            "version": 2.1
+        },
+        "mapr_home": "/opt/mapr",
+        "mapr_oozie_version": "4.3.0",
+        "mapr_pass": "6RZy49zN",
+        "mapr_secure": "yes",
+        "mapr_subnets": "10.32.0.0/16",
+        "mapr_uid": "1535138087",
+        "mapr_user": "mapr",
+        "mapr_version": "6.0.0",
+        "mapr_vm_swappiness": 10,
+        "mapr_volume_name": "vg_mapr",
+        "mariadb_admin_pass": "mapr",
+        "mariadb_admin_user": "admin",
+        "mariadb_hive_pass": "mapr",
+        "mariadb_hive_user": "hive",
+        "mariadb_root_pass": "tedpuser",
+        "mariadb_root_user": "root",
+        "module_setup": true,
+        "nexus_pass": "datalakeuser",
+        "nexus_url": "http://artifactrepo.qa.tpp.tsysecom.com:8081/nexus/content/repositories/datalakelibraries",
+        "nexus_user": "nexus",
+        "omit": "__omit_place_holder__6bf213ed492cdb9227eecb7114d6607873e68d4d",
+        "packages": "yarn",
+        "playbook_dir": "/home/jenkins/workspace/tedp-devops/provisioning/edp-ansible/playbooks",
+        "proxy_env": [
+            {
+                "dummy": "no-proxy"
+            }
+        ],
+        "sqdata_pass": "Temp123$",
+        "sqdata_private_key": "-----BEGIN NACL PRIVATE KEY-----\n3UnVF5l1KgQj/lLv4WbmlmsgLngvu6EgS6fOWzr8tU8=\n-----END NACL PRIVATE KEY-----  \n",
+        "sqdata_public_key": "MSeKRreMKm1SLWhW/x+pd9fP5/zqOgXY5D7E7Yvc4zw= sqdata@3db628794f9f",
+        "sqdata_user": "sqdata",
+        "tedp_pass": "6RZy49zN",
+        "tedp_schemaregistry": {
+            "url": "http://10.32.48.107:8081"
+        },
+        "tedp_user": "tedp"
+    }
+}
+ok: [lxvdatlkdmprn03] => (item=lxvdatlkdmprn06) => {
+    "item": "lxvdatlkdmprn06",
+    "msg": {
+        "ansible_all_ipv4_addresses": [
+            "10.32.48.137",
+            "172.17.0.1",
+            "172.18.0.1"
+        ],
+        "ansible_all_ipv6_addresses": [
+            "fe80::38ef:c6ff:fe83:9b86",
+            "fe80::30b3:69ff:fee7:74d0",
+            "fe80::64a0:c9ff:fe7e:1eef",
+            "fe80::250:56ff:fe84:1b89",
+            "fe80::5c84:91ff:fec4:f0af",
+            "fe80::42:dfff:feef:1167",
+            "fe80::42:6aff:fe37:5e50"
+        ],
+        "ansible_apparmor": {
+            "status": "disabled"
+        },
+        "ansible_architecture": "x86_64",
+        "ansible_bios_date": "10/22/2013",
+        "ansible_bios_version": "6.00",
+        "ansible_check_mode": false,
+        "ansible_cmdline": {
+            "BOOT_IMAGE": "/vmlinuz-3.10.0-327.el7.x86_64",
+            "LANG": "en_US.UTF-8",
+            "biosdevname": "0",
+            "crashkernel": "auto",
+            "net.ifnames": "0",
+            "quiet": true,
+            "rd.lvm.lv": "vg_sys/lv_usr",
+            "rd.shell": "0",
+            "rhgb": true,
+            "ro": true,
+            "root": "/dev/mapper/vg_sys-lv_root"
+        },
+        "ansible_date_time": {
+            "date": "2018-01-29",
+            "day": "29",
+            "epoch": "1517267817",
+            "hour": "18",
+            "iso8601": "2018-01-29T23:16:57Z",
+            "iso8601_basic": "20180129T181657727996",
+            "iso8601_basic_short": "20180129T181657",
+            "iso8601_micro": "2018-01-29T23:16:57.728167Z",
+            "minute": "16",
+            "month": "01",
+            "second": "57",
+            "time": "18:16:57",
+            "tz": "EST",
+            "tz_offset": "-0500",
+            "weekday": "Monday",
+            "weekday_number": "1",
+            "weeknumber": "05",
+            "year": "2018"
+        },
+        "ansible_default_ipv4": {
+            "address": "10.32.48.137",
+            "alias": "eth0",
+            "broadcast": "10.32.51.255",
+            "gateway": "10.32.48.1",
+            "interface": "eth0",
+            "macaddress": "00:50:56:84:1b:89",
+            "mtu": 1500,
+            "netmask": "255.255.252.0",
+            "network": "10.32.48.0",
+            "type": "ether"
+        },
+        "ansible_default_ipv6": {},
+        "ansible_devices": {
+            "sda": {
+                "holders": [],
+                "host": "Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS1068 PCI-X Fusion-MPT SAS (rev 01)",
+                "model": "Virtual disk",
+                "partitions": {
+                    "sda1": {
+                        "holders": [],
+                        "sectors": "1024000",
+                        "sectorsize": 512,
+                        "size": "500.00 MB",
+                        "start": "2048",
+                        "uuid": "e06d0031-f294-4df9-a544-121895191c41"
+                    },
+                    "sda2": {
+                        "holders": [
+                            "vg_sys-lv_root",
+                            "vg_sys-lv_swap",
+                            "vg_sys-lv_usr",
+                            "vg_sys-lv_opt",
+                            "vg_sys-lv_tmp",
+                            "vg_sys-lv_var",
+                            "vg_sys-lv_home"
+                        ],
+                        "sectors": "103831552",
+                        "sectorsize": 512,
+                        "size": "49.51 GB",
+                        "start": "1026048",
+                        "uuid": null
+                    }
+                },
+                "removable": "0",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "deadline",
+                "sectors": "104857600",
+                "sectorsize": "512",
+                "size": "50.00 GB",
+                "support_discard": "0",
+                "vendor": "VMware"
+            },
+            "sdb": {
+                "holders": [
+                    "vg_docker-lv_thinpool_tmeta",
+                    "vg_docker-lv_thinpool_tdata"
+                ],
+                "host": "Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS1068 PCI-X Fusion-MPT SAS (rev 01)",
+                "model": "Virtual disk",
+                "partitions": {},
+                "removable": "0",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "deadline",
+                "sectors": "524288000",
+                "sectorsize": "512",
+                "size": "250.00 GB",
+                "support_discard": "0",
+                "vendor": "VMware"
+            },
+            "sdc": {
+                "holders": [
+                    "vg_mapr-lv_opt"
+                ],
+                "host": "Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS1068 PCI-X Fusion-MPT SAS (rev 01)",
+                "model": "Virtual disk",
+                "partitions": {},
+                "removable": "0",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "deadline",
+                "sectors": "419430400",
+                "sectorsize": "512",
+                "size": "200.00 GB",
+                "support_discard": "0",
+                "vendor": "VMware"
+            },
+            "sdd": {
+                "holders": [],
+                "host": "Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS1068 PCI-X Fusion-MPT SAS (rev 01)",
+                "model": "Virtual disk",
+                "partitions": {},
+                "removable": "0",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "deadline",
+                "sectors": "209715200",
+                "sectorsize": "512",
+                "size": "100.00 GB",
+                "support_discard": "0",
+                "vendor": "VMware"
+            },
+            "sde": {
+                "holders": [],
+                "host": "Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS1068 PCI-X Fusion-MPT SAS (rev 01)",
+                "model": "Virtual disk",
+                "partitions": {},
+                "removable": "0",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "deadline",
+                "sectors": "211812352",
+                "sectorsize": "512",
+                "size": "101.00 GB",
+                "support_discard": "0",
+                "vendor": "VMware"
+            },
+            "sdf": {
+                "holders": [],
+                "host": "Serial Attached SCSI controller: LSI Logic / Symbios Logic SAS1068 PCI-X Fusion-MPT SAS (rev 01)",
+                "model": "Virtual disk",
+                "partitions": {},
+                "removable": "0",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "deadline",
+                "sectors": "213909504",
+                "sectorsize": "512",
+                "size": "102.00 GB",
+                "support_discard": "0",
+                "vendor": "VMware"
+            },
+            "sr0": {
+                "holders": [],
+                "host": "IDE interface: Intel Corporation 82371AB/EB/MB PIIX4 IDE (rev 01)",
+                "model": "VMware IDE CDR10",
+                "partitions": {},
+                "removable": "1",
+                "rotational": "1",
+                "sas_address": null,
+                "sas_device_handle": null,
+                "scheduler_mode": "cfq",
+                "sectors": "2097151",
+                "sectorsize": "512",
+                "size": "1024.00 MB",
+                "support_discard": "0",
+                "vendor": "NECVMWar"
+            }
+        },
+        "ansible_distribution": "RedHat",
+        "ansible_distribution_major_version": "7",
+        "ansible_distribution_release": "Maipo",
+        "ansible_distribution_version": "7.4",
+        "ansible_dns": {
+            "nameservers": [
+                "10.32.13.15",
+                "10.32.13.16",
+                "10.32.13.20",
+                "10.32.13.21",
+                "10.32.16.11",
+                "10.32.16.12"
+            ],
+            "search": [
+                "tsysdev.net"
+            ]
+        },
+        "ansible_docker0": {
+            "active": false,
+            "device": "docker0",
+            "features": {
+                "busy_poll": "off [fixed]",
+                "fcoe_mtu": "off [fixed]",
+                "generic_receive_offload": "on",
+                "generic_segmentation_offload": "on",
+                "highdma": "on",
+                "large_receive_offload": "off [fixed]",
+                "loopback": "off [fixed]",
+                "netns_local": "on [fixed]",
+                "ntuple_filters": "off [fixed]",
+                "receive_hashing": "off [fixed]",
+                "rx_all": "off [fixed]",
+                "rx_checksumming": "off [fixed]",
+                "rx_fcs": "off [fixed]",
+                "rx_vlan_filter": "off [fixed]",
+                "rx_vlan_offload": "off [fixed]",
+                "rx_vlan_stag_filter": "off [fixed]",
+                "rx_vlan_stag_hw_parse": "off [fixed]",
+                "scatter_gather": "on",
+                "tcp_segmentation_offload": "on",
+                "tx_checksum_fcoe_crc": "off [fixed]",
+                "tx_checksum_ip_generic": "on",
+                "tx_checksum_ipv4": "off [fixed]",
+                "tx_checksum_ipv6": "off [fixed]",
+                "tx_checksum_sctp": "off [fixed]",
+                "tx_checksumming": "on",
+                "tx_fcoe_segmentation": "on",
+                "tx_gre_segmentation": "on",
+                "tx_gso_robust": "on",
+                "tx_ipip_segmentation": "on",
+                "tx_lockless": "on [fixed]",
+                "tx_mpls_segmentation": "on",
+                "tx_nocache_copy": "off",
+                "tx_scatter_gather": "on",
+                "tx_scatter_gather_fraglist": "on",
+                "tx_sit_segmentation": "on",
+                "tx_tcp6_segmentation": "on",
+                "tx_tcp_ecn_segmentation": "on",
+                "tx_tcp_segmentation": "on",
+                "tx_udp_tnl_segmentation": "on",
+                "tx_vlan_offload": "on",
+                "tx_vlan_stag_hw_insert": "off [fixed]",
+                "udp_fragmentation_offload": "on",
+                "vlan_challenged": "off [fixed]"
+            },
+            "id": "8000.0242dfef1167",
+            "interfaces": [],
+            "ipv4": {
+                "address": "172.17.0.1",
+                "broadcast": "global",
+                "netmask": "255.255.0.0",
+                "network": "172.17.0.0"
+            },
+            "ipv6": [
+                {
+                    "address": "fe80::42:dfff:feef:1167",
+                    "prefix": "64",
+                    "scope": "link"
+                }
+            ],
+            "macaddress": "02:42:df:ef:11:67",
+            "mtu": 1500,
+            "promisc": false,
+            "stp": false,
+            "type": "bridge"
+        },
+        "ansible_domain": "tsysdev.net",
+        "ansible_effective_group_id": 0,
+        "ansible_effective_user_id": 0,
+        "ansible_env": {
+            "HISTSIZE": "",
+            "HOME": "/root",
+            "LANG": "en_US.UTF-8",
+            "LOGNAME": "root",
+            "MAIL": "/var/mail/mapr",
+            "PATH": "/sbin:/bin:/usr/sbin:/usr/bin",
+            "PWD": "/home/mapr",
+            "SHELL": "/bin/bash",
+            "SHLVL": "1",
+            "SUDO_COMMAND": "/bin/sh -c echo BECOME-SUCCESS-hglkpzxwotubyyxvnecixvlzljfbttnh; /usr/bin/python",
+            "SUDO_GID": "1535138087",
+            "SUDO_UID": "1535138087",
+            "SUDO_USER": "mapr",
+            "TERM": "unknown",
+            "USER": "root",
+            "USERNAME": "root",
+            "XAUTHORITY": "/home/mapr/.Xauthority",
+            "_": "/usr/bin/python"
+        },
+        "ansible_eth0": {
+            "active": true,
+            "device": "eth0",
+            "features": {
+                "busy_poll": "off [fixed]",
+                "fcoe_mtu": "off [fixed]",
+                "generic_receive_offload": "on",
+                "generic_segmentation_offload": "on",
+                "highdma": "on",
+                "large_receive_offload": "off",
+                "loopback": "off [fixed]",
+                "netns_local": "off [fixed]",
+                "ntuple_filters": "off [fixed]",
+                "receive_hashing": "on",
+                "rx_all": "off [fixed]",
+                "rx_checksumming": "on",
+                "rx_fcs": "off [fixed]",
+                "rx_vlan_filter": "on [fixed]",
+                "rx_vlan_offload": "on",
+                "rx_vlan_stag_filter": "off [fixed]",
+                "rx_vlan_stag_hw_parse": "off [fixed]",
+                "scatter_gather": "on",
+                "tcp_segmentation_offload": "on",
+                "tx_checksum_fcoe_crc": "off [fixed]",
+                "tx_checksum_ip_generic": "on",
+                "tx_checksum_ipv4": "off [fixed]",
+                "tx_checksum_ipv6": "off [fixed]",
+                "tx_checksum_sctp": "off [fixed]",
+                "tx_checksumming": "on",
+                "tx_fcoe_segmentation": "off [fixed]",
+                "tx_gre_segmentation": "off [fixed]",
+                "tx_gso_robust": "off [fixed]",
+                "tx_ipip_segmentation": "off [fixed]",
+                "tx_lockless": "off [fixed]",
+                "tx_mpls_segmentation": "off [fixed]",
+                "tx_nocache_copy": "off",
+                "tx_scatter_gather": "on",
+                "tx_scatter_gather_fraglist": "off [fixed]",
+                "tx_sit_segmentation": "off [fixed]",
+                "tx_tcp6_segmentation": "on",
+                "tx_tcp_ecn_segmentation": "off [fixed]",
+                "tx_tcp_segmentation": "on",
+                "tx_udp_tnl_segmentation": "off [fixed]",
+                "tx_vlan_offload": "on",
+                "tx_vlan_stag_hw_insert": "off [fixed]",
+                "udp_fragmentation_offload": "off [fixed]",
+                "vlan_challenged": "off [fixed]"
+            },
+            "ipv4": {
+                "address": "10.32.48.137",
+                "broadcast": "10.32.51.255",
+                "netmask": "255.255.252.0",
+                "network": "10.32.48.0"
+            },
+            "ipv6": [
+                {
+                    "address": "fe80::250:56ff:fe84:1b89",
+                    "prefix": "64",
+                    "scope": "link"
+                }
+            ],
+            "macaddress": "00:50:56:84:1b:89",
+            "module": "vmxnet3",
+            "mtu": 1500,
+            "pciid": "0000:0b:00.0",
+            "promisc": false,
+            "speed": 10000,
+            "type": "ether"
+        },
+        "ansible_fips": false,
+        "ansible_form_factor": "Other",
+        "ansible_fqdn": "lxvdatlkdmprd1.tsysdev.net",
+        "ansible_gather_subset": [
+            "hardware",
+            "network",
+            "virtual"
+        ],
+        "ansible_host": "10.32.48.137",
+        "ansible_hostname": "lxvdatlkdmprn06",
+        "ansible_interfaces": [
+            "docker0",
+            "lo",
+            "veth66a70a2",
+            "veth6f12a43",
+            "docker_gwbridge",
+            "vethbbaff0f",
+            "veth4bb05d3",
+            "eth0"
+        ],
+        "ansible_kernel": "3.10.0-327.el7.x86_64",
+        "ansible_lo": {
+            "active": true,
+            "device": "lo",
+            "features": {
+                "busy_poll": "off [fixed]",
+                "fcoe_mtu": "off [fixed]",
+                "generic_receive_offload": "on",
+                "generic_segmentation_offload": "on",
+                "highdma": "on [fixed]",
+                "large_receive_offload": "off [fixed]",

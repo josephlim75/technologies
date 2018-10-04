@@ -1,0 +1,5 @@
+---
+- include: common.yml
+- include: redis.yml
+    redis_port="{{ airflow_redis_port }}"
+    redis_bind="{{ airflow_redis_host }}"
