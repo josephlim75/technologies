@@ -1,0 +1,83 @@
+## Bundle Certs
+https://unix.stackexchange.com/questions/464484/install-self-signed-certificate-to-alpine-linux
+
+/etc/ssl/certs/ca-certificates.crt is actually appending each individual cert from /usr/local/share/ca-certificates.
+
+- Get a clean environment (This was my first major issue)
+- Break your certs chain into a separate parts for each BEGIN/END pair you have.
+    company-Root.crt
+    company-X.crt
+    company-Y.crt
+    company-Z.crt
+    company-Issuing.crt
+-If you're being extra careful, load one at a time, starting with the company-Root.crt cert, then run update-ca-certificates.
+-Repeat until all certs have been processed.
+-Verify that /etc/ssl/certs/ca-certificates.crt contains the updates at the bottom of the file.
+
+
+## Read SSL cert
+
+- Read from remove server
+  
+    $ openssl s_client -showcerts -connect ma.ttias.be:443
+
+- Read from text file
+
+    $ openssl x509 -text -noout -in certificate.crt 
+    
+Generate a keystore
+=======================
+
+keytool -genkeypair -keystore keystore.jks \
+-storepass nexus123 \
+-keypass nexus123 \
+-alias jetty \
+-keyalg RSA \
+-keysize 2048 \
+-validity 365 \
+-dname "CN=*.tsysdev.net, OU=Datalake, O=Sonatype, L=Unspecified, ST=Unspecified, C=US" \
+-ext "SAN=DNS:wxv-isa-dapp2.tsysdev.net,IP:10.32.48.173" \
+-ext "BC=ca:true" \
+-deststoretype pkcs12
+
+----------------------------------------------------------------------------------------------------
+
+certutil -dump vault-cert.pem
+
+----------------------------------------------------------------------------------------------------
+
+keytool -printcert -rfc -sslserver https://blackduck.tsys.com > blackduck.pem
+
+Verify if DER cert
+=======================
+openssl x509 -in blackduck.pem -text -noout
+
+Verify if is encoded PEM DER
+===============================
+openssl x509 -in blackduck.pem -inform der -text -noout
+
+keytool -import -alias blackduck -keystore /etc/pki/java/cacerts  -file /tmp/blackducktsyscom.crt
+
+Step 3 - Import the certificate into the Java Store
+========================================================
+Make sure you have write access to your JRE and  use the keytool utility to import it:
+
+keytool -import -alias alias -keystore path-to-jre/lib/security/cacerts -file path-to-certificate-file
+
+Example:
+  keytool -import -alias sunas -keystore /opt/jdk1.6/jre/lib/security/cacerts -file /home/gugrim/tmp/sunas.der
+
+You will be prompted for the keystore password, which is by default changeit.
+
+Also, when you connect to the server make sure you use the same name as the one set as the Subject in the certificate. 
+You may need to add it to your host file if the server isn't reachable using this name, which may be the case for a developer server.
+
+
+----------------------------------------------------------------------------------------------------
+
+
+Get DER certificate from Website
+
+- Click on the adddress bar LOCK
+- Click View Certificates
+- Click on popup tabs Details, -> Hit EXPORT
