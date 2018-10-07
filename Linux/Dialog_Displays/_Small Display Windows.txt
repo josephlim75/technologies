@@ -1,0 +1,12 @@
+It is mostly to do with the size of the window assumed by the terminal is not the same as your 
+actual window size. If you are using bash, you can try this.
+
+$ shopt  | grep checkwinsize
+If you don't get
+  checkwinsize    on
+
+Then activate it with
+
+$ shopt -s checkwinsize
+
+  Then resize your Windows

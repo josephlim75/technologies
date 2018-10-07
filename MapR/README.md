@@ -152,7 +152,7 @@ awk - Find and Print
   $ maprcli node list -columns hostname,id | awk '/10.32.42.30/{print $3}'
 
 SMTP Setting
-  $ maprcli config save -values '{"mapr.smtp.provider":"other","mapr.smtp.server":"smtpgw.us.tsys.com","mapr.smtp.sslrequired":"false","mapr.smtp.port":"25","mapr.smtp.sender.fullname":"EDP Support","mapr.smtp.sender.email":"edp.support@tsys.com","mapr.smtp.sender.username":"edp.support@tsys.com","mapr.smtp.sender.password":""}'
+  $ maprcli config save -values '{"mapr.smtp.provider":"other","mapr.smtp.server":"smtpgw.us.txxx.com","mapr.smtp.sslrequired":"false","mapr.smtp.port":"25","mapr.smtp.sender.fullname":"EDP Support","mapr.smtp.sender.email":"edp.support@txxx.com","mapr.smtp.sender.username":"edp.support@txx.om","mapr.smtp.sender.password":""}'
 
 Show who has access to WebUI
   $ maprcli acl show -type cluster

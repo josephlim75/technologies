@@ -1,0 +1,1 @@
+curl -v -X POST -H "Content-Type: application/json" -d '{"Image": " registry:2.",}' http://10.123.132.21:2376/containers/create?name=registr

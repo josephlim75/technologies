@@ -1,0 +1,20 @@
+
+
+When in top, typing capital "E" cycles through different memory units (kb, mb, gb etc) in the total memory info:
+The image shows tops general memory display with GiB as a unit.
+While lower-case "e" does the same individual process lines:
+
+The image shows processes in top where the memory is displayed in MiB
+
+------------------------------------------------------------------------------------------------------------------
+Show GIG
+free -g
+free -m
+
+------------------------------------------------------------------------------------------------------------------
+
+To wrap top command
+
+top -c 
+
+  use arrow keys to scroll

@@ -1,0 +1,7 @@
+https://www.linuxquestions.org/questions/linux-server-73/rhel6-centos6-how-to-reserve-dev-sd-letter-disk-device-names-4175436269/
+https://unix.stackexchange.com/questions/86764/understanding-dev-disk-by-folders
+http://cgit.freedesktop.org/systemd/systemd/tree/src/udev/udev-builtin-path_id.c
+https://superuser.com/questions/275135/linux-changing-device-names-in-dev-causes-problems-on-boot
+http://hmontoliu.blogspot.com/2011/04/set-uuid-on-reiserfs-partitions-fun.html
+
+/dev/udev/rules.d/60-raw.rules 

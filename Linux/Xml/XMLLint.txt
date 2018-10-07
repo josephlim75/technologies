@@ -1,0 +1,92 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+Hadoop XML Property Configuration
+
+echo -e 'cd //configuration/property[name="hive.metastore.sasl.enabled"]/value\nset jj\nsave' | xmllint --shell hive-site.xml
+
+---------------------------------------------------------------------------------------------------------------------------------------
+<footag>TastyGoodness</footag>
+
+xmllint --xpath "string(//footag)" sourcefile.xml
+
+TastyGoodness
+---------------------------------------------------------------------------------------------------------------------------------------
+<configuration>
+  <property>
+    <name></name>
+    <value></value>
+    <description></description>
+  </property>
+  <property>
+    <name></name>
+    <value></value>
+    <description></description>
+  </property>
+</configuration>
+
+
+echo "cat //configuration/property/name/text()" | xmllint --shell pom.xml
+
+xmllint --xpath "/*[name()='configuration']/*[name()='property']/text()" pom.xml
+
+xmllint --html --xpath '//span[@class="version"]/text()'
+
+---------------------------------------------------------------------------------------------------------------------------------------
+<studentFile>
+  <student>
+      <studentName>CLASSA</studentName>
+      <studentStatus>Success</studentStatus>
+      <studentActions>
+          <studentAction>
+              <studentType>Juniour</studentType>
+              <studentStatus>Completed</studentStatus>
+              <studentMsg/>
+          </studentAction>
+          <studentAction>
+              <studentType>HighSchool</studentType>
+              <studentStatus>Completed</studentStatus>
+              <studentMsg/>
+          </studentAction>
+      </studentActions>
+  </student>
+  <student>
+      <studentName>CLASSB</studentName>
+      <studentStatus>Success</studentStatus>
+      <studentActions>
+          <studentAction>
+              <studentType>Senior</studentType>
+              <studentStatus>Completed</studentStatus>
+          </studentAction>
+          <studentAction>
+              <studentType>Middle</studentType>
+              <studentStatus>Completed</studentStatus>
+          </studentAction>                         
+      </studentActions>
+  </student>
+</studentFile>
+
+xmllint -xpath "/studentFile/student[studentName='CLASSA']/studentActions/studentAction[studentType="Juniour"]/studentStatus" myxml.xml
+
+Update value with xmllint in file.xml:
+
+xmllint --shell file.xml << EOF
+cd /studentFile/student[studentName='CLASSA']/studentActions/studentAction[studentType='Juniour']/studentStatus
+set failed
+save
+EOF
+
+or without here document:
+
+echo -e "cd /studentFile/student[studentName='CLASSA']/studentActions/studentAction[studentType='Juniour']/studentStatus\nset failed\nsave" | xmllint --shell file.xml
+
+Update: With bash and XML in a variable:
+
+xml=$(xmllint --shell <(echo "$xml") << EOF
+cd /studentFile/student[studentName='CLASSA']/studentActions/studentAction[studentType='Juniour']/studentStatus
+set failed
+save -
+EOF
+)
+
+or without here document:
+
+xml=$(echo -e "cd /studentFile/student[studentName='CLASSA']/studentActions/studentAction[studentType='Juniour']/studentStatus\nset failed\nsave -" | xmllint --shell <(echo "$xml"))

@@ -1,0 +1,1 @@
+docker run --rm -ti --storage-opt size=30G --user sqdata 20e bash

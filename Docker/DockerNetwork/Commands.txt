@@ -1,0 +1,68 @@
+Configure docker0 : https://gist.github.com/kamermans/94b1c41086de0204750b
+
+https://blog.bugsnag.com/container-orchestration-with-docker-swarm-mode/
+
+https://github.com/moby/moby/issues/25325
+
+sudo iptables -t nat -S
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+Now, that most distributions make use of systemd, what about simply providing a corresponding sysctl.d file to enable IP forwarding?
+
+/usr/lib/sysctl.d/docker-ip-forwarding.conf
+
+net.ipv4.ip_forward = 1
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+http://community.arubanetworks.com/t5/Monitoring-Management-Location/How-to-disable-Docker0-or-bridge-interface-within-Airwave/ta-p/291692
+Configuration:
+Execute the following 2 commands from the Airwave command line interface by logging in with root credentials.
+[root@localhost mercury]# ip addr add 127.0.0.2/16 dev docker0
+[root@localhost mercury]# service network restart
+
+We can also choose to delete this interface based on requirement:
+[root@localhost mercury]# sudo ip link delete docker0 type bridge
+[root@localhost mercury]# service network restart
+
+
+
+Just delete it:
+
+If there is more than 1 inet, delete the one that not needed with the following command
+$ sudo ip addr del 127.0.0.2/16 dev docker0
+ 
+$ ip link del docker0
+(The old way, specific to bridges: brctl delbr docker0)
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+https://stackoverflow.com/questions/31989426/how-to-identify-orphaned-veth-interfaces-and-how-to-delete-them
+http://techbackground.blogspot.com/p/how-to-find-veth-peers.html
+
+To delete a veth interface:
+
+# ip link delete <ifname>
+
+How to find veth peers
+root@netnode:/# ip link show dev phy-br-eth2
+8: phy-br-eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+link/ether 82:a4:31:98:d2:f3 brd ff:ff:ff:ff:ff:ff
+
+
+root@netnode:/# ip link show dev int-br-eth2
+9: int-br-eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+link/ether c6:60:28:48:4f:7d brd ff:ff:ff:ff:ff:ff
+
+
+root@netnode:/# ethtool -S phy-br-eth2
+NIC statistics:
+peer_ifindex: 9
+
+
+root@netnode:/# ethtool -S int-br-eth2
+NIC statistics:
+peer_ifindex: 8
+Email This
+BlogThis!
+Share to Twitter
+Share to Facebook
+Share to Pinterest

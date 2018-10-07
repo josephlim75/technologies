@@ -1,0 +1,15 @@
+Unix command extract part of hostname
+======================================
+echo "testsrv1.main.corp.loc.domain.com" | cut -d"." -f1
+
+
+Contain string
+==================
+string='My long string'
+if [[ $string == *"My long"* ]]; then
+  echo "It's there!"
+fi
+
+GetOpts
+===========
+http://wiki.bash-hackers.org/howto/getopts_tutorial

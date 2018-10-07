@@ -1,0 +1,124 @@
+## Increasing Heap Size
+
+  NEXUS_HOME/bin/nexus.vmoptions
+  
+
+How to Enable the HTTPS Connector
+NEXUS_HOME = /opt/sonatype/nexus
+NEXUS_DATA = /nexus-data
+jetty-https.xml = $NEXUS_HOME/jetty
+
+Create a Java keystore file at $install-dir/etc/ssl/keystore.jks which contains the Jetty SSL certificate to use. Instructions are available on the Eclipse Jetty documentation site.
+Edit $data-dir/etc/nexus.properties. Add a property on a new line application-port-ssl=8443. Change 8443 to be your preferred port on which to expose the HTTPS connector.
+Edit $data-dir/etc/nexus.properties. Change the nexus-args property comma delimited value to include ${jetty.etc}/jetty-https.xml. Save the file.
+Edit the $install-dir/etc/jetty-https.xml and set your keystore password appropriately. Note that if you use "password" as your keystore password this step is not necessary.
+Restart the repository manager. Verify HTTPS connections can be established.
+Update the Base URL to use https in your repository manager configuration using the Base URL capability.
+
+---------------------
+
+Upload
+
+curl -u admin:tedpuser --upload-file index.html http://10.32.48.29:8081/repository/utils/uploader
+
+TEDP/packages/oracle/jdk/v9 >>
+
+find oracle -type f -exec curl --user admin:tedpuser --upload-file {} http://10.32.48.29:8081/repository/raw-tedp-hosted/{} \;
+find caddy -type f -exec curl --user jlim:2018Jfm! --upload-file {} http://10.255.22.122:8081/repository/raw-tedp-hosted/{} \;
+
+
+---------------------
+Configuring Nexus SSL
+======================
+
+Add to $NEXUS_DATA/etc/nexus.properties
+  application-port-ssl=8443
+  nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-https.xml,${jetty.etc}/jetty-requestlog.xml
+
+----------------------------------------------------------------------------------------------------
+
+Drop certificate in $NEXUS_HOME/etc/ssl
+Modify $NEXUS_HOME/etc/jetty/jetty-https.xml 
+
+   <New id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
+      <Set name="KeyStorePath"><Property name="ssl.etc"/>/keystore.jks</Set>
+      <Set name="KeyStorePassword">nexus123</Set>
+      <Set name="KeyManagerPassword">nexus123</Set>
+      <Set name="TrustStorePath"><Property name="ssl.etc"/>/keystore.jks</Set>
+      <Set name="TrustStorePassword">nexus123</Set>
+      <Set name="EndpointIdentificationAlgorithm"></Set>
+      <Set name="NeedClientAuth"><Property name="jetty.ssl.needClientAuth" default="false"/></Set>
+      <Set name="WantClientAuth"><Property name="jetty.ssl.wantClientAuth" default="false"/></Set>
+      <Set name="ExcludeCipherSuites">
+        <Array type="String">
+          <Item>SSL_RSA_WITH_DES_CBC_SHA</Item>
+          <Item>SSL_DHE_RSA_WITH_DES_CBC_SHA</Item>
+          <Item>SSL_DHE_DSS_WITH_DES_CBC_SHA</Item>
+          <Item>SSL_RSA_EXPORT_WITH_RC4_40_MD5</Item>
+          <Item>SSL_RSA_EXPORT_WITH_DES40_CBC_SHA</Item>
+          <Item>SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA</Item>
+          <Item>SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA</Item>
+        </Array>
+      </Set>
+    </New>
+----------------------------------------------------------------------------------------------------
+
+Create services /usr/lib/systemd/system/nexus.service  (file)
+
+[Unit]
+Description=nexus service
+After=network.target
+
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/nexus-3.8.0-02/bin/nexus start
+ExecStop=/opt/nexus/nexus-3.8.0-02/bin/nexus stop
+User=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+--------------------------
+
+sudo systemctl daemon-reload
+sudo systemctl enable nexus
+sudo systemctl start nexus
+
+----------------------------
+
+nexus.vmoptions
+
+-Xms1200M
+-Xmx1200M
+-XX:MaxDirectMemorySize=2G
+-XX:+UnlockDiagnosticVMOptions
+-XX:+UnsyncloadClass
+-XX:+LogVMOutput 
+-XX:LogFile=/var/lib/nexus/data/log/jvm.log
+-XX:-OmitStackTraceInFastThrow
+-Djava.net.preferIPv4Stack=true
+-Dkaraf.home=.
+-Dkaraf.base=.
+-Dkaraf.etc=etc/karaf
+-Djava.util.logging.config.file=etc/karaf/java.util.logging.properties
+-Dkaraf.data=/var/lib/nexus/data
+-Djava.io.tmpdir=/var/lib/nexus/data/tmp
+-Dkaraf.startLocalConsole=false
+
+-------------------------
+
+The Number Of Maximum Files Was Reached, How Do I Fix This Problem?
+
+Many application such as Oracle database or Apache web server needs this range quite higher. So you can increase the maximum number of open files by setting a new value in kernel variable /proc/sys/fs/file-max as follows (login as the root):
+# sysctl -w fs.file-max=100000
+
+Above command forces the limit to 100000 files. You need to edit /etc/sysctl.conf file and put following line so that after reboot the setting will remain as it is:
+# vi /etc/sysctl.conf
+
+Append a config directive as follows:
+fs.file-max = 100000
+
+Save and close the file. Users need to log out and log back in again to changes take effect or just type the following command:
+# sysctl -p

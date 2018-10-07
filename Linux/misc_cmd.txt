@@ -1,0 +1,124 @@
+﻿## Delete Empty Directories
+
+  # Remove all empty directories if any
+  find /. -type d -empty -delete
+
+
+  
+## Shell variable curly braces
+In this particular example, it makes no difference. However, the {} in ${} are useful if you want to expand the variable foo in the string
+
+"${foo}bar"
+since "$foobar" would instead expand foobar.
+
+Curly braces are also unconditionally required when:
+
+expanding array elements, as in ${array[42]}
+using parameter expansion operations, as in ${filename%.*} (remove extension)
+expanding positional parameters beyond 9: "$8 $9 ${10} ${11}"
+Doing this everywhere, instead of just in potentially ambiguous cases, can be considered good programming practice. 
+This is both for consistency and to avoid surprises like $foo_$bar.jpg, where it's not visually obvious that the 
+underscore becomes part of the variable name.
+
+## Ping Permission Denied Alpine
+
+chmod u+s /bin/ping
+
+## Extracting Filename and extension
+---
+    filename=$(basename "$fullfile")
+    extension="${filename##*.}"
+    filename="${filename%.*}"
+
+## Changing hostname
+---
+    vi /etc/sysconfig/network
+    HOSTNAME=xxxxx
+
+OR
+    
+    /etc/hostname
+    hostnamectl status --> Update the hostname
+
+Immediate change
+=====================
+    sudo hostnamectl set-hostname "xxxxxx.com"
+    hostname -v xxxxx.com
+
+Query AD user
+=================
+    adquery user -A <username>
+
+SetGid
+==========
+    chmod g+s <directoryname>  ==> Create a sticky group.  Any directory created inside the directory will inherit its group
+
+https://docs.oracle.com/cd/E19683-01/806-4078/secfiles-69/index.html
+https://docs.oracle.com/cd/E19683-01/806-4078/6jd6cjs37/index.html
+
+How to Find Files With setuid Permissions
+Use the following procedure to find files with setuid permissions.
+
+Become superuser or assume an equivalent role.
+
+Find files with setuid permissions by using the find command.
+
+
+## Find directory
+    find directory -user root -perm -4000 -exec ls -ldb {} \; >/tmp/filename
+
+
+Checks all mounted paths starting at the specified directory, which can be root (/), sys, bin, or mail.
+
+    -user root
+
+Displays files owned only by root.
+
+    -perm -4000
+
+Displays files only with permissions set to 4000.  
+
+    -exec ls -ldb
+
+Displays the output of the find command in ls -ldb format.
+
+    /tmp/filename
+
+Writes results to this file. 
+
+Display the results in `/tmp/filename`.
+
+    more /tmp/filename
+
+If you need background information about setuid permissions, see setuid Permission.
+Example—Finding Files With setuid Permissions
+
+    $ find / -user root -perm -4000 -exec ls -ldb {} \; > /tmp/ckprm
+    $ cat /tmp/ckprm
+    -r-sr-xr-x 1 root bin 38836 Aug 10 16:16 /usr/bin/at
+    -r-sr-xr-x 1 root bin 19812 Aug 10 16:16 /usr/bin/crontab
+    ---s--x--x 1 root sys 46040 Aug 10 15:18 /usr/bin/ct
+    -r-sr-xr-x 1 root sys 12092 Aug 11 01:29 /usr/lib/mv_dir
+    -r-sr-sr-x 1 root bin 33208 Aug 10 15:55 /usr/lib/lpadmin
+    -r-sr-sr-x 1 root bin 38696 Aug 10 15:55 /usr/lib/lpsched
+    ---s--x--- 1 root rar 45376 Aug 18 15:11 /usr/rar/bin/sh
+    -r-sr-xr-x 1 root bin 12524 Aug 11 01:27 /usr/bin/df
+    -rwsr-xr-x 1 root sys 21780 Aug 11 01:27 /usr/bin/newgrp
+    -r-sr-sr-x 1 root sys 23000 Aug 11 01:27 /usr/bin/passwd
+    -r-sr-xr-x 1 root sys 23824 Aug 11 01:27 /usr/bin/su
+
+# Tar command
+tar -cvf <tar file name.tar> <source to tar>
+tar -cvzf <tar file name.tar.gz> <source to tar>
+
+c – Creates a new .tar archive file.
+v – Verbosely show the .tar file progress.
+f – File name type of the archive file.
+z - create a .gz
+j - create a .bz2
+
+Untar
+
+tar -xvf <tar file>
+tar -zxvf <tar file>.gz
+tar -jxvf <tar file>.bz2

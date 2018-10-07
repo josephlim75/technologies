@@ -1,0 +1,4 @@
+cat /etc/*release
+lsb_release -a
+cat /proc/version
+uname -a

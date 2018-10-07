@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/8377312/how-to-convert-symlink-to-regular-file
+https://stackoverflow.com/questions/34078488/convert-symbolic-links-to-hard-links-in-windows
+
+cp --remove-destination `readlink bar.pdf` bar.pdf
+
+for f in $(find -type l);do cp --remove-destination $(readlink $f) $f;done;

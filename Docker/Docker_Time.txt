@@ -1,0 +1,8 @@
+https://www.ivankrizsan.se/2015/10/31/time-in-docker-containers/
+https://blog.dustinrue.com/2016/12/how-to-set-the-timezone-for-jenkins-running-in-docker/
+
+Found myself with an odd situation when running Jenkins using Docker. The time displayed was correct but claimed it was UTC which lead to some odd behavior. The best way to resolve this is to force the Docker container to use the correct timezone from the host system.
+
+To do so, add the following to your run command:
+
+-v /etc/timezone:/etc/timezone -v /etc/localtime:/etc/localtime

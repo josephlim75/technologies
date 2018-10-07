@@ -1,0 +1,29 @@
+https://github.com/moby/moby/issues/24253
+tcpdump -i eth0 -X -s 0  (Run inside the container)
+tcpdump -i vpn0 'host 23.239.3.133'
+
+tcpdump -s 1500 -A -i ens37 port 4789 on one of the nodes gave me the plaintext when I tried to 
+communicate between one container on host A and a container on host B using netcat.
+
+I did see encrypted traffic using
+tcpdump -i eth0 -n -s 0 -vv \(port 500 or port 4500 or proto 50\) though.
+
+overlay network traffic in swarm does not go thru docker0 or docker_gwbridge. 
+There are 2 options:
+option 1:
+Go inside container and do tcpdump:
+nicolaka/netshoot is container with all network debug tools.
+docker run -ti --net container: <container name/id> nicolaka/netshoot
+tcpdump -i <eth0>
+
+Option 2:
+Go inside network namespace of overlay network and do tcpdump:
+First find overlay network id with docker network inspect 
+Start debug container mounting network namespace:
+docker run -it --rm -v /var/run/docker/netns:/var/run/docker/netns --privileged=true nicolaka/netshoot
+All namespaces are listed under:
+/var/run/docker/netns
+Find your swarm overlay network namespace matching with overlay networkid of previous command.
+Then nsenter into network namespace:
+nsenter --net=/var/run/docker/netns/ sh
+tcpdump -i vxlan0

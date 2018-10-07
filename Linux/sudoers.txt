@@ -1,0 +1,7 @@
+# SR342112
+Defaults:%datalake_qa_app_devs !requiretty
+%datalake_qa_app_devs ALL=(ALL:ALL) NOPASSWD:ALL
+
+
+User_Alias DATALAKEADMINS = mapr,jlim,aleichter,quinnsmith,fmarakbi,spingale,mcargal,jzitzelberger,rcronise,gbates,ranvijaysingh,puneetjoshi,sachinjadhav,mbadhe,baskarraj
+DATALAKEADMINS ALL=(ALL) NOPASSWD: ALL

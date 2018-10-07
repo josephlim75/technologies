@@ -10,6 +10,31 @@ When running `lvdisplay` shows LV exists but status as `NOT available`, this req
 
     vgchange -a y
 
+## Remove volume on disk
+=================================================================
+1.  Reduce the logical volume (lv) first
+      $ sudo lvreduce -L XG /dev/VGNAME/LVNAME
+    
+2.  Resize the actual filesystem
+      $ sudo resize2fs /dev/mapper/VGNAME-LVNAME
+    
+3.  Move the lv to another disk.  Assuming you have vg_sys in /dev/sda and /dev/sdb.  You want
+    to remove vg_sys from /dev/sdb.  After resizing the lv in /dev/sdb, move the /dev/sdb 
+    
+      $ sudo pvmove /dev/sdb
+    
+    NOTE: The above will move vg_sys from /dev/sdb to another vg_sys /dev/sda
+    
+4.  Now the vg_sys at device /dev/sdb is not mounted and can start remove
+      $ sudo vgreduce vg_sys /dev/sdb
+      
+---
+
+lvremove -f vg_sys/lv_tmp
+lvchange -a n /dev/vg_sys/lv_tmp
+xfs_growfs /dev/vg_sys/lv_tmp
+
+
 ## Remove Volume Group
 
 You cannot use --removemissing or force delete VG if metadata area equal zero as in my case.

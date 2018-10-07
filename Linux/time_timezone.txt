@@ -1,0 +1,4 @@
+https://www.tecmint.com/check-linux-timezone/
+https://www.ivankrizsan.se/2015/10/31/time-in-docker-containers/
+
+timedatectl | grep "Time zone"

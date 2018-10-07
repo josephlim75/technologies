@@ -1,0 +1,7 @@
+I try the below way and it work for me:
+1. open cmd.exe
+2. takeown /R /F *.*
+3. icacls * /T /grant [username]:(D)
+4. del *.* /S /Q
+
+So that the files can become my own access and it assign to "Delete" and then I can delete the files and folders.

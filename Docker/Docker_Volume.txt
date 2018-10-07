@@ -1,0 +1,1 @@
+docker volume create --driver local --opt type=nfs --opt o=addr=10.32.48.147,rw  --opt device=:/mapr mapr-qa

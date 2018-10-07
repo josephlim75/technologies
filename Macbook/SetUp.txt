@@ -1,0 +1,31 @@
+# JAVA
+
+## List all Java version
+  ls -la /Library/Java/JavaVirtualMachines
+
+## Check Mac Package Entry
+  pkgutil --pkgs | grep -i jdk
+  com.oracle.jdk8u121
+  
+## Check Package info
+
+  pkgutil --info com.oracle.jdk8u121
+      > it will show location
+      
+  
+Remove the location Java then only remove the package entry list
+  
+## Uninstall Java
+    sudo rm -fr /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin 
+    sudo rm -fr /Library/PreferencePanes/JavaControlPanel.prefPane 
+    sudo rm -fr ~/Library/Application\ Support/Java
+    sudo rm -rf cd /Library/Java/JavaVirtualMachines/jdk-<version>
+
+## Remove Package Entry List
+  pkgutil --forget com.oracle.jdk8u121
+
+  
+/usr/libexec/java_home -V  --> Check Info    
+
+-- JAVA_HOME -/Library/Java/JavaVirtualMachines/jdk-<version>/Contents/Home
+

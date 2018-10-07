@@ -6,7 +6,7 @@
 
     keytool -genkey \
       -alias tedp-mqclient \
-      -dname "CN=TEDP MQ Client,O=TSYS,OU=Datalake,C=US" \
+      -dname "CN=TEDP MQ Client,O=TPP,OU=Datalake,C=US" \
       -keyalg RSA \
       -keysize 2048 \
       -keypass mqtest123 \

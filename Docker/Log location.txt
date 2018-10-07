@@ -1,0 +1,17 @@
+https://stackoverflow.com/questions/30969435/where-is-the-docker-daemon-log
+
+It depends on your OS. Here are the few locations, with commands for few Operating Systems:
+•Ubuntu (old using upstart ) - /var/log/upstart/docker.log
+•Ubuntu (new using systemd ) - journalctl -u docker.service
+•Boot2Docker - /var/log/docker.log
+•Debian GNU/Linux - /var/log/daemon.log
+•CentOS - /var/log/daemon.log | grep docker
+•centos7 seems to log to /var/log/messages – Steve E. Apr 22 '16 at 12:54 
+•CoreOS - journalctl -u docker.service
+•Fedora - journalctl -u docker.service
+•Red Hat Enterprise Linux Server - /var/log/messages | grep docker
+•OpenSuSE - journalctl -u docker.service
+•OSX - ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/log/d??ocker.log
+•Windows - Get-EventLog -LogName Application -Source Docker -After (Get-Date).AddMinutes(-5) | Sort-Object Time, as mentioned here.
+
+also worth mentioning is the -D docker option to activate debug mode. See docs.docker.com/reference/commandline/cli/#daemon

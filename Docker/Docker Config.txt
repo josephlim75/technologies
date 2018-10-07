@@ -1,0 +1,37 @@
+## Docker Config
+
+https://docs.docker.com/engine/swarm/configs/#advanced-example-use-configs-with-a-nginx-service
+
+'''
+$ echo <secret> | docker config create my_config -
+    echo "This is a config" | docker config create my-config -
+$ docker config create <my_config> <file>
+
+
+ jenkins_slave2:
+    image: ${DOCKER_REGISTRY_URL:-docker.com:9095}/edp-jenkins-slave:7-mapr-6.0-centos
+    configs:
+      - source: hosts
+        target: /tmp/config.yml
+        
+configs:
+  hosts:
+    external: true
+    
+## Show config content data
+
+    docker config inspect -f '{{json .Spec.Data }}' haproxy_config.1 | cut -d'"' -f2 | base64 -d
+
+## Deploy and use configuration
+    
+$ docker secret create site.key site.key
+$ docker secret create site.crt site.crt
+
+docker service create \
+     --name nginx \
+     --secret site.key \
+     --secret site.crt \
+     --config source=site.conf,target=/etc/nginx/conf.d/site.conf,mode=0440 \
+     --publish published=3000,target=443 \
+     nginx:latest \
+     sh -c "exec nginx -g 'daemon off;'"    

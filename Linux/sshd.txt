@@ -1,0 +1,13 @@
+To set the SSH keep alive option on the server:
+
+Log in as root
+Edit the file at /etc/ssh/sshd_config
+Add this line to the file: ClientAliveInterval 60
+Save the file
+Restart sshd on the server
+
+Putty Client
+
+- Putty Configuration -> Load the server
+- Select Category -> Connection
+-- Check `Enable TCP keepalives (SO_KEEPALIVE option)

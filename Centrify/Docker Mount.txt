@@ -1,0 +1,7 @@
+
+ -v /etc/centrifydc:/etc/centrifydc \
+ -v /etc/pam.d:/etc/pam.d \
+ -v /etc/nsswitch.conf:/etc/nsswitch.conf \
+ -v /etc/krb5.keytab:/etc/krb5.keytab \
+ -v /etc/krb5.conf:/etc/krb5.conf \
+ -v /var/centrifydc:/var/centrifydc \

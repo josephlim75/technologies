@@ -1,0 +1,41 @@
+To show all networking related to a given port:
+
+lsof -iTCP -i :port
+lsof -i:22
+netstat -alpn | grep 7220
+
+To show connections to a specific host, use @host
+
+lsof -i@192.168.1.5
+Show connections based on the host and the port using @host:port lsof -i@192.168.1.5:22
+
+grepping for LISTEN shows what ports your system is waiting for connections on:
+
+lsof -i| grep LISTEN
+Show what a given user has open using -u:
+
+lsof -u daniel
+See what files and network connections a command is using with -c
+
+lsof -c syslog-ng
+The -p switch lets you see what a given process ID has open, which is good for learning more about unknown processes:
+
+lsof -p 10075
+The -t option returns just a PID
+
+lsof -t -c Mail
+Using the -t and -c options together you can HUP processes
+
+kill -HUP $(lsof -t -c sshd)
+You can also use the -t with -u to kill everything a user has open
+
+kill -9 $(lsof -t -u daniel)
+
+
+[2016-04-12T13:46:25] root@vserver04:/etc/stunnel# lsof -i :4444 -Pn
+COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+stunnel4 10705 root   20u  IPv4  43870      0t0  TCP 172.16.0.2:4444 (LISTEN)
+stunnel4 10705 root   21u  IPv4  43871      0t0  TCP 172.16.0.3:4444 (LISTEN)
+stunnel4 10705 root   22u  IPv4  43872      0t0  TCP 172.16.0.4:4444 (LISTEN)
+[2016-04-12T13:46:27] root@vserver04:/etc/stunnel# wsrep_sst_rsync --role 'donor' --address 'nnn.nnn.nnn.nnn:4444/rsync_sst' --socket '/var/run/mysqld/mysqld.sock' --datadir '/var/lib/mysql/'    --binlog '/var/log/mysql/mariadb-bin' --gtid '592c386a-ff50-11e5-9f2e-d69a5c76ba34:5' --gtid-domain-id '0'
+flush tables

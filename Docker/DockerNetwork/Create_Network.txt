@@ -1,0 +1,9 @@
+docker network create --attachable=true -d macvlan --subnet=172.16.86.0/24 --gateway=172.16.86.1 -o parent=bond0 tedp_macvlan
+
+docker network create --attachable=true -d overlay --ipam-driver docker-ipam-plugin mynet
+
+
+docker network create --driver bridge --subnet=192.168.33.0/24 --gateway=192.168.33.10 --opt "com.docker.network.bridge.name"="bond0" tedp_bridge
+
+
+docker network create -d macvlan --ipam-driver=dhcp -o parent=bond0 --ipam-opt dhcp_interface=bond0 tedp_macvlan

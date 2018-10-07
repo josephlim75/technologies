@@ -1,0 +1,40 @@
+http://janhapke.com/blog/mount-cifs-samba-fstab-alpine-linux/
+
+
+Mounting CIFS (formerly Samba) volumes via fstab on Alpine Linux
+
+1 Reply
+For my local development environment, I store all my code on my Windows 10 PC. The web servers and everything else then runs inside Linux Virtual Boxes. The Virtual Box shared folders feature has a lot of problems, so I mount the directories using CIFS, which as formerly called Samba.
+
+Naturally, I wanted the same setup I had for my old Ubuntu boxes in Alpine. The setup was, as usual, not as straightforward as I had hoped. First, I installed the cifs-utils. This may or may not be necessary.
+
+apk add cifs-utils
+Then, I simply copied over the entry for /etc/fstab from the Ubuntu Box.
+
+//192.168.178.30/www    /mnt/www    cifs    uid=0,gid=0,user=janhapke,password=*****
+In Ubuntu, this has been working fine for years and over several versions. On Alpine, I got an error message.
+
+mount: can't find /mnt/www/ in /etc/fstab
+Strangely enough, mounting directly from the command line worked, so CIFS was properly installed and the machines could talk to each other.
+
+It turns out, Alpine parses the fstab a little more strictly than Ubuntu and absolutely needs 6 options per line whereas Ubuntu is OK with just 4. So to fix this, I just had to add the last 2 entries (for dump & pass, respectively).
+
+//192.168.178.30/www    /mnt/www    cifs    uid=0,gid=0,user=janhapke,password=***** 0 0
+Great, now I could easily mount the directory on Alpine with a simple mount /mnt/www
+
+Until I rebooted the machine. I always poweroff the VMs when I don’t use them because like shared folders, suspending them doesn’t really work so well in Virtual Box. The problem is, it now tried to mount the folders on boot, before the network was even available. This resulted in a lot of error messages during the boot process.
+
+mount error(101): Network unreachable
+Refer to the mount.cifs(8) manual page (e.g. man mount.cifs)
+mount: mounting //192.168.178.30/www on /mnt/www failed: Network unreachable
+ * Some local filesystem failed to mount
+ * ERROR: localmount failed to start
+This was then followed by even more error messages about system services that cannot start because not everything could be mounted. It was possible to log in, but the system was not really properly configured (e.g. keymap ws incorrect).
+
+The fix was again adding the right thing to /etc/fstab, namely appending the option _netdev to the mount options (which again was not necessary on Ubuntu).
+
+//192.168.178.30/www    /mnt/www    cifs    uid=0,gid=0,user=janhapke,password=*****,_netdev 0 0
+This option tells Alpine Linux to only mount this directory after the network is available. With this entry, the VM can now finally mount files from the Windows Host machine.
+
+This entry was posted in DevOps, Non-Photo Posts on February 15, 2016 by Jan Hapke.
+Post navigation

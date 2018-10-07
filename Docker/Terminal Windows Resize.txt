@@ -1,0 +1,1 @@
+kill -SIGWINCH $(ps -ef | grep 'docker exec -ti 723' | grep -v grep | awk '{ print $2}')

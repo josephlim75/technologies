@@ -1,0 +1,88 @@
+Bits Permission
+=================
+Each field has three character positions:
+
+...
+
+  3.   The first of the following that applies:
+
+       S     If in the owner permissions, the file is not exe-
+             cutable and set-user-ID mode is set.  If in the
+             group permissions, the file is not executable and
+             set-group-ID mode is set.
+
+       s     If in the owner permissions, the file is exe-
+             cutable and set-user-ID mode is set.  If in the
+             group permissions, the file is executable and set-
+             group-ID mode is set.
+
+       x     The file is executable or the directory is search-
+             able.
+
+       -     The file is neither readable, writable, exe-
+             cutable, nor set-user-ID nor set-group-ID mode,
+             nor sticky.  (See below.)
+Basically,
+
+S == setuid/setgid && not executable
+s == setuid/setgid && executable
+x == not setuid/setgid && executable
+- == not setuid/setgid && not executable
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+When applying permissions to directories on Linux, the permission bits have different meanings than on regular files.
+
+The write bit allows the affected user to create, rename, or delete files within the directory, and modify the directory's attributes
+The read bit allows the affected user to list the files within the directory
+The execute bit allows the affected user to enter the directory, and access files and directories inside
+The sticky bit states that files and directories within that directory may only be deleted or renamed by their owner (or root)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+gpasswd -d user group   -- Delete user from group
+gpasswd -a user group   -- Add user into group
+
+usermod -aG docker non-root-user -- Add user into group docker
+
+Users in Linux can belong to more than one group. In this case you want to create a brand new group, let's call it tomandruser:
+
+sudo groupadd tomandruser
+
+sudo usermod -a -G tomandruser tomcat6
+sudo usermod -a -G tomandruser ruser
+sudo chgrp -R tomandruser /path/to/the/directory
+sudo chmod -R 770 /path/to/the/directory
+
+{code}
+[root@case ~]# groupadd -g 7001 bmcorp
+[root@case ~]# useradd -u 7002 kelly -g 7001
+[root@case ~]# id kelly
+uid=7002(kelly) gid=7001(bmcorp) groups=7001(bmcorp)
+[root@case ~]# useradd -u 7003 dave -g 7001
+[root@case ~]# useradd -u 7004 joe -g 7001
+[root@case ~]# useradd -u 7005 mike -g 7001
+[root@case ~]# useradd -u 7006 peter -g 7001
+[root@case ~]# useradd -u 7006 pe ^C 7001
+[root@case ~]#
+[root@case ~]# cat /etc/passwd | grep 700
+kelly:x:7002:7001::/home/kelly:/bin/bash
+dave:x:7003:7001::/home/dave:/bin/bash
+joe:x:7004:7001::/home/joe:/bin/bash
+mike:x:7005:7001::/home/mike:/bin/bash
+peter:x:7006:7001::/home/peter:/bin/bash
+[root@case ~]# cd /mapr
+[root@case mapr]# ls
+case.cluster.com
+[root@case mapr]# cd case.cluster.com/
+[root@case case.cluster.com]# ls
+apps hbase installer oozie opt tmp user var
+[root@case case.cluster.com]# cd user/
+[root@case user]# ls
+hive mapr root
+[root@case user]# #maprcli volume create -name home-kelly -path /user/kelly -mount 1 -rootdirperms 777 -aetype 1 -ae bmcorp -quota 2G -advisoryquota 1.3G -user mapr:fc,a kelly:fc,a -readAce 'u:kelly|r:manager' -writeAce 'u:kelly|r:manager'
+[root@case user]#
+[root@case user]#
+[root@case user]# vi /opt/mapr/conf/m7_permissions_roles_refimpl.conf
+[root@case user]#
+[root@case user]# /opt/mapr/server/mrconfig dbrolescache invalidate

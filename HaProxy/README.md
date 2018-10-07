@@ -1,3 +1,16 @@
+## Hot reconfigure haproxy without restart
+
+If you don’t want to loose all of your current connections, you need to get haproxy to reload the new configuration without stopping and starting.
+
+    # haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
+
+The `-sf` flag is for a soft reset.
+
+
+## Blog Code FabianLee
+
+    https://github.com/fabianlee/blogcode/tree/master/haproxy
+    
 ## Reference Site
 - http://www.haproxy.org/download/1.8/doc/configuration.txt
 - https://pierrevillard.com/tag/haproxy/

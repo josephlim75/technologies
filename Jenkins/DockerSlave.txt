@@ -1,0 +1,75 @@
+create folder bin,lib,conf,logs
+conf/jenkins-env.sh
+bin/jenkins-slave
+ln -s /opt/edp/jenkins/bin/jenkins-slave /etc/init.d/jenkins-slave
+
+yum install -y wget 
+
+--apachectl -d /etc/apache2 -e info -DFOREGROUND
+
+
+
+
+#!/bin/sh
+
+JAVA=$JAVA_HOME/bin/java
+JAVA_OPTS=""
+JENKINS_USR=jenkins
+JENKINS_GRP=jenkins
+JENKINS_JAR=$JENKINS_HOME/lib/slave.jar
+JENKINS_LOG=$JENKINS_HOME/logs
+JENKINS_MASTER=jenkins-psa.qa.tpp.com:8080
+JENKINS_NODE=TDP_Slave
+JENKINS_SECRET=3fe0588820f0015a62f5b1194419f5afca960f4dd74195f1cd8c5855e02601
+JENKINS_SECRET_ARG=$([ "${JENKINS_SECRET}" == "" ] &&  echo "" || echo "-secret ${JENKINS_SECRET}")
+JENKINS_REMOTE_JAR="http://${JENKINS_MASTER}/jnlpJars/slave.jar"
+JENKINS_ARGS="-jnlpUrl http://${JENKINS_MASTER}/computer/${JENKINS_NODE}/slave-agent.jnlp $JENKINS_SECRET_ARG"
+
+
+
+#!/bin/bash
+
+# Source function library and JENKINS environment
+JENKINS_HOME=${JENKINS_HOME:-/opt/edp/jenkins}
+source $JENKINS_HOME/conf/jenkins-env.sh
+source /etc/init.d/functions
+
+#------------------------------------------------------------------------------------------------------------
+# This is the list of exit codes for wget:
+#
+# 0       No problems occurred
+# 1       Generic error code
+# 2       Parse error — for instance, when parsing command-line options, the .wgetrc or .netrc…
+# 3       File I/O error
+# 4       Network failure
+# 5       SSL verification failure
+# 6       Username/password authentication failure
+# 7       Protocol errors
+# 8       Server issued an error respons
+#------------------------------------------------------------------------------------------------------------
+get_jenkins_slave_jar() {
+  wget -O ${JENKINS_JAR} ${JENKINS_REMOTE_JAR}
+  RETVAL=$?
+  if [ $RETVAL != 0 ]; then
+    rm -f ${JENKINS_JAR}
+    echo "Wait to retry in (10 seconds)"
+    sleep 10
+  fi
+}
+
+main() {
+  while [ ! -f ${JENKINS_JAR} ]; do
+    get_jenkins_slave_jar
+  done
+
+  case "$1" in
+    -DForeground|-DFOREGROUND)
+      ${JAVA} ${JAVA_OPTS} -jar ${JENKINS_JAR} ${JENKINS_ARGS} 2>&1 | tee -a ${JENKINS_LOG}/jenkins.log
+      ;;
+    *)
+      nohup ${JAVA} ${JAVA_OPTS} -jar ${JENKINS_JAR} ${JENKINS_ARGS} >> ${JENKINS_LOG}/jenkins.log 2>&1&
+      ;;
+  esac
+}
+
+main "$@"

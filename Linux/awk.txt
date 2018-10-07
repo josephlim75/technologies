@@ -1,0 +1,124 @@
+To print the second line:
+
+awk 'FNR == 2 {print}'
+To print the second field:
+
+awk '{print $2}'
+To print the third field of the fifth line:
+
+awk 'FNR == 5 {print $3}'
+Edit: Here's an example with a header line and (redundant) field descriptions:
+
+awk 'BEGIN {print "Name\t\tAge"}  FNR == 5 {print "Name: "$3"\tAge: "$2}'
+There are better ways to align columns than "\t\t" by the way.
+
+
+This is the very basic
+
+awk '/pattern/{ print $0 }' file
+ask awk to search for pattern using //, then print out the line, which by default is called a record, denoted by $0. At least read up the documentation.
+
+If you only want to get print out the matched word.
+
+awk '{for(i=1;i<=NF;i++){ if($i=="yyy"){print $i} } }' file
+
+
+Find and get column with : separator
+
+ echo "1: " | awk -F  ":" '/1/ {print $1}'
+ echo "1: " | awk 'BEGIN { FS=":" } /1/ { print $1 }'
+ $echo "1: " | awk -F":" '/1/ {print $1}' 1
+ 
+ 
+Remove leading whitespaces
+- sub(/^[ \t]+/, "");
+docker swarm join-token worker | awk '/docker/{sub(/^[ \t]+/, ""); print $0}'
+
+docker swarm join --token SWMTKN-1-4y4g7yalq2qht8qz1es24e833gkrtre2z08v9965mdjq8rs357-5m23f4sjyh350dkkuhfq9l8uz 10.32.48.147:2377
+
+adquery group -A DATALAKE_QA_APP_DEVS | awk -F ":" '/unixMembers/ {print $2}'
+aleichter,ankitsharma,baskarraj,fmarakbi,jlim,milindbadhe,puneetjoshi,quinnsmith,ranvijaysingh,rreddy,sachinjadhav,spingale
+----------------------------------
+
+Substitute (find and replace) "foo" with "bar" on each line.
+
+awk '{ sub(/foo/,"bar"); print }'
+
+(Note:  You can also do this change all in vi with sed (invoked with "s"), like this:
+
+<exc>:.,$s/foo/bar/g
+
+Change "scarlet" or "ruby" or "puce" to "red".
+
+awk '{ gsub(/scarlet|ruby|puce/, "red"); print}'
+
+Remove duplicate, consecutive lines (emulate "uniq")
+
+awk 'a !~ $0; { a = $0 }'
+
+Convert Windows/DOS newlines (CRLF) to Unix newlines (LF) from Unix.
+
+awk '{ sub(/\r$/,""); print }'
+
+Convert Unix newlines (LF) to Windows/DOS newlines (CRLF) from Unix.
+
+awk '{ sub(/$/,"\r"); print }'
+
+Delete leading whitespace (spaces and tabs) from the beginning of each line (ltrim).
+
+awk '{ sub(/^[ \t]+/, ""); print }'
+
+Delete trailing whitespace (spaces and tabs) from the end of each line (rtrim).
+
+awk '{ sub(/[ \t]+$/, ""); print }'
+
+Delete both leading and trailing whitespaces from each line (trim).
+
+awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }'
+
+Insert 5 blank spaces at beginning of each line.
+
+awk '{ sub(/^/, "     "); print }'
+
+---------------------------------------------------------------------------------------------------------------------------------
+Get IP Address
+
+ifconfig -a | awk '/(cast)/ { print $2 }' | cut -d':' -f2 | head -1
+ip -o -4 addr show | awk -F '[ /]+' '/global/ {print $4}'
+host `hostname` | rev | cut -d' ' f1 | rev
+ifconfig -a | awk '/Bcast/{print $2}' | cut -c 5-19
+ifdata -pN eth0
+ifconfig -a | awk '/Bcast/{print $2}' | cut -c 5-19
+
+---------------------------------------------------------------------------------------------------------------------------------
+Select row and element from awk
+
+awk 'FNR == 2 {print}'
+To print the second field:
+
+awk '{print $2}'
+To print the third field of the fifth line:
+
+awk 'FNR == 5 {print $3}'
+Edit: Here's an example with a header line and (redundant) field descriptions:
+
+awk 'BEGIN {print "Name\t\tAge"}  FNR == 5 {print "Name: "$3"\tAge: "$2}'
+----------------------------------------------------------------------------------------------------------------------------------
+You can use getent, which comes with glibc (so you almost certainly have it on Linux). This resolves using gethostbyaddr/gethostbyname2, and so also will check /etc/hosts/NIS/etc:
+
+getent hosts unix.stackexchange.com | awk '{ print $1 }'
+Or, as Heinzi said below, you can use dig with the +short argument (queries DNS servers directly, does not look at /etc/hosts/NSS/etc) :
+
+dig +short unix.stackexchange.com
+If dig +short is unavailable, any one of the following should work. All of these query DNS directly and ignore other means of resolution:
+
+host unix.stackexchange.com | awk '/has address/ { print $4 }'
+nslookup unix.stackexchange.com | awk '/^Address: / { print $2 }'
+dig unix.stackexchange.com | awk '/^;; ANSWER SECTION:$/ { getline ; print $5 }'
+If you want to only print one IP, then add the exit command to awk's workflow.
+
+dig +short unix.stackexchange.com | awk '{ print ; exit }'
+getent hosts unix.stackexchange.com | awk '{ print $1 ; exit }'
+host unix.stackexchange.com | awk '/has address/ { print $4 ; exit }'
+nslookup unix.stackexchange.com | awk '/^Address: / { print $2 ; exit }'
+dig unix.stackexchange.com | awk '/^;; ANSWER SECTION:$/ { getline ; print $5 ; exit }'

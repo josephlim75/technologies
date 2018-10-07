@@ -1,3 +1,369 @@
 http://cuddletech.com/?p=959
 https://hackernoon.com/vault-as-ca-with-pki-backend-bbcfc315f06f
 https://wiki.onap.org/display/DW/Signing+certificates+using+Vault+provided+CA%2C+and+the+CA+imported+into+Vault
+
+Reading Data
+==============
+
+-r == --raw-output  (without quotes)
+-s == --silent
+
+curl -ks -X GET -H "X-Vault-Token: c1a90d09-03fb-262c-5e0f-9dccebad3f2e" \
+  http://10.123.82.190:8200/v1/secret/datalake/uat/auth/serviceaccounts | \
+  jq ".data.files" -r > /home/jlim/mapr.uue
+
+curl -ks --cert /etc/pki/tls/certs/sslclient.pem --key /etc/pki/tls/private/sslclient-key.pem \
+ -X GET -H "X-Vault-Token: c1a90d09-03fb-262c-5e0f-9dccebad3f2e" \
+https://10.123.82.190:8300/v1/secret/datalake/dev/auth/serviceaccounts
+  
+curl -ks --cert /etc/pki/tls/certs/sslclient.pem --key /etc/pki/tls/private/sslclient-key.pem \
+   -X GET -H "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" \
+  https://10.32.6.133:8300/v1/secret/datalake/dev/auth/serviceaccounts | \
+  python -c 'import sys, json; print json.load(sys.stdin)["data"]["MARIADB_ROOT_PASS"]'
+
+Reference Site
+=================
+https://werner-dijkerman.nl/2017/01/15/setting-up-a-secure-vault-with-a-consul-backend/
+
+Create Certificate
+======================
+  Create a key
+    $ openssl genrsa -out private/vault.service.dj-wasabi.local.key 4096
+
+  Create a signing request file and then sign it with the CA.
+    $ openssl req -new -extensions usr_cert -sha256 -subj "/C=NL/ST=Utrecht/L=Nieuwegin/O=dj-wasabi/CN=vault.service.dj-wasabi.local" -key private/vault.service.dj-wasabi.local.key -out csr/vault.service.dj-wasabi.local.csr
+
+  We copy the ‘vault.service.dj-wasabi.local.key’, ‘vault.service.dj-wasabi.local.crt’ and the caroot certificate file to the hosts which 
+  will be running the Vault container into the directory /data/vault/ssl. Hashicorp advises to run vault on hosts where Consul Agents are 
+  running, not Consul Servers. This has probably todo with that for most use cases they see is that Consul is part of large networks and 
+  thus the servers will handle a lot of request (High load). As the Consul Servers will be very busy, it would then be wise to not run 
+  anything else on those servers.
+  But this is my own versy small environment (With 10 machines) so I will run Vault on the hosts running the Consul Server.    
+     $ openssl ca -batch -config /etc/pki/tls/openssl.cnf -notext -in csr/vault.service.dj-wasabi.local.csr -out certs/vault.service.dj-wasabi.local.crt
+
+DevTEST
+=======
+docker run -d \
+-p 8000:8000 \
+-e VAULT_URL_DEFAULT=http://10.32.48.29:8200 \
+-e VAULT_AUTH_DEFAULT=TOKEN \
+--name vault-ui \
+docker.com:9095/vault-ui:2.4.0-alpine
+
+
+Unseal Key 1: az2m8TKFojtO231KxhEje7q/4jbawGh67Alk5PBPj1c=
+Initial Root Token: c67f6ce5-1885-1678-c85d-ca55925c3e88
+tenant1: e6764c5c-f87a-3c67-b61f-8085b3f2d00b
+808fd959-699d-3027-0b5d-6779b5be8665
+
+Check health
+  curl -k http://10.32.48.29:8200/v1/sys/health
+  curl -k http://vault-qa.tpp.ecom.com:8200/v1/sys/health
+  vault status -tls-skip-verify
+
+Create keys and root token
+  curl -X PUT -d "{\"secret_shares\":1, \"secret_threshold\":1}" http://10.32.48.29:8200/v1/sys/init
+
+Unseal
+  curl -X PUT -d "{\"key\": \"az2m8TKFojtO231KxhEje7q/4jbawGh67Alk5PBPj1c=\"}" http://10.32.48.29:8200/v1/sys/unseal
+  
+Initial
+  vault operator init -tls-skip-verify
+  Unseal Key 1: 3eV2mjAZHixFHlpAjCjEO+w8zULxLW0IODCbA6QpwF5t
+  Unseal Key 2: v/P6oG7BrhQAAHobeg2iiwD+YL9MgijgZf3LfODuc+sy
+  Unseal Key 3: wET6UNj81f2V/I4TaXGbuPG6ysx0L6FVdbM4mPgdC9NS
+  Unseal Key 4: eQ2TEDoZ9+EtBBkURxmFS2Nl1dqTC7Ot5g+BAPbV3XLD
+  Unseal Key 5: bhPsU/C7CUJF/iM/bTbpFwjBoTahnh16eXYr+EpP9C80
+
+  Initial Root Token: ae88d37c-5a9f-7ad6-95ca-07f9a136f3d1
+
+  Vault initialized with 5 keys and a key threshold of 3. Please
+  securely distribute the above keys. When the Vault is re-sealed,
+  restarted, or stopped, you must provide at least 3 of these keys
+  to unseal it again.
+   
+  Vault does not store the master key. Without at least 3 keys,
+  your Vault will remain permanently sealed.
+
+Unseal
+  vault operator unseal -tls-skip-verify
+  
+List ACcessors
+
+  vault list auth/token/accessors
+  vault token-lookup -accessor 08d21210-f940-f8b0-f795-06a958bb02f7
+  
+Mount
+  - List
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://10.32.48.29:8200/v1/sys/mounts | python -m json.tool
+  curl -H "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/sys/mounts | python -m json.tool
+
+  - Create
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" -X POST -d "{\"type\": \"pki\",\"config\": {\"force_no_cache\": true}}" http://10.32.48.29:8200/v1/sys/mounts/pki/datalake
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" -X POST -d "{\"type\": \"kv\",\"config\": {\"force_no_cache\": true}}" http://10.32.48.29:8200/v1/sys/mounts/secrets/datalake
+
+  - Delete
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" -X DELETE http://10.32.48.29:8200/v1/sys/mounts/datalake
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" -X DELETE http://10.32.48.29:8200/v1/sys/mounts/secrets/datalake_kv
+
+  - Read mount
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://10.32.48.29:8200/v1/sys/mounts/secrets/datalake/tune
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://10.32.48.29:8200/v1/sys/mounts/pki/datalake/tune
+  curl -H "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/sys/mounts/secret/datalake | python -m json.tool
+  
+Policies
+  curl -X GET -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88"  http://10.32.48.29:8200/v1/sys/policy
+  curl -X GET -H "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14"  http://vault-qa.tpp.ecom.com:8200/v1/sys/policy/datalake_ro
+  
+  curl -X LIST --header "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://10.32.48.29:8200/v1/sys/policies/acl
+  curl -X LIST --header "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/sys/policies/acl/datalake_ro
+
+  -<<EOH = - means from stdin
+  
+  vault policy-write tenant1_ro -<<EOH
+  path "sys/mounts" {
+  capabilities = ["read"]
+}
+  path "sys/auth" {
+  capabilities = ["read"]
+}
+  path "auth/token/lookup-self" {
+  capabilities = ["read"]
+}
+  path "auth/token/create" {
+  capabilities = ["update","sudo"]
+}
+ 
+  path "pki/tenant1/" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+  path "secret/tenant1/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+  path "secret/tenant/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+EOH
+
+  vault policy-write datalake_rw -<<EOH
+  path "/pki/datalake" {
+  capabilities = ["read","update","sudo"]
+  path "/secrets/datalake" {
+  capabilities = ["read","update","delete","list"]
+}
+  path "/secrets/datalake" {
+  capabilities = ["read","update","sudo"]
+}
+EOH
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # this policy enables a user to view and perform actions
+    # in the "Secrets" and "Bulletins" pages
+
+    # allows user to list default secrets page
+    path "secret" {
+      capabilities = ["list"]
+    }
+
+    # allows user to browse all secrets, including bulletins
+    path "secret/*" {
+      capabilities = ["read", "list"]
+    }
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      
+    # this policy enables a user to view and perform actions
+    # in the "Administration" -> "Users" page
+
+    # allows user to list tokens and their details
+    path "auth/token/accessors/" {
+      capabilities = ["list", "sudo"]
+    }
+    path "auth/token/lookup-accessor*" {
+      capabilities = ["read", "update"]
+    }
+
+    # allows user to list roles and read role details
+    path "/auth/token/roles/" {
+      capabilities = ["list"]
+    }
+    path "/auth/token/roles/*" {
+      capabilities = ["read"]
+    }
+
+    # allows user to list ldap groups, users, and their details
+    path "/auth/ldap/groups/" {
+      capabilities = ["list"]
+    }
+    path "/auth/ldap/groups/*" {
+      capabilities = ["read"]
+    }
+    path "/auth/ldap/users/" {
+      capabilities = ["list"]
+    }
+    path "/auth/ldap/users/*" {
+      capabilities = ["read"]
+    }
+
+    # # allows user to delete tokens
+    # # disabled for the demo environment
+    # path "auth/token/revoke-accessor" {
+    #	capabilities = ["update"]
+    # }
+
+    # allows user to list users and their details
+    path "auth/userpass/users/" {
+      capabilities = ["list"]
+    }
+    path "auth/userpass/users/*" {
+      capabilities = ["read"]
+      # use the following if you wish to allow deletion:
+      # capabilities = ["read", "delete"]
+    }
+
+    # allows users to list approle details
+    path "auth/approle/role/" {
+      capabilities = ["list"]
+    }
+    path "auth/approle/role/*" {
+      capabilities = ["read"]
+      # use the following if you wish to allow deletion:
+      # capabilities = ["read", "delete"]
+    }
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    path "sys/seal" {
+       policy = "sudo"
+    }
+      
+    path "intermediate-ca/issue/kubernetes-vault" {
+      capabilities = ["update"]
+    }
+
+    path "auth/token/roles/kubernetes-vault" {
+      capabilities = ["read"]
+    }
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # this policy enables a user to view and perform actions
+    # in the "Administration" -> "Mounts" page
+
+    # allows user to list mounts
+    path "sys/mounts" {
+      capabilities = ["read"]
+    }
+
+    # allows user to view all mounts' configs
+    path "sys/mounts/*" {
+      capabilities = ["read"]
+    }
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # this policy enables a user to view and perform actions
+    # in the "Tools" -> "Token Creator" page
+
+    # listing and reading roles are not required
+    # but the make for a better experience for the demo
+    path "auth/token/roles/" {
+      capabilities = ["list"]
+    }
+    path "auth/token/roles/*" {
+      capabilities = ["read"]
+    }
+
+    # # allows user to create tokens
+    # # disabled on demo
+    # path "auth/token/create" {
+    # 	capabilities = ["update"]
+    # }
+    # path "auth/token/create/*" {
+    # 	capabilities = ["update"]
+    # }
+
+path "auth/approle/role/*" {
+  capabilities = ["update","read"]
+}
+
+Capabilities
+  curl -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" -X POST -d "{\"token\": \"c67f6ce5-1885-1678-c85d-ca55925c3e88\",\"paths\": [\"secret/datalake/\"]}" http://10.32.48.29:8200/v1/sys/capabilities
+  "{\"token\": \"c67f6ce5-1885-1678-c85d-ca55925c3e88\",\"paths\": [\"secret/datalake/\"]}"
+  
+Enable Audit
+  https://127.0.0.1:8200/v1/sys/audit/file
+  vault audit-enable file file_path=/opt//edp/hashicorp/vault/logs/vault_audit.log log_raw=true hmac_accessor=false
+  vault audit-disable file
+  
+Check Auth Method
+  vault token-create -policy=dev-readonly -policy=logs
+  vault auth -methods
+    Path    Type   Accessor             Default TTL  Max TTL  Replication Behavior  Description
+    token/  token  auth_token_014a0db1  system       system   replicated            token based credentials
+
+Auth
+  Get TOKEN
+      Get information about the locally authenticated token (this uses the /auth/token/lookup-self endpoint and permission):
+        $ vault token-lookup
+
+      Get information about a particular token (this uses the /auth/token/lookup endpoint and permission):
+        $ vault token-lookup 96ddf4bc-d217-f3ba-f9bd-017055595017
+
+      Get information about a token via its accessor:
+        $ vault token-lookup -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da  
+  
+  curl --header "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/auth/token/lookup-self
+  curl --header "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://127.0.0.1:8200/v1/auth/token/lookup-self
+  curl -X GET -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://127.0.0.1:8200/v1/sys/auth
+  curl -X GET -H "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/sys/auth
+
+AppRole
+  curl -X POST -H "X-Vault-Token: cfbc8c26-e684-8540-d78d-0303a7208e17" -d '{"policies":"dev","token_ttl":"5m"}' http://127.0.0.1:8200/v1/auth/approle/role/tenant_role
+  curl -X GET -H "X-Vault-Token:a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/auth/approle/role\?list\=true
+  curl -X GET -H "X-Vault-Token:$VAULT_TOKEN" http://127.0.0.1:8200/v1/auth/approle/role\?list\=true
+  
+  curl -X GET -H "X-Vault-Token: a02747af-bf2a-9ff4-d3cd-091c13489b14" http://vault-qa.tpp.ecom.com:8200/v1/auth/approle/role/datalake_admin/role-id
+  curl -X GET -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://127.0.0.1:8200/v1/auth/approle/role/tenant_role/role-id
+  curl -X POST -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" http://127.0.0.1:8200/v1/auth/approle/role/app/secret-id
+  curl -X POST -H "X-Vault-Token: c67f6ce5-1885-1678-c85d-ca55925c3e88" -d '{"policies":"tenant_ro"}' http://127.0.0.1:8200/v1/auth/approle/role/tenant_role
+  
+  # Get token for app
+  curl -X GET -H "X-Vault-Token:$VAULT_TOKEN" http://127.0.0.1:8200/v1/auth/approle/role/tenant_role/role-id
+  
+Secrets
+  vault write secret/password value=secret
+  vault read secret/password value=secret
+  
+--------------------------------------------------------------------------------------------------
+cfbc8c26-e684-8540-d78d-0303a7208e17
+
+curl -X GET -H "X-Vault-Token: cfbc8c26-e684-8540-d78d-0303a7208e17" http://127.0.0.1:8200/v1/auth/approle/role/tenant_role/role-id
+curl -X POST -H "X-Vault-Token: cfbc8c26-e684-8540-d78d-0303a7208e17" http://127.0.0.1:8200/v1/auth/approle/role/tenant_role/secret-id
+
+$ cat poltest.hcl 
+path "sys" { policy="deny" }
+path "auth/token/revoke-self" { policy="write" }
+path "secret/myapp" { policy="read" }
+
+$ vault policy-write myapp poltest.hcl
+Policy 'myapp' written.
+
+$ vault write secret/myapp foo=bar
+Success! Data written to: secret/myapp
+
+$ vault token-create -policy=myapp
+Key             Value
+token           6185a3dc-0841-4c7b-5b7e-f9dc13dcd586
+token_accessor  7a4424bc-cb0b-8e61-65f0-e15aecaebb9f
+token_duration  2592000
+token_renewable true
+token_policies  [default myapp]
+
+# Show that an invalid token has an effect
+$ VAULT_TOKEN="a" vault read secret/myapp
+Error reading secret/myapp: Error making API request.
+
+URL: GET http://127.0.0.1:8200/v1/secret/myapp
+Code: 403. Errors:
+
+* permission denied
+
+$ VAULT_TOKEN="6185a3dc-0841-4c7b-5b7e-f9dc13dcd586" vault read secret/myapp
+Key             Value
+lease_duration  2592000
+foo             bar

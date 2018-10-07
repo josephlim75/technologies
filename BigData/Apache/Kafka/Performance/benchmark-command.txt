@@ -1,0 +1,101 @@
+## Topics
+```
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_snp_1Bx2K_ACK
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_snp_1Bx5K_ACK
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_snp_1Bx10K_ACK
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_snp_1Bx15K_ACK
+
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_lz4_1Bx2K_ACK
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_lz4_1Bx5K_ACK
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_lz4_1Bx10K_ACK
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 360 --replication-factor 3 --topic benchmark_360_lz4_1Bx15K_ACK
+
+bin/kafka-topics.sh --create --zookeeper 10.123.128.22:2181/kafka --partitions 60 --replication-factor 3 --topic benchmark_25_lz4_1Bx15K_ACK
+```
+
+bin/kafka-topics.sh --create --zookeeper 10.121.128.22:2181/kafka --partitions 50 --replication-factor 3 --topic __consumer_offsets
+
+----
+## Producer
+```
+nohup 
+
+bin/kafka-producer-perf-test.sh --print-metrics --num-records 1000000000 --record-size 5120 --throughput 500000 --topic benchmark_360_snp_1Bx2K_ACK --producer-props \
+acks=all \
+retries=12 \
+retry.backoff.ms=5000 \
+compression.type=ls4 \
+max.in.flight.requests.per.connection=2 \
+linger.ms=100 \
+batch.size=16384 \
+buffer.memory=73728000 \
+bootstrap.servers=10.123.128.25:9092,10.123.128.28:9092,10.123.128.23:9092,10.123.128.26:9092,10.123.128.29:9092 
+
+
+
+&> producer_360_snp_1Bx2K_ACK_01.out&
+```
+-------------------------------------------------------------------------------------------------------------------------------------------------
+## Consumer
+
+nohup bin/kafka-consumer-perf-test.sh --print-metrics --show-detailed-stats --group benchmark_360_snp_1Bx2K_001 --topic benchmark_360_snp_1Bx2K_ACK \
+--timeout 30000 --messages 1000000000 --fetch-size 204800 --threads 90 --num-fetch-threads 2 \
+--broker-list 10.123.128.22:9092,10.123.128.25:9092,10.123.128.28:9092,10.123.128.23:9092,10.123.128.26:9092,10.123.128.29:9092 &> consumer_360_snp_1Bx2K_ACK.out&
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Producer
+
+Setup
+bin/kafka-topics.sh --zookeeper esv4-hcl197.grid.linkedin.com:2181 --create --topic test-rep-one --partitions 6 --replication-factor 1
+bin/kafka-topics.sh --zookeeper esv4-hcl197.grid.linkedin.com:2181 --create --topic test --partitions 6 --replication-factor 3
+
+Single thread, no replication
+
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test7 50000000 100 -1 acks=1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=8196
+
+Single-thread, async 3x replication
+
+bin/kafktopics.sh --zookeeper esv4-hcl197.grid.linkedin.com:2181 --create --topic test --partitions 6 --replication-factor 3
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test6 50000000 100 -1 acks=1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=8196
+
+Single-thread, sync 3x replication
+
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test 50000000 100 -1 acks=-1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=64000
+
+Three Producers, 3x async replication
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test 50000000 100 -1 acks=1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=8196
+
+Throughput Versus Stored Data
+
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test 50000000000 100 -1 acks=1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=8196
+
+Effect of message size
+
+for i in 10 100 1000 10000 100000;
+do
+echo ""
+echo $i
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test $((1000*1024*1024/$i)) $i -1 acks=1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=128000
+done;
+
+Consumer
+Consumer throughput
+
+bin/kafka-consumer-perf-test.sh --zookeeper esv4-hcl197.grid.linkedin.com:2181 --messages 50000000 --topic test --threads 1
+
+3 Consumers
+
+On three servers, run:
+bin/kafka-consumer-perf-test.sh --zookeeper esv4-hcl197.grid.linkedin.com:2181 --messages 50000000 --topic test --threads 1
+
+End-to-end Latency
+
+bin/kafka-run-class.sh kafka.tools.TestEndToEndLatency esv4-hcl198.grid.linkedin.com:9092 esv4-hcl197.grid.linkedin.com:2181 test 5000
+
+Producer and consumer
+
+bin/kafka-run-class.sh org.apache.kafka.clients.tools.ProducerPerformance test 50000000 100 -1 acks=1 bootstrap.servers=esv4-hcl198.grid.linkedin.com:9092 buffer.memory=67108864 batch.size=8196
+
+bin/kafka-consumer-perf-test.sh --zookeeper esv4-hcl197.grid.linkedin.com:2181 --messages 50000000 --topic test --threads 1
+

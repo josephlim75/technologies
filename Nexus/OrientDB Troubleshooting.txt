@@ -1,0 +1,16 @@
+Just in case that actually matters for somebody else - the above did not help me, but the json export / import one.
+
+In my case nexus runs in the official docker image, so
+
+docker exec -it nexus bash
+Or however you access your nexus shell
+
+cd /tmp
+/opt/jdk1.8.0_141/bin/java -jar /opt/sonatype/nexus/lib/support/nexus-orient-console.jar
+
+CONNECT plocal:/nexus-data/db/component admin admin
+
+export database component-export
+drop database
+create database plocal:/nexus-data/db/component
+import database component-export.json.gz

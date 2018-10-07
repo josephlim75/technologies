@@ -1,0 +1,154 @@
+Convert disk to GPT
+
+parted /dev/sda mklabel gpt
+
+Fdisk Shell
+===============
+sudo su; \
+lsblk; \
+pause
+echo "n
+
+
++1T
+n
+
+
++1T
+n
+
+
++1T
+n
+
+
++1T
+n
+
+
++500G
+n
+
+
++500G
+n
+
+
+
+w
+" | fdisk /dev/sda
+
+
+echo "n
+
+
++1T
+n
+
+
++1T
+n
+
+
++1T
+n
+
+
+
+w
+" | fdisk /dev/sda; \
+echo "n
+
+
++1T
+n
+
+
++1T
+n
+
+
++1T
+n
+
+
+
+w
+" | fdisk /dev/sdb
+
+
+
+
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
+o # clear the in memory partition table
+n # new partition
+  # default partition number
+  # default first sector
++1T # 100 MB boot parttion
+n # new partition
+  # default partition number
+  # default, start immediately after preceding partition
++1T # default, extend partition to end of disk
+n # new partition
+  # default partition number
+  # default, start immediately after preceding partition
++1T # default, extend partition to end of disk
+n # new partition
+  # default partition number
+  # default, start immediately after preceding partition
++1T # default, extend partition to end of disk
+n # new partition
+  # default partition number
+  # default, start immediately after preceding partition
++500G # default, extend partition to end of disk
+n # new partition
+  # default partition number
+  # default, start immediately after preceding partition
++500G # default, extend partition to end of disk
+n # new partition
+  # default partition number
+  # default, start immediately after preceding partition
++500G # default, extend partition to end of disk  
+p # print the in-memory partition table
+w # write the partition table
+q # and we're done
+EOF
+
+
+
+Fdisk
+===============
+sudo umount /dev/sdb1
+sudo dd if=/dev/zero of=/dev/sdb1 bs=512 count=1
+
+
+fdisk -l
+sudo fdisk -l
+
+fdisk /dev/sdb
+
+d - delete partition
+? - number of partition
+w - write partition info
+
+partprobe /dev/sdb   (Partprobe allow fdisk to be effective immediately without reboot)
+
+------------------------------------------------------------------------------------------------------------------------
+Check what partition type
+
+parted /dev/sda
+print
+
+------------------------------------------------------------------------------------------------------------------------
+
+Create partitions
+
+fdisk /dev/sdb
+p   <--- show partition
+n   <--- create partition
+          Choose primary / extended
+Partition number: (default)
+First sector: (default)
+Last sector: +1T (1 Terabyte)
+
+

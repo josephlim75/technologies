@@ -16,13 +16,13 @@
         "docker_tls_cert_basepath": "/etc/docker",
         "docker_tls_cert_path": "/etc/docker/cert",
         "docker_tls_expiration": 3650,
-        "docker_tls_subject": "/C=US/ST=GA/L=COLUMBUS/O=TSYS/OU=DATALAKE",
+        "docker_tls_subject": "/C=US/ST=GA/L=COLUMBUS/O=COMPANY/OU=BIGDATA",
         "docker_user": "docker",
         "docker_version": "",
         "docker_volume_name": "vg_docker",
-        "drill_pass": "6RZy49zN",
+        "drill_pass": "",
         "drill_user": "drill",
-        "flink_pass": "D@t@lak3!",
+        "flink_pass": "!",
         "flink_user": "flink",
         "group_names": [
             "cluster",
@@ -191,7 +191,7 @@
             "skip_reason": "Conditional result was False",
             "skipped": true
         },
-        "host_domain": "tsysdev.net",
+        "host_domain": "dev.net",
         "host_nodemanager": {
             "changed": false,
             "msg": "All items completed",
@@ -281,7 +281,7 @@
         "mariadb_root_user": "root",
         "module_setup": true,
         "nexus_pass": "datalakeuser",
-        "nexus_url": "http://artifactrepo.qa.tpp.tsysecom.com:8081/nexus/content/repositories/datalakelibraries",
+        "nexus_url": "http://artifactrepo.qa.tpp.ecom.com:8081/nexus/content/repositories/datalakelibraries",
         "nexus_user": "nexus",
         "omit": "__omit_place_holder__6bf213ed492cdb9227eecb7114d6607873e68d4d",
         "packages": "yarn",
@@ -530,7 +530,7 @@ ok: [lxvdatlkdmprn03] => (item=lxvdatlkdmprn06) => {
                 "10.32.16.12"
             ],
             "search": [
-                "tsysdev.net"
+                "dev.net"
             ]
         },
         "ansible_docker0": {
@@ -602,7 +602,7 @@ ok: [lxvdatlkdmprn03] => (item=lxvdatlkdmprn06) => {
             "stp": false,
             "type": "bridge"
         },
-        "ansible_domain": "tsysdev.net",
+        "ansible_domain": "dev.net",
         "ansible_effective_group_id": 0,
         "ansible_effective_user_id": 0,
         "ansible_env": {
@@ -696,7 +696,7 @@ ok: [lxvdatlkdmprn03] => (item=lxvdatlkdmprn06) => {
         },
         "ansible_fips": false,
         "ansible_form_factor": "Other",
-        "ansible_fqdn": "lxvdatlkdmprd1.tsysdev.net",
+        "ansible_fqdn": "lxvdatlk.dev.net",
         "ansible_gather_subset": [
             "hardware",
             "network",

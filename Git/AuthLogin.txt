@@ -1,0 +1,30 @@
+Git store password cache
+============================
+
+Enable credential store 
+  git config credential.helper store
+
+Key in password for the first time and it will store in the store
+git pull
+------------------------------------------------------------------------------------
+To fix this, you can use
+
+git config --global credential.helper osxkeychain
+You'll then be prompted for your password again.
+
+For Windows, it's the same command with a different argument:
+
+git config --global credential.helper wincred
+
+Windows 10
+=============
+git config --global credential.helper manager
+
+Goto Credential Manager, remove the item
+
+None of the other answers worked for me on MacOS Sierra 10.12.4
+
+Here is what I had to do:
+
+git config --global --unset user.password
+Then run your git command (ex. git push) and reenter your username and password.

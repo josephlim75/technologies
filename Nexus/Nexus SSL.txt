@@ -1,0 +1,51 @@
+http://codeheaven.io/using-nexus-3-as-your-repository-part-3-docker-images/
+
+
+
+rm -rf /tmp/keystore.jks; \
+keytool -genkeypair -storepass nexus123 -keypass nexus123 -alias jetty -keyalg RSA -keysize 2048 -validity 5000 -dname "CN=localhost, OU=Datalake, O=TPP, L=TEST, ST=TEST, C=US" -ext "SAN=DNS:localhost,IP:127.0.01" -ext "BC=ca:true" -destkeystore $NEXUS_HOME/etc/ssl/keystore.jks -deststoretype pkcs12
+
+$NEXUS_HOME/etc/jetty/jetty-https.xml
+Change password
+
+
+/nexus-data/etc/nexus.properties
+application-port-ssl=8481
+nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-https.xml,${jetty.etc}/jetty-requestlog.xml
+
+sh -c ${SONATYPE_DIR}/start-nexus-repository-manager.sh
+
+
+https://help.sonatype.com/display/NXRM3/Configuring+SSL
+
+Understanding Nexus ssl.etc
+==================================
+https://groups.google.com/a/glists.sonatype.com/forum/#!topic/nexus-users/SDnSuBe9kDY
+ Other recipients: morten.b...@gmail.com
+Hi,
+
+First, the only file loaded from sonatype-work/nexus3/etc is “nexus.properties” which lets you override various properties in the configuration templates. Note you can find the default values for these properties in $install-dir/etc/nexus-default.properties.
+
+If you need to further customise configuration files (over and above the existing property placeholders) then you need to change them under $install-dir/etc.
+
+Second, you currently set the keystore and truststore paths to:
+
+	<Property name="ssl.etc"/>/ssl/nexus3.jks
+	<Property name="ssl.etc"/>/ssl/nexus3.jks
+
+Since ${ssl.etc} is defined as ${install-dir}/etc/ssl these will resolve to:
+
+	 ${install-dir}/etc/ssl/ssl/nexus3.jks
+	 ${install-dir}/etc/ssl/ssl/nexus3.jks
+
+If you remove the extra “/ssl” from your store path settings in your jetty configuration (make sure those jetty files are located in $install-dir/etc/jetty) and move your keystore and truststore files to ${install-dir}/etc/ssl then they should load.
+
+Setting Docker to point to nexus 
+==================================
+
+https://support.sonatype.com/hc/en-us/articles/217542177-Using-Self-Signed-Certificates-with-Nexus-Repository-Manager-and-Docker-Daemon
+
+https://docs.docker.com/registry/insecure/#use-self-signed-certificates
+
+cp certs/domain.crt /etc/pki/ca-trust/source/anchors/myregistrydomain.com.crt
+update-ca-trust

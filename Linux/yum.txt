@@ -1,0 +1,51 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+yum-config-manager --disable <yum id>
+
+yum whatprovides */<package to search>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+The following table shows some examples of common tasks that you can perform using yum.
+
+Command
+Description
+yum repolist          Lists all enabled repositories.
+yum list              Lists all packages that are available in all enabled repositories and all packages that are installed on your system.
+yum list installed    Lists all packages that are installed on your system.
+yum list available    Lists all packages that are available to be installed in all enabled repositories.
+yum search string     Searches the package descriptions for the specified string.
+yum provides feature  Finds the name of the package to which the specified file or feature belongs. For example: yum provides /etc/sysconfig/atd
+yum info package      Displays detailed information about a package. For example:  yum info bind         
+yum install package   Installs the specified package, including packages on which it depends. For example: yum install ocfs2-tools
+yum check-update      Checks whether updates exist for packages that are already installed on your system.
+yum update package    Updates the specified package, including packages on which it depends. For example:  yum upgrade nfs-utils
+yum update            Updates all packages, including packages on which they depend.
+yum remove package    Removes the specified package. For example: yum erase nfs-utils 
+yum erase package     Removes the specified package. This command has the same effect as the yum remove command.
+yum update            Updates all packages, including packages on which they depend.
+yum clean all         Removes all cached package downloads and cached headers that contain information about remote packages. Running this command can help to clear problems that can result from unfinished transactions or out-of-date headers.
+yum help              Displays help about yum usage.
+yum help command      Displays help about the specified yum command. For example:
+yum help upgrade      yum shell
+
+Runs the yum interactive shell.
+See the yum(8) manual page for more information.
+
+To list the files in a package, use the repoquery utility, which is included in the yum-utils package. 
+For example, the following command lists the files that the btrfs-progs package provides.
+
+# repoquery -l btrfs-progs
+/sbin/btrfs
+/sbin/btrfs-convert
+/sbin/btrfs-debug-tree
+.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Simply prefix the package name that you want to keep with -. 
+You need to add -- before the list of packages to ensure that the name of the package is not treated like an option:
+
+yum remove *php* -- -php-common 
+
+
+If the name starts with a - character, then a search is done within the transaction and any matches are removed.

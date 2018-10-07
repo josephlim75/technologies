@@ -1,0 +1,75 @@
+## DNS
+Examples
+
+The examples below show how nsupdate could be used to insert and delete resource records from the example.com zone. Notice that the input in each example contains a trailing blank line so that a group of commands are sent as one dynamic update request to the master name server for example.com.
+
+# nsupdate
+> update delete oldhost.example.com A
+> update add newhost.example.com 86400 A 172.16.1.1
+> send
+Any A records for oldhost.example.com are deleted. and an A record for newhost.example.com it IP address 172.16.1.1 is added. The newly-added record has a 1 day TTL (86400 seconds)
+# nsupdate
+> prereq nxdomain nickname.example.com
+> update add nickname.example.com 86400 CNAME somehost.example.com
+> send
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The reverse dns dig command is as follows on Linux, OS X, BSD, and other Unix-like operating systems:
+
+dig -x {ip-address}
+dig +noall +answer -x {ip-address}
+dig +noall +answer -x 74.125.236.211
+Sample outputs:
+
+211.236.125.74.in-addr.arpa. 10912 IN   PTR     maa03s17-in-f19.1e100.net.
+You can also use host command or nslookup command as follows:
+
+host 74.125.236.211
+nslookup 74.125.236.211
+Examples and usage: HowTo Test or Check Reverse DNS on a Linux / Unix
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FEDORA
+========
+dnf -y install bind-utils
+
+RHEL/CENTOS
+============
+yum -y install bind-utils
+
+DEBIAN/UBUNTU
+==================
+apt-get update
+apt-get install -y dnsutils
+
+Managing your PTR records
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Once nsupdate is installed you can move on to update the record.
+
+Let’s say that you’re running a cloud server with an IP address of 162.213.39.225, which translates to domain name – 225.39.213.162.in-addr.arpa.
+
+Here’s what you do to update its PTR record to somehost.somedomain.org :
+
+
+nsupdate -v
+update delete  225.39.213.162.in-addr.arpa IN PTR
+update add 225.39.213.162.in-addr.arpa 86400 IN PTR somehost.somedomain.org
+send
+
+nsupdate -v
+update delete  225.39.213.162.in-addr.arpa IN PTR
+update add 225.39.213.162.in-addr.arpa 86400 IN PTR somehost.somedomain.org
+send
+
+These commands will effectively:
+
+delete the old reverse record for 225.39.213.162.in-addr.arpa
+add a new reverse record for 225.39.213.162.in-addr.arpa with a TTL of 86400
+send the command batch to the master DNS
+Using nsupdate -v ensures the updates are sent over TCP which we require. 
+Please note that each update must be made from the IP whose record you wish to update.
+
+It you are using multiple IP addresses on the same network interface you may find it is not possible to successfully update your PTR records 
+using the method above. If this is your case, please contact support and we’ll add the record manually for you. For the vast majority of 
+customers this method works reliably and can be incorporated easily into automated deployment workflows to ensure PTR records are in place 
+across a dynamic environment.

@@ -14,7 +14,7 @@ Hello,
 
 Maybe this command is an easier way to count the number of rows in a table:
 
-/> maprcli table region list -path /tsys/refined/02220/datasets/tables/ts2/core/consumer/ims/tran_detail
+/> maprcli table region list -path /refined/02220/datasets/tables/ts2/core/consumer/ims/tran_detail
 ---------------------------------------------------------------------------------------------------------------------------------
 
 http://maprdocs.mapr.com/home/ReferenceGuide/table-edit.html#tableedit
@@ -33,10 +33,10 @@ maprcli table cf colperm set -path /tables/CP_DATA -cfname A -name column3 -read
 
 maprcli table create -path /user/jlim/tbl1 -adminaccessperm "u:mapr|u:jlim"
 
-maprcli table edit -path /tsys/edp/datasets/tables/authorizations -adminaccessperm u:mapr
-maprcli table edit -path /tsys/edp/datasets/tables/authorizations -adminaccessperm "u:mapr|u:jlim"
-maprcli table cf edit -path /tsys/edp/datasets/tables/authorizations -cfname "default" -readperm "g:datalake_dev_users"
-maprcli table cf edit -path /tsys/edp/datasets/tables/authorizations -cfname "default" -readperm "p" 
+maprcli table edit -path /edp/datasets/tables/authorizations -adminaccessperm u:mapr
+maprcli table edit -path /edp/datasets/tables/authorizations -adminaccessperm "u:mapr|u:jlim"
+maprcli table cf edit -path /edp/datasets/tables/authorizations -cfname "default" -readperm "g:datalake_dev_users"
+maprcli table cf edit -path /edp/datasets/tables/authorizations -cfname "default" -readperm "p" 
 
 maprcli table edit
 -path <path >

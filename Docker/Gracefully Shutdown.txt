@@ -1,0 +1,8 @@
+https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
+https://github.com/phusion/baseimage-docker#whats_inside
+
+https://www.ctl.io/developers/blog/post/gracefully-stopping-docker-containers/
+
+https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86
+
+https://stackoverflow.com/questions/32940887/docker-container-shutdown-script

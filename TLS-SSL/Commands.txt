@@ -35,8 +35,8 @@ keytool -genkeypair -keystore keystore.jks \
 -keyalg RSA \
 -keysize 2048 \
 -validity 365 \
--dname "CN=*.tsysdev.net, OU=Datalake, O=Sonatype, L=Unspecified, ST=Unspecified, C=US" \
--ext "SAN=DNS:wxv-isa-dapp2.tsysdev.net,IP:10.32.48.173" \
+-dname "CN=*.dev.net, OU=Datalake, O=Sonatype, L=Unspecified, ST=Unspecified, C=US" \
+-ext "SAN=DNS:wxv-isa-dapp2.dev.net,IP:10.32.48.173" \
 -ext "BC=ca:true" \
 -deststoretype pkcs12
 
@@ -46,7 +46,7 @@ certutil -dump vault-cert.pem
 
 ----------------------------------------------------------------------------------------------------
 
-keytool -printcert -rfc -sslserver https://blackduck.tsys.com > blackduck.pem
+keytool -printcert -rfc -sslserver https://blackduck.com > blackduck.pem
 
 Verify if DER cert
 =======================
@@ -56,7 +56,7 @@ Verify if is encoded PEM DER
 ===============================
 openssl x509 -in blackduck.pem -inform der -text -noout
 
-keytool -import -alias blackduck -keystore /etc/pki/java/cacerts  -file /tmp/blackducktsyscom.crt
+keytool -import -alias blackduck -keystore /etc/pki/java/cacerts  -file /tmp/blackduckcom.crt
 
 Step 3 - Import the certificate into the Java Store
 ========================================================

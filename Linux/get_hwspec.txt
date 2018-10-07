@@ -1,0 +1,20 @@
+Get the system model 
+  $ sudo dmidecode | grep -A3 '^System Information'
+
+CPU
+  $ cat /proc/cpuinfo
+
+Memory :
+  $ free
+  $ cat /proc/meminfo
+
+HDD:
+  $ df -h
+  $ sudo fdisk -l
+  $ hdparm -i /dev/device (for example sda1, hda3...)
+
+sudo dmidecode
+
+-- Require 3rd party tool --
+  sudo lshw | less
+  hwinfo

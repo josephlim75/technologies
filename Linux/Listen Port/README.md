@@ -1,0 +1,15 @@
+
+
+Nice and verbose! From the man pages.
+Single port:
+
+nc -zv 127.0.0.1 80
+
+Multiple ports:
+
+nc -zv 127.0.0.1 22 80 8080
+
+Range of ports:
+
+nc -zv 127.0.0.1 20-30
+

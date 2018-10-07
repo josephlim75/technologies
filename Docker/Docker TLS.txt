@@ -1,0 +1,106 @@
+http://tech.paulcz.net/2016/01/secure-docker-with-tls/
+https://integratedcode.us/2015/07/29/using-tls-with-the-docker-engine/
+https://github.com/docker/docker.github.io/blob/master/swarm/configure-tls.md
+
+---
+- name: create certificates directory
+  file:
+    path: "{{ docker_tls_cert_path }}"
+    state: directory
+    mode: 0644 
+  
+- name: create ca certificates
+  shell: |
+    openssl genrsa -aes256 -passout pass:{{ docker_tls_ca_pass }} -out {{ docker_tls_cert_path }}/ca-key.pem 4096
+    openssl req -passin pass:{{ docker_tls_ca_pass }} \
+    -new -x509 -days {{ docker_tls_expiration }} \
+    -key {{ docker_tls_cert_path }}/ca-key.pem -sha256 \
+    -out {{ docker_tls_cert_path }}/ca.pem -subj '{{ docker_tls_subject }}/CN={{ ansible_fqdn }}'
+  tags:
+    - ca-certificates
+  
+- name: create server certificates
+  shell: |
+    echo "subjectAltName = DNS:{{ ansible_fqdn }},IP:{{ ansible_host }},IP:127.0.0.1" > {{ docker_tls_cert_path }}/extfile.cnf
+    openssl genrsa -out {{ docker_tls_cert_path }}/server-key.pem 4096
+    openssl req -subj "/CN={{ ansible_fqdn }}" -new -key {{ docker_tls_cert_path }}/server-key.pem -out {{ docker_tls_cert_path }}/server.csr
+    openssl x509 -passin pass:{{ docker_tls_ca_pass }} \
+    -req -days {{ docker_tls_expiration }} \
+    -in {{ docker_tls_cert_path }}/server.csr \
+    -CA {{ docker_tls_cert_path }}/ca.pem \
+    -CAkey {{ docker_tls_cert_path }}/ca-key.pem \
+    -CAcreateserial \
+    -out {{ docker_tls_cert_path }}/server-cert.pem \
+    -extfile {{ docker_tls_cert_path }}/extfile.cnf
+  tags:
+    - server-certificates
+    
+    
+- name: create client certificates
+  shell: |
+    openssl genrsa -out {{ docker_tls_cert_path }}/key.pem 4096
+    openssl req -subj "/CN=client" -new -key {{ docker_tls_cert_path }}/key.pem -out {{ docker_tls_cert_path }}/client.csr
+    echo "extendedKeyUsage = clientAuth" > {{ docker_tls_cert_path }}/extfile.cnf
+    openssl x509 -passin pass:{{ docker_tls_ca_pass }} \
+    -req -days {{ docker_tls_expiration }} \ 
+    -in {{ docker_tls_cert_path }}/client.csr \
+    -CA {{ docker_tls_cert_path }}/ca.pem \
+    -CAkey {{ docker_tls_cert_path }}/ca-key.pem \
+    -CAcreateserial \
+    -out {{ docker_tls_cert_path }}/cert.pem \
+    -extfile {{ docker_tls_cert_path }}/extfile.cnf
+    
+- name: secure all certificate files
+  file:
+    path: "{{ docker_tls_cert_path }}/{{ item.file }}"
+    mode: "{{ item.filemode }}"
+  with_items:
+    - {file: ca-key.pem, filemode: '0400'}
+    - {file: ca.pem, filemode: '0444'}
+    - {file: server-key.pem, filemode: '0400'}
+    - {file: server-cert.pem, filemode: '0444'}
+    - {file: key.pem, filemode: '0400'}
+    - {file: cert.pem, filemode: '0444'}
+    
+- name: clean up certificates
+  file:
+    path: "{{ docker_tls_cert_path }}/{{ item }}"
+    state: absent
+  with_items:
+    - server.csr
+    - client.csr
+    - extfile.cnf
+    - ca.srl
+
+
+---
+ansible_ssh_user: root
+ansible_ssh_pass: joseph6728
+docker_tls_ca_pass: joseph6728
+docker_tls_expiration: 3650
+docker_tls_cert_path: /etc/cert
+docker_tls_subject: /C=US/ST=GA/L=COLUMBUS/O=TPP/OU=DATALAKE
+mapr_pass: mapr
+mapr_uid: 5000
+mapr_gid: 5000
+mysql_root_user: root
+mysql_root_password: mapr
+
+
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -D \
+  --tlsverify \
+  --tlscacert=/etc/cert/ca.pem \
+  --tlscert=/etc/cert/server-cert.pem \
+  --tlskey=/etc/cert/server-key.pem \
+  -H tcp://0.0.0.0:2376
+  -H unix:///var/run/docker.sock
+
+
+
+
+
+DOCKER_HOST=tcp://127.0.0.1:2376
+DOCKER_TLS_VERIFY=1
+DOCKER_CERT_PATH=/etc/cert/
