@@ -71,7 +71,8 @@ xxd -r -p input.txt mapr.tar.gz
 - Create `@creds.json` file containing password
 
         {
-          "ansible_ssh_pass": "xxxxxx"
+          "ansible_ssh_pass": "xxxxxx",
+          "hashivault_token": "xxxxx-xxxxx-xxxxx-xxxxx"
         }
 
 - Set ANSIBLE_CONFIG
