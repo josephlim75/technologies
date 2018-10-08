@@ -57,7 +57,10 @@ xxd -r -p input.txt mapr.tar.gz
     
 - Running playbook 
         
-        # ansible-playbook -i inventory/qa -e "@@creds.json" -u mapr playbooks/mi.yml
+        # ansible-playbook -i inventory/qa -e "@@creds.json" \
+          -u mapr \
+          --tags install,configure,up
+          playbooks/mapr-install2.yml
         
         # ./add-host-sudoer.sh
         
