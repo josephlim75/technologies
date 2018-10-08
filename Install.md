@@ -1,3 +1,30 @@
+## Resize /var mount point
+        # Create a user that have sudo access
+        
+        # Login with the user to stop all running services
+        systemctl stop rpcbind.socket
+        systemctl stop centrifydc
+        systemctl stop rsyslog
+        systemctl stop splunk
+        
+        # Make a backup of /var 
+        tar czf var.tar.gz /var
+        
+        vgremove vg_docker
+        sudo rm -rf /var/lib/docker
+
+        lsof | grep /var
+          -- make sure no process using /var
+          -- make a backup of /var
+
+        umount -l /var
+        lvremove /dev/vg_sys/lv_var
+        vgreduce vg_sys /dev/sdc
+        vgreduce vg_sys /dev/sdd
+        lvcreate -l+100%FREE -n lv_var vg_sys
+        mkfs.ext4 /dev/vg_sys/lv_var
+        mount /dev/vg_sys/lv_var /var
+
 ## Docker Overlay2
 - Creating overlay2 lvm mount
 
