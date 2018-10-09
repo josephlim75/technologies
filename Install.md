@@ -82,7 +82,16 @@ xxd -r -p input.txt mapr.tar.gz
 - List the hosts under group cluster
          
          # ansible -i inventory/qa cluster --list-hosts
-    
+
+- Add user directory in MapR file system /users
+
+         # acl_group is only if group doesn't exists for the same user id
+         $ ansible-playbook -i inventory/qa -e "@@creds.json" \
+          -u mapr \
+          -e "acl_group=xxxx" \
+          playbooks/access_control.yml \
+          --tags manage_mfs_homedir
+
 - Running playbook 
         
         # ansible-playbook -i inventory/qa -e "@@creds.json" \
