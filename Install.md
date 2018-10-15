@@ -1,3 +1,30 @@
+## Resize /var mount point
+        # Create a user that have sudo access
+        
+        # Login with the user to stop all running services
+        systemctl stop rpcbind.socket
+        systemctl stop centrifydc
+        systemctl stop rsyslog
+        systemctl stop splunk
+        
+        # Make a backup of /var 
+        tar czf var.tar.gz /var
+        
+        vgremove vg_docker
+        sudo rm -rf /var/lib/docker
+
+        lsof | grep /var
+          -- make sure no process using /var
+          -- make a backup of /var
+
+        umount -l /var
+        lvremove /dev/vg_sys/lv_var
+        vgreduce vg_sys /dev/sdc
+        vgreduce vg_sys /dev/sdd
+        lvcreate -l+100%FREE -n lv_var vg_sys
+        mkfs.ext4 /dev/vg_sys/lv_var
+        mount /dev/vg_sys/lv_var /var
+
 ## Docker Overlay2
 - Creating overlay2 lvm mount
 
@@ -44,7 +71,8 @@ xxd -r -p input.txt mapr.tar.gz
 - Create `@creds.json` file containing password
 
         {
-          "ansible_ssh_pass": "xxxxxx"
+          "ansible_ssh_pass": "xxxxxx",
+          "hashivault_token": "xxxxx-xxxxx-xxxxx-xxxxx"
         }
 
 - Set ANSIBLE_CONFIG
@@ -54,10 +82,22 @@ xxd -r -p input.txt mapr.tar.gz
 - List the hosts under group cluster
          
          # ansible -i inventory/qa cluster --list-hosts
-    
+
+- Add user directory in MapR file system /users
+
+         # acl_group is only if group doesn't exists for the same user id
+         $ ansible-playbook -i inventory/qa -e "@@creds.json" \
+          -u mapr \
+          -e "acl_group=xxxx" \
+          playbooks/access_control.yml \
+          --tags manage_mfs_homedir
+
 - Running playbook 
         
-        # ansible-playbook -i inventory/qa -e "@@creds.json" -u mapr playbooks/mi.yml
+        # ansible-playbook -i inventory/qa -e "@@creds.json" \
+          -u mapr \
+          --tags install,configure,up
+          playbooks/mapr-install2.yml
         
         # ./add-host-sudoer.sh
         
@@ -72,13 +112,19 @@ xxd -r -p input.txt mapr.tar.gz
           --user mapr -e "@@credential.json"
 
 - Installing Hive requires `mapr_pass` and `mariadb_hive_pass` values
-
-        # ansible-playbook -i inventory/qa playbooks/mapr-eco-packages.yml  \
+        
+        # Mapr password and hashivault token is in @creds.json file
+        $ ansible-playbook -i inventory/qa -u mapr -e "@@creds.json" \
+            playbooks/mapr-mep-install.yml \
+            --tags pkg_yarn,install
+            
+        # Deprecated 
+        $ ansible-playbook -i inventory/qa playbooks/mapr-eco-packages.yml  \
            -e "access_region=qa hashivault_token=xxxx" \
            -e "packages=hive" --user mapr -e "@@creds.json" \
            --skip-tags metastore
 
-        # ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml \
+        $ ansible-playbook -i <inventory> playbooks/mapr-eco-packages.yml \
            -e "access_region=dev hashivault_token=xxxxxxxxxxx" \
            -e "packages=hive,oozie" \
           --user mapr -e "@@credential.json"
