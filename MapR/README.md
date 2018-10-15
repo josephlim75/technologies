@@ -30,6 +30,27 @@ RHEL 7.4 |Yes |Yes |Yes | Yes
 ### Metrics Monitoring
 - MapR 6.1.0 requires a minimal level of metrics monitoring to be configured to support metering.
 
+## Re-formatting a Node
+
+- Skip to end of metadataGo to start of metadata
+- Change to the root user (or use sudo for the following commands).
+- Stop the Warden:
+    
+      service mapr-warden stop
+
+- Remove the disktab file:
+
+      rm /opt/mapr/conf/disktab
+
+- Create a text file /tmp/disks.txt that lists all the disks and partitions to format for use by MapR. See Setting Up Disks for MapR.
+
+- Use disksetup to re-format the disks:
+    
+      disksetup -F /tmp/disks.txt
+
+- Start the Warden:
+
+      service mapr-warden start
 
 ## Changing Cluster name
 

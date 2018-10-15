@@ -1,5 +1,57 @@
-Convert DOS to GPT
-=======================
+## List all mounts
+  
+    sudo systemctl --type mount
+
+
+## Mounting via Systemd
+
+Mount point with hyphens has to be escaped in systemd.  To escaped a mountpoint, the command below can be used
+
+    $ systemd-escape -p --suffix=mount "/mapr/qa-red/tsys/"
+    $ mapr-qa\x2dred-tsys.mount
+
+To start a mount, `sudo systemctl start mapr-qa\\x2dred-tsys.mount`
+    
+### Stackoverflow reference
+
+- [Systemd-hyphens-in-mount-point](https://superuser.com/questions/1101753/systemd-hyphens-in-mount-point)
+
+Well the hyphen will be escaped when the unit is being created:
+
+    [tom@localhost ~]$ udisksctl mount -b /dev/sdb1 
+    Mounted /dev/sdb1 at /run/media/tom/A942-EE49.
+
+    [tom@localhost ~]$ systemctl --type mount
+    UNIT                             LOAD   ACTIVE SUB     DESCRIPTION
+    ...
+    run-media-tom-A942\x2dEE49.mount loaded active mounted /run/media/tom/A942-EE49
+    ...
+
+With some older version of systemd, you may need to escape the backslash of the escaped hyphen:
+
+    [Unit]
+    ...
+    [Service]
+    ...
+    [Install]
+    WantedBy=run-media-tom-A942\\x2dEE49.mount
+
+However when I just tested it again with systemd 230, apparently you don't need to do that anymore. So:
+
+    [Unit]
+    ...
+    [Service]
+    ...
+    [Install]
+    WantedBy=run-media-tom-A942\x2dEE49.mount
+
+should do.
+
+FWIW, I think udisks2 prefers filesystem label over UUID if set.
+
+P.S. The above case (WantedBy=) is just an example. It is used to make a service start (if enabled) with the mounting.    
+    
+## Convert DOS to GPT
 
 parted /dev/sda
 mklabel msdos
