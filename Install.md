@@ -68,6 +68,8 @@ xxd -r -p input.txt mapr.tar.gz
 ```
 
 ## Bootstrapping 
+- Navigate to the ansible script path
+
 - Create `@creds.json` file containing password
 
         {
