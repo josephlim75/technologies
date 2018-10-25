@@ -84,6 +84,11 @@ xxd -r -p input.txt mapr.tar.gz
 - List the hosts under group cluster
          
          # ansible -i inventory/qa cluster --list-hosts
+         # ansible-playbook -i inventory/qa -u ansible -e "@@creds.json" playbooks/host-prepare.yml --list-hosts
+         
+- Host Preparation
+
+         ansible-playbook -i inventory/qa --limit='node9' -u ansible -e "@@creds.json" playbooks/host-prepare.yml --tags install-java
 
 - Add user directory in MapR file system /users
 
