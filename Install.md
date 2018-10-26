@@ -90,6 +90,10 @@ xxd -r -p input.txt mapr.tar.gz
 
          ansible-playbook -i inventory/qa --limit='node9' -u ansible -e "@@creds.json" playbooks/host-prepare.yml --tags install-java
 
+- Generate passwordless
+
+        ansible-playbook -i inventory/qa -u mapr -e "@@creds.json" playbooks/host-passwordless.yml
+
 - Add user directory in MapR file system /users
 
          # acl_group is only if group doesn't exists for the same user id
