@@ -5,7 +5,8 @@ Clear ACES
 hadoop mfs -delace -R <DFS fullpath>
 
 hadoop mfs -getace -R /user/hive
-
+-preservemodebits true 
+-setinherits true
  
 sudo hadoop mfs -setace -R -aces "rf:g:datalake_qa_app_devs|g:datalake_qa_services,wf:g:datalake_qa_app_devs|g:datalake_qa_services,ef:g:datalake_qa_app_devs|g:datalake_qa_services,ld:g:datalake_qa_app_devs|g:datalake_qa_services,rd:g:datalake_qa_app_devs|g:datalake_qa_services,dc:g:datalake_qa_app_devs|g:datalake_qa_services,ac:g:datalake_qa_app_devs|g:datalake_qa_services" /tpp
 
@@ -28,13 +29,14 @@ hadoop mfs -setace -R \
   -deletechild 'g:datalake_qa_services|u:tedp' /product/tdap/databases
   
 
-hadoop mfs -setace -R \
-  -readfile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
-  -writefile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
-  -executefile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
-  -lookupdir 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
-  -addchild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' \
-  -deletechild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:datalake_dev_argus_users' /user/hive
+hadoop mfs -setace  \
+  -readfile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' \
+  -readdir '(g:datalake_qa_app_devs|g:datalake_qa_services)&!(g:netspend)' \
+  -writefile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' \
+  -executefile 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' \
+  -lookupdir 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' \
+  -addchild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' \
+  -deletechild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' /tsys/qa/refined
 
   
 hadoop mfs -setace -readfile 'u:mapr|u:cmatta' /data/users.view.drill
@@ -43,7 +45,14 @@ https://community.mapr.com/docs/DOC-1544
 =============================================
 
 hadoop mfs -delace -R /user/hive
-hadoop mfs -setace -R -aces "rf:g:1015,,wf:g:1015,ef:g:1015,ld:g:1015,rd:g:1015,dc:g:1015,ac:g:1015" /landing
+hadoop mfs -setace -R \
+-aces "rf:g:1016,wf:g:1016,ef:g:1016,ld:g:1016,rd:g:1016,dc:g:1016,ac:g:1016" \
+-setinherit true \
+-preservemodebits true \
+/tsys/qa/landing/0000_netspend
+
+hadoop mfs -setace -aces "rf:!(g:1015),wf:g:1015,ef:g:1015,ld:g:1015,rd:g:1015,dc:g:1015,ac:g:1015" /landing
+
 
 hadoop mfs -setace -R -aces "rf:g:datalake_qa_app_devs,wf:g:datalake_qa_app_devs,ef:g:datalake_qa_app_devs,ld:g:datalake_qa_app_devs,rd:g:datalake_qa_app_devs,dc:g:datalake_qa_app_devs,ac:g:datalake_qa_app_devs" /user/hive
 hadoop mfs -setace -R -aces "rf:g:datalake_qa_services,wf:g:datalake_qa_services,ef:g:datalake_qa_services,ld:g:datalake_qa_services,rd:g:datalake_qa_services,dc:g:datalake_qa_services,ac:g:datalake_qa_services" /user/hive

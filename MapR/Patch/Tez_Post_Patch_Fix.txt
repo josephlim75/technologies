@@ -1,0 +1,17 @@
+
+sudo su mapr
+cd /opt/mapr/tez/tez-0.8/
+mkdir /opt/mapr/tez/tez-0.8/tez_lib_bkp
+mv /opt/mapr/tez/tez-0.8/lib/hadoop-* /opt/mapr/tez/tez-0.8/tez_lib_bkp/
+ls -1 /opt/mapr/tez/tez-0.8/tez_lib_bkp/ | sed 's/2.7.0-mapr-1710.jar/*/g' | while read line; do find /opt/mapr/hadoop -name $line | grep -v "test\|sources" |head -1 ; done | sort -u | xargs cp -t /opt/mapr/tez/tez-0.8/lib/
+cd tez_lib_bkp/
+cp /mapr/*/apps/tez/tez-0.8/lib/maprfs-6.0.1-mapr.jar /opt/mapr/tez/tez-0.8/lib/
+cp /mapr/*/apps/tez/tez-0.8/lib/slf4j-log4j12-1.7.12.jar /opt/mapr/tez/tez-0.8/lib/
+cp /mapr/*/apps/tez/tez-0.8/lib/slf4j-api-1.7.12.jar /opt/mapr/tez/tez-0.8/lib/
+hadoop fs -rm -r /apps/tez/*;hadoop fs -put /opt/mapr/tez/tez-0.8 /apps/tez; hadoop fs -chmod -R 755 /apps/tez;
+
+maprcli node services -name nodemanager -action restart -nodes `hostname`
+
+
+
+

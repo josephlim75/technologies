@@ -1,8 +1,36 @@
+## Format and create a new disk pool
+
+The disksetup script is used to format disks for use by the MapR cluster. 
+Create a text file `/tmp/disks.txt` listing the disks and partitions for use by MapR on the node. 
+Each line lists either a single disk or all applicable partitions on a single disk. When listing multiple partitions on a line, separate by spaces. For example:
+
+    /dev/sdb
+    /dev/sdc1 /dev/sdc2 /dev/sdc4
+    /dev/sdd
+
+Later, when you run disksetup to format the disks, specify the disks.txt file. For example:
+
+  /opt/mapr/server/disksetup -F /tmp/disks.txt
+
+Note: The script disksetup removes all data from the specified disks. Make sure you specify the disks correctly, and that any data you wish to keep has been backed up elsewhere.
+If you are re-using a node that was used previously in another cluster, be sure to format the disks to remove any traces of data from the old cluster.
+Note: Run disksetup only after running configure.sh.
+
+## Fixing a Bad Disk / Storage Pool
+
 sudo /opt/mapr/server/mrconfig sp list -v
   ListSPs resp: status 0:1
   No. of SPs (1), totalsize 296358 MB, totalfree 290885 MB
   SP 0: name SP1, Online, size 296358 MB, free 290885 MB, path /dev/sdf, 
 
+
+### Command to recover storage pool
+    
+    $ ​/opt/mapr/server/fsck -n <SP name> -r -m <allocate memory in MB>
+
+In this case, it will be:
+
+    $ /opt/mapr/server/fsck -n SP2 -r -m 10000
 
 
   sudo /opt/mapr/server/fsck -d -r -m 4096 -n SP1
