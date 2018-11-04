@@ -68,6 +68,8 @@ xxd -r -p input.txt mapr.tar.gz
 ```
 
 ## Bootstrapping 
+- Navigate to the ansible script path
+
 - Create `@creds.json` file containing password
 
         {
@@ -82,6 +84,15 @@ xxd -r -p input.txt mapr.tar.gz
 - List the hosts under group cluster
          
          # ansible -i inventory/qa cluster --list-hosts
+         # ansible-playbook -i inventory/qa -u ansible -e "@@creds.json" playbooks/host-prepare.yml --list-hosts
+         
+- Host Preparation
+
+         ansible-playbook -i inventory/qa --limit='node9' -u ansible -e "@@creds.json" playbooks/host-prepare.yml --tags install-java
+
+- Generate passwordless
+
+        ansible-playbook -i inventory/qa -u mapr -e "@@creds.json" playbooks/host-passwordless.yml
 
 - Add user directory in MapR file system /users
 
