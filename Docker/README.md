@@ -1,3 +1,34 @@
+## Docker Node Update
+
+Changing node availability lets you:
+
+- drain a manager node so that only performs swarm management tasks and is unavailable for task assignment.
+- drain a node so you can take it down for maintenance.
+- pause a node so it can’t receive new tasks.
+- restore unavailable or paused nodes available status.
+- For example, to change a manager node to Drain availability:
+
+      $ docker node update --availability drain node-1
+
+      node-1
+
+## Docker Placement Preference
+
+The following example sets a preference to spread the deployment across nodes based on the value of the `datacenter` label. 
+If some nodes have `datacenter=us-east` and others have `datacenter=us-west`, the service is deployed as evenly as possible across the 
+two sets of nodes.
+
+    $ docker service create \
+      --replicas 9 \
+      --name redis_2 \
+      --placement-pref 'spread=node.labels.datacenter' \
+      redis:3.0.6
+
+    create three node swarm, (node1, node2, node3) then:
+    docker node update --label-add=azone=1 node1
+    docker node update --label-add=azone=2 node2
+    docker service create --placement-pref spread=node.labels.azone --replicas 2 --name spread nginx      
+      
 ## Docker Prune or Cleanup
 
     docker rm -f $(docker ps -q -f "status=created" -f "status=exited"); \
