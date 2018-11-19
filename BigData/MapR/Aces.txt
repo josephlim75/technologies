@@ -39,6 +39,10 @@ hadoop mfs -setace  \
   -deletechild 'g:datalake_qa_app_devs|g:datalake_qa_services|g:netspend' /tsys/qa/refined
 
   
+hadoop mfs -setace -lookupdir 'g:netspend|g:tmsadmin|g:ndm' /tsys  
+
+hadoop mfs -setace -lookupdir 'g:datalake_qa_app_devs' /tsys  
+
 hadoop mfs -setace -readfile 'u:mapr|u:cmatta' /data/users.view.drill
 
 https://community.mapr.com/docs/DOC-1544
@@ -50,6 +54,69 @@ hadoop mfs -setace -R \
 -setinherit true \
 -preservemodebits true \
 /tsys/qa/landing/0000_netspend
+
+hadoop mfs -setace \
+-aces "ld:g:datalake_qa_app_devs" \
+-setinherit true \
+-preservemodebits true \
+/tsys
+
+hadoop mfs -setace \
+-aces "rf:g:datalake_qa_app_devs,\
+wf:g:datalake_qa_app_devs,\
+ef:g:datalake_qa_app_devs,\
+ld:g:datalake_qa_app_devs|g:1017|g:1016|g:1015,\
+rd:g:datalake_qa_app_devs,\
+dc:g:datalake_qa_app_devs,\
+ac:g:datalake_qa_app_devs" \
+-setinherit true \
+-preservemodebits true \
+/tsys/qa/landing
+
+hadoop mfs -setace \
+-aces "rf:g:datalake_qa_app_devs|g:1016,\
+wf:g:datalake_qa_app_devs|g:1016,\
+ef:g:datalake_qa_app_devs|g:1016,\
+ld:g:datalake_qa_app_devs|g:1016,\
+rd:g:datalake_qa_app_devs|g:1016,\
+dc:g:datalake_qa_app_devs|g:1016,\
+ac:g:datalake_qa_app_devs|g:1016" \
+-setinherit true \
+-preservemodebits true \
+/tsys/qa/landing/0000_netspend
+
+
+hadoop mfs -setace \
+-aces "rf:g:datalake_qa_app_devs|g:1015,\
+wf:g:datalake_qa_app_devs|g:1015,\
+ef:g:datalake_qa_app_devs|g:1015,\
+ld:g:datalake_qa_app_devs|g:1015,\
+rd:g:datalake_qa_app_devs|g:1015,\
+dc:g:datalake_qa_app_devs|g:1015,\
+ac:g:datalake_qa_app_devs|g:1015" \
+-setinherit true \
+-preservemodebits true \
+/tsys/dev/landing/2220_cardguard
+
+hadoop mfs -setace \
+-aces "rf:g:datalake_qa_app_devs|g:1017,\
+wf:g:datalake_qa_app_devs|g:1017,\
+ef:g:datalake_qa_app_devs|g:1017,\
+ld:g:datalake_qa_app_devs|g:1017,\
+rd:g:datalake_qa_app_devs|g:1017,\
+dc:g:datalake_qa_app_devs|g:1017,\
+ac:g:datalake_qa_app_devs|g:1017" \
+-setinherit true \
+-preservemodebits true \
+/tsys/qa/landing/0000_merchant
+
+
+
+
+
+
+
+
 
 hadoop mfs -setace -aces "rf:!(g:1015),wf:g:1015,ef:g:1015,ld:g:1015,rd:g:1015,dc:g:1015,ac:g:1015" /landing
 

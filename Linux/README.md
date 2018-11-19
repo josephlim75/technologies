@@ -1,3 +1,22 @@
+## Check count on open files or process/threads
+
+    ps -elfT | wc -l
+    lsof | wc -l
+    
+## Check Max Open files
+
+    cat /proc/sys/fs/file-nr
+
+- Permanently set max open files
+
+    sudo vi /etc/security/limits.conf
+    
+    * - nofile 256000
+    
+## Check Threads system wide settings
+
+    $ echo 100000 > /proc/sys/kernel/threads-max
+
 ## Remove file empty bytes recursively
 
     find */audit -name 'file*' -size 0 -print0 | xargs -0 rm

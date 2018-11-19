@@ -15,16 +15,6 @@ https://unix.stackexchange.com/questions/464484/install-self-signed-certificate-
 -Verify that /etc/ssl/certs/ca-certificates.crt contains the updates at the bottom of the file.
 
 
-## Read SSL cert
-
-- Read from remove server
-  
-    $ openssl s_client -showcerts -connect ma.ttias.be:443
-
-- Read from text file
-
-    $ openssl x509 -text -noout -in certificate.crt 
-    
 Generate a keystore
 =======================
 

@@ -1,3 +1,25 @@
+## OpenSSL command
+
+- List CRL Pem
+
+    openssl crl -inform DER -text -noout -inform PEM -in crl.pem
+
+- Serial Number:
+    
+    $ openssl x509 -in CERTIFICATE_FILE -serial -noout
+
+- Thumbprint:
+
+    $ openssl x509 -in CERTIFICATE_FILE -fingerprint -noout
+
+- Read from remove server
+  
+    $ openssl s_client -showcerts -connect ma.ttias.be:443
+
+- Read from text file
+
+    $ openssl x509 -text -noout -in <certificate> 
+    
 ## Generate Self-signed Certificate
 
 https://superuser.com/questions/226192/avoid-password-prompt-for-keys-and-prompts-for-dn-information
