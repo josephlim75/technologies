@@ -6,6 +6,7 @@
 ## Check Max Open files
 
     cat /proc/sys/fs/file-nr
+    cat /proc/sys/fs/file-nr | awk -F ' ' '{ printf "%d %d %d",$1,$2,$3 }'
 
 - Permanently set max open files
 
