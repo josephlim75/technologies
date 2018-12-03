@@ -8,7 +8,7 @@
         systemctl stop splunk
         
         # Make a backup of /var 
-        tar czf var.tar.gz /var
+        tar czfP var.tar.gz /var
         
         vgremove vg_docker
         sudo rm -rf /var/lib/docker
@@ -24,6 +24,8 @@
         lvcreate -l+100%FREE -n lv_var vg_sys
         mkfs.ext4 /dev/vg_sys/lv_var
         mount /dev/vg_sys/lv_var /var
+        
+        sudo tar xzfP var.tar.gz -C /var
 
 ## Docker Overlay2
 - Creating overlay2 lvm mount
