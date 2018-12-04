@@ -1,4 +1,13 @@
 ## Resize /var mount point
+        Check if any process is using /var mount
+        lsof | grep /var
+        If sshd is using /var/tmp/host_0
+        
+        Set sshd KRB5RCACHEDIR to another location at /usr/lib/systemd/system/sshd.service
+        Environment=KRB5RCACHEDIR=/tmp
+        systemctl daemon-reload
+        systemctl restart sshd
+        
         # Create a user that have sudo access
         
         # Login with the user to stop all running services
