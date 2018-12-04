@@ -6,6 +6,12 @@
         systemctl stop centrifydc
         systemctl stop rsyslog
         systemctl stop splunk
+        systemctl stop gssproxy
+        systemctl stop tuned
+        systemctl stop postfix*
+        systemctl stop vmware*
+        systemctl stop chronyd
+        systemctl stop rpc*
         
         # Make a backup of /var 
         tar czfP var.tar.gz /var
