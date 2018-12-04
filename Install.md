@@ -13,6 +13,8 @@
         systemctl stop chronyd
         systemctl stop rpc*
         
+        rm -rf /var/log/lastlog /var/log/audit/* /var/log/*.gz /var/log/vmware*.log*
+        
         # Make a backup of /var 
         tar czfP var.tar.gz /var
         
