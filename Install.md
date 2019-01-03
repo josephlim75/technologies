@@ -21,8 +21,10 @@
         systemctl stop vmware*
         systemctl stop chronyd
         systemctl stop rpc*
+        systemctl stop systemd-journald.socket
+
         
-        rm -rf /var/log/lastlog /var/log/audit/* /var/log/*.gz /var/log/vmware*.log*
+        rm -rf /var/cache/yum /var/log/lastlog /var/log/audit/* /var/log/*.gz /var/log/vmware*.log*
         
         # Make a backup of /var 
         tar czfP var.tar.gz /var
