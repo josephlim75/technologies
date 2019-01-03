@@ -11,6 +11,7 @@
         # Create a user that have sudo access
         
         # Login with the user to stop all running services
+        systemctl disable centrifydc
         systemctl stop rpcbind.socket
         systemctl stop centrifydc
         systemctl stop rsyslog
@@ -22,7 +23,7 @@
         systemctl stop chronyd
         systemctl stop rpc*
         systemctl stop systemd-journald.socket
-
+        systemctl enable centrifydc
         
         rm -rf /var/cache/yum /var/log/lastlog /var/log/audit/* /var/log/*.gz /var/log/vmware*.log*
         
