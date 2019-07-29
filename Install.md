@@ -6,6 +6,8 @@
         sudo partprobe (Make partition available effectively)
         sudo vgextend vg_docker /dev/sdg1
         sudo lvextend -l+100%FREE vg_docker/lv_var
+        sudo xfs_growfs /dev/mapper/vg_docker-lv_var  (df -h will be effectively see new size)
+       
 
 ## Resize /var mount point
         Check if any process is using /var mount
