@@ -1,4 +1,4 @@
-## Create Partiion
+## Create Partition
 
         sudo gdisk /dev/sdg
         n  (Create partition and accept all options)
