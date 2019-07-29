@@ -1,3 +1,10 @@
+## Create Partiion
+
+        sudo gdisk /dev/sdg
+        n  (Create partition and accept all options)
+        w  (Write to partition to filesystem)
+        sudo partprobe (Make partition available effectively)
+        
 ## Resize /var mount point
         Check if any process is using /var mount
         lsof | grep /var
