@@ -1,10 +1,12 @@
-## Create Partition
+## Extend Docker Volume with new Disk
 
         sudo gdisk /dev/sdg
         n  (Create partition and accept all options)
         w  (Write to partition to filesystem)
         sudo partprobe (Make partition available effectively)
-        
+        sudo vgextend vg_docker /dev/sdg1
+        sudo lvextend -l+100%FREE vg_docker/lv_var
+
 ## Resize /var mount point
         Check if any process is using /var mount
         lsof | grep /var
