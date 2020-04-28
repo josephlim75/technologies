@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="hashinomad.svg"
+   inkscape:version="1.0beta1 (32d4812, 2019-09-19)"
+   inkscape:export-ydpi="96"
+   inkscape:export-xdpi="96"
+   inkscape:export-filename="/Users/jlim/Downloads/jenkins.png"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 92.763123 92.763123"
+   height="92.763123mm"
+   width="92.763123mm">
+  <defs
+     id="defs2">
+    <path
+       id="a"
+       d="M37.6 36.8c1.2 0 2.1-1 2.1-2.1s-.9-2.1-2.1-2.1-2.1 1-2.1 2.1.9 2.1 2.1 2.1zM31.3 31c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1-1.2 0-2.1 1-2.1 2.1 0 1.2.9 2.1 2.1 2.1zm6.3 0c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1s-2.1 1-2.1 2.1c0 1.2.9 2.1 2.1 2.1zm6.3 0c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1-1.2 0-2.1 1-2.1 2.1 0 1.2 1 2.1 2.1 2.1zm-12.6-5.7c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1-1.2 0-2.1 1-2.1 2.1 0 1.2.9 2.1 2.1 2.1zm6.3 0c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1s-2.1 1-2.1 2.1c0 1.2.9 2.1 2.1 2.1zm6.3 0c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1-1.2 0-2.1 1-2.1 2.1 0 1.2 1 2.1 2.1 2.1zm-6.3-5.7c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1s-2.1 1-2.1 2.1.9 2.1 2.1 2.1zm6.3 0c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1-1.2 0-2.1 1-2.1 2.1s1 2.1 2.1 2.1zm-12.6 0c1.2 0 2.1-1 2.1-2.1 0-1.2-.9-2.1-2.1-2.1-1.2 0-2.1 1-2.1 2.1s.9 2.1 2.1 2.1zM36.8 72L0 0h73.6L36.8 72z" />
+  </defs>
+  <sodipodi:namedview
+     fit-margin-bottom="0"
+     fit-margin-right="0"
+     fit-margin-left="0"
+     fit-margin-top="0"
+     inkscape:window-maximized="0"
+     inkscape:window-y="89"
+     inkscape:window-x="195"
+     inkscape:window-height="907"
+     inkscape:window-width="1600"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="364.46116"
+     inkscape:cx="286.22073"
+     inkscape:zoom="0.49497475"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <rect
+       y="0"
+       x="0"
+       height="92.763123"
+       width="92.763123"
+       id="rect843"
+       style="opacity:1;fill:#4e6d8b;fill-opacity:1;stroke-width:0.490871;stop-opacity:1" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:1.00481"
+       inkscape:connector-curvature="0"
+       class="st0"
+       d="M 47.533441,13.887564 17.99194,30.969389 V 65.13302 L 47.533441,82.214847 77.074941,65.13302 V 30.969389 Z M 61.500338,51.266601 53.16039,55.989229 42.408891,49.759392 v 12.258709 l -8.942835,5.325516 V 44.936286 l 8.942835,-4.923584 9.646201,5.62695 V 33.98382 l 9.344767,-5.425984 v 22.708765 z"
+       id="path1128" />
+  </g>
+  <style
+     id="style898">svg {enable-background:new 0 0 360 360}</style>
+  <style
+     id="style900">.st0{fill:none}</style>
+  <style
+     id="style1088">.st0{fill:#000}</style>
+  <style
+     id="style1126">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#000}</style>
+</svg>
