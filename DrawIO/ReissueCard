@@ -1,4 +1,4 @@
-<mxfile modified="2020-08-12T15:47:56.297Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="prfTavrSu1Bc8C5RL45i" version="13.6.2" type="github">
+<mxfile modified="2020-08-12T15:52:50.207Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="yf11oW6JMI3HQocxsyyV" version="13.6.2" type="github">
   <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
     <mxGraphModel dx="1123" dy="719" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -44,16 +44,13 @@
         <mxCell id="bdjAe6Q9-067PibRLU0H-26" value="&lt;span style=&quot;font-weight: normal ; font-size: 10px&quot;&gt;Source File&lt;br style=&quot;font-size: 10px&quot;&gt;&lt;/span&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.batch;" vertex="1" parent="1">
           <mxGeometry x="363.5" y="204.75" width="50" height="76" as="geometry" />
         </mxCell>
-        <mxCell id="bdjAe6Q9-067PibRLU0H-28" value="&lt;span style=&quot;font-weight: normal; font-size: 10px;&quot;&gt;Input DataMapper&lt;br style=&quot;font-size: 10px;&quot;&gt;&lt;/span&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.batch;" vertex="1" parent="1">
-          <mxGeometry x="450" y="204.75" width="50" height="77" as="geometry" />
-        </mxCell>
         <mxCell id="bdjAe6Q9-067PibRLU0H-29" value="&lt;span style=&quot;font-weight: normal ; font-size: 10px&quot;&gt;Sink Stream&lt;br style=&quot;font-size: 10px&quot;&gt;&lt;/span&gt;" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.batch;" vertex="1" parent="1">
           <mxGeometry x="540" y="203.75" width="50" height="77" as="geometry" />
         </mxCell>
-        <mxCell id="bdjAe6Q9-067PibRLU0H-32" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;elbow=vertical;startArrow=none;endFill=1;strokeColor=#545B64;rounded=0;fontColor=#000000;" edge="1" parent="1" source="bdjAe6Q9-067PibRLU0H-26" target="bdjAe6Q9-067PibRLU0H-28">
+        <mxCell id="bdjAe6Q9-067PibRLU0H-32" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;elbow=vertical;startArrow=none;endFill=1;strokeColor=#545B64;rounded=0;fontColor=#000000;" edge="1" parent="1" source="bdjAe6Q9-067PibRLU0H-26">
           <mxGeometry width="100" relative="1" as="geometry">
             <mxPoint x="423" y="348" as="sourcePoint" />
-            <mxPoint x="440" y="236" as="targetPoint" />
+            <mxPoint x="450" y="230" as="targetPoint" />
             <Array as="points">
               <mxPoint x="432" y="230" />
               <mxPoint x="432" y="230" />
@@ -89,9 +86,9 @@
             <mxPoint x="280" y="237" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="bdjAe6Q9-067PibRLU0H-64" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;elbow=vertical;startArrow=none;endFill=1;strokeColor=#545B64;rounded=0;fontColor=#000000;exitX=1;exitY=0.325;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="bdjAe6Q9-067PibRLU0H-28" target="bdjAe6Q9-067PibRLU0H-29">
+        <mxCell id="bdjAe6Q9-067PibRLU0H-64" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;elbow=vertical;startArrow=none;endFill=1;strokeColor=#545B64;rounded=0;fontColor=#000000;exitX=1;exitY=0.325;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="bdjAe6Q9-067PibRLU0H-29">
           <mxGeometry width="100" relative="1" as="geometry">
-            <mxPoint x="500" y="229.8" as="sourcePoint" />
+            <mxPoint x="500" y="229.7750000000001" as="sourcePoint" />
             <mxPoint x="536.5" y="229.8" as="targetPoint" />
             <Array as="points">
               <mxPoint x="530" y="230" />
@@ -131,7 +128,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="bdjAe6Q9-067PibRLU0H-77" value="Batchframework&lt;br style=&quot;font-size: 10px;&quot;&gt;Source: Cobol&lt;br style=&quot;font-size: 10px;&quot;&gt;Sink: Kafka" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#0000FF;" vertex="1" parent="1">
-          <mxGeometry x="421.75" y="290" width="106.5" height="20" as="geometry" />
+          <mxGeometry x="421.75" y="297" width="106.5" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bdjAe6Q9-067PibRLU0H-80" value="Rules&lt;br&gt;Validation" style="outlineConnect=0;gradientColor=none;strokeColor=#ffffff;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.guardduty;fontColor=#0000FF;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="450" y="204.75" width="50" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
