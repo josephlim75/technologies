@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="bitbucket.svg"
+   inkscape:version="1.0beta1 (32d4812, 2019-09-19)"
+   inkscape:export-ydpi="96"
+   inkscape:export-xdpi="96"
+   inkscape:export-filename="/Users/jlim/Downloads/jenkins.png"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 92.763123 92.763123"
+   height="92.763123mm"
+   width="92.763123mm">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     fit-margin-bottom="0"
+     fit-margin-right="0"
+     fit-margin-left="0"
+     fit-margin-top="0"
+     inkscape:window-maximized="0"
+     inkscape:window-y="89"
+     inkscape:window-x="195"
+     inkscape:window-height="907"
+     inkscape:window-width="1600"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="150.41623"
+     inkscape:cx="142.7388"
+     inkscape:zoom="1.4"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <rect
+       y="0"
+       x="0"
+       height="92.763123"
+       width="92.763123"
+       id="rect843"
+       style="opacity:1;fill:#126fc7;fill-opacity:1;stroke-width:0.490871;stop-opacity:1" />
+    <g
+       style="fill:#ffffff;fill-opacity:1"
+       transform="matrix(0.22125249,0,0,0.22125249,18.615941,14.688723)"
+       fill="#205081"
+       id="g1003">
+      <path
+         style="fill:#ffffff;fill-opacity:1"
+         inkscape:connector-curvature="0"
+         d="m 128,4.6074241e-6 v 0 C 57.731882,4.6074241e-6 0.01163951,18.821816 0.01163951,42.662782 c 0,6.273941 15.05745349,95.363878 21.33139449,130.497928 C 23.852606,189.47297 65.260609,212.05915 128,212.05915 v 0 c 62.73939,0 102.89259,-22.58618 106.65697,-38.89844 C 240.9309,138.02666 255.98836,48.936723 255.98836,42.662782 254.73357,18.821816 198.26811,4.6074241e-6 128,4.6074241e-6 Z M 128,183.19902 c -22.58618,0 -40.153211,-17.56703 -40.153211,-40.15321 0,-22.58618 17.567031,-40.1532 40.153211,-40.1532 22.58617,0 40.15321,17.56702 40.15321,40.1532 0,21.33139 -17.56704,40.15321 -40.15321,40.15321 z m 0,-127.988356 c -45.172366,0 -81.561214,-7.528727 -81.561214,-17.567026 0,-10.03831 36.388848,-17.567036 81.561214,-17.567036 45.17235,0 81.56121,7.528726 81.56121,17.567036 0,10.038299 -36.38886,17.567026 -81.56121,17.567026 z"
+         id="path997" />
+      <path
+         style="fill:#ffffff;fill-opacity:1"
+         inkscape:connector-curvature="0"
+         d="m 220.60818,207.03999 c -2.50959,0 -3.76437,1.25479 -3.76437,1.25479 0,0 -31.3697,25.09576 -87.83515,25.09576 -56.465449,0 -87.835153,-25.09576 -87.835153,-25.09576 0,0 -2.509572,-1.25479 -3.764358,-1.25479 -2.509583,0 -5.019155,1.25479 -5.019155,5.01916 v 1.25478 c 5.019155,26.35055 8.783513,45.17236 8.783513,47.68193 3.764369,18.82183 41.408003,33.87928 86.580363,33.87928 v 0 c 45.17236,0 82.816,-15.05745 86.58036,-33.87928 0,-2.50957 3.76436,-21.33138 8.78352,-47.68193 v -1.25478 c 1.25478,-2.50959 0,-5.01916 -2.50957,-5.01916 z"
+         id="path999" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1"
+         cx="128"
+         cy="141.79108"
+         r="20.076605"
+         id="circle1001" />
+    </g>
+  </g>
+  <style
+     id="style898">svg {enable-background:new 0 0 360 360}</style>
+  <style
+     id="style900">.st0{fill:none}</style>
+</svg>

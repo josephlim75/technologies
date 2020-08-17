@@ -1,14 +1,45 @@
+## Extend Docker Volume with new Disk
+
+        sudo gdisk /dev/sdg
+        n  (Create partition and accept all options)
+        w  (Write to partition to filesystem)
+        sudo partprobe (Make partition available effectively)
+        sudo vgextend vg_docker /dev/sdg1
+        sudo lvextend -l+100%FREE vg_docker/lv_var
+        sudo xfs_growfs /dev/mapper/vg_docker-lv_var  (df -h will be effectively see new size)
+       
+
 ## Resize /var mount point
+        Check if any process is using /var mount
+        lsof | grep /var
+        If sshd is using /var/tmp/host_0
+        
+        Set sshd KRB5RCACHEDIR to another location at /usr/lib/systemd/system/sshd.service
+        Environment=KRB5RCACHEDIR=/tmp
+        systemctl daemon-reload
+        systemctl restart sshd
+        
         # Create a user that have sudo access
         
         # Login with the user to stop all running services
+        systemctl disable centrifydc
         systemctl stop rpcbind.socket
         systemctl stop centrifydc
         systemctl stop rsyslog
         systemctl stop splunk
+        systemctl stop gssproxy
+        systemctl stop tuned
+        systemctl stop postfix*
+        systemctl stop vmware*
+        systemctl stop chronyd
+        systemctl stop rpc*
+        systemctl stop systemd-journald.socket
+        systemctl enable centrifydc
+        
+        rm -rf /var/cache/yum /var/log/lastlog /var/log/audit/* /var/log/*.gz /var/log/vmware*.log*
         
         # Make a backup of /var 
-        tar czf var.tar.gz /var
+        tar czfP var.tar.gz /var
         
         vgremove vg_docker
         sudo rm -rf /var/lib/docker
@@ -24,6 +55,8 @@
         lvcreate -l+100%FREE -n lv_var vg_sys
         mkfs.ext4 /dev/vg_sys/lv_var
         mount /dev/vg_sys/lv_var /var
+        
+        sudo tar xzfP var.tar.gz -C /var
 
 ## Docker Overlay2
 - Creating overlay2 lvm mount
