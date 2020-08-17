@@ -1,0 +1,23 @@
+<configuration>
+  <property>
+    <name>hive.security.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory</value>
+    <description></description>
+  </property>
+
+  <property>
+    <name>hive.security.authorization.enabled</name>
+    <value>true</value>
+    <description></description>
+  </property>
+
+  <property>
+    <name>hive.security.authenticator.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.SessionStateUserAuthenticator</value>
+  </property>
+
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://10.32.49.195:9083</value>
+  </property>
+</configuration>

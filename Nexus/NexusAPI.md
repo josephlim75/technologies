@@ -12,4 +12,5 @@
 ## Get repository list
 
     curl -k -X GET --header 'Accept: application/json' 'https://10.32.48.29:8443/service/rest/beta/repositories'
-   
+    
+    URL : https://nexus.ops.tsysedp.org:8443/service/rest/v1/components?repository=raw-tedp-hosted

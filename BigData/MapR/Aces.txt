@@ -10,6 +10,31 @@ hadoop mfs -getace -R /user/hive
  
 sudo hadoop mfs -setace -R -aces "rf:g:datalake_qa_app_devs|g:datalake_qa_services,wf:g:datalake_qa_app_devs|g:datalake_qa_services,ef:g:datalake_qa_app_devs|g:datalake_qa_services,ld:g:datalake_qa_app_devs|g:datalake_qa_services,rd:g:datalake_qa_app_devs|g:datalake_qa_services,dc:g:datalake_qa_app_devs|g:datalake_qa_services,ac:g:datalake_qa_app_devs|g:datalake_qa_services" /tpp
 
+hadoop mfs -setace \
+  -lookupdir '!p' \
+-setinherit true \
+-preservemodebits true \
+/user/hive/warehouse
+
+hadoop mfs -setace -R \
+-aces "rf:p,wf:p,ef:p,rd:p,dc:p,ac:p" \
+-setinherit true \
+-preservemodebits true \
+/user/hive/warehouse
+
+
+hadoop mfs -delace /user/hive/warehouse && \
+hadoop mfs -setace \
+-aces "rf:p,wf:p,ef:p,rd:p,dc:p,ac:p" \
+-setinherit true \
+-preservemodebits true \
+/user/hive/warehouse
+
+-aces "rf:p,wf:p,ef:p,ld:p,rd:p,dc:p,ac:p" \
+
+
+
+  
 hadoop mfs -setace -R \
   -readfile 'u:mapr' \
   -writefile 'u:mapr' \
@@ -17,7 +42,6 @@ hadoop mfs -setace -R \
   -lookupdir 'u:mapr' \
   -addchild 'u:mapr' \
   -deletechild 'u:mapr' /data/userdata
-
   
   
 hadoop mfs -setace -R \
@@ -49,6 +73,7 @@ https://community.mapr.com/docs/DOC-1544
 =============================================
 
 hadoop mfs -delace -R /user/hive
+
 hadoop mfs -setace -R \
 -aces "rf:g:1016,wf:g:1016,ef:g:1016,ld:g:1016,rd:g:1016,dc:g:1016,ac:g:1016" \
 -setinherit true \

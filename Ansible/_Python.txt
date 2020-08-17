@@ -1,0 +1,18 @@
+I came back to this today and ran into the issue again. I was able to use the above command to determine which 
+Python Ansible was invoking and then was able to pip install hvac into the correct environment.
+ansible -m debug -a 'var=ansible_playbook_python' localhost
+
+localhost | SUCCESS => {
+    "ansible_playbook_python": "/usr/local/Cellar/ansible/2.6.0/libexec/bin/python2.7"
+}
+source /usr/local/Celler/ansible/2.6.0/libexec/bin/activate
+pip install hvac
+
+
+
+I get this issue all the time, I resolved it by setting ansible_python_interpreter in my hosts inventory to be my python 
+installation where hvac was installed (as opposed to system python on OSX which is a completely different python 
+(/usr/bin/python vs /usr/local/bin/python). None of the above solutions worked for me but this did:
+
+    [targets]
+    localhost ansible_connection=local ansible_python_interpreter=/usr/local/bin/python

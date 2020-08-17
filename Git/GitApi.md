@@ -12,7 +12,7 @@ curl -ks -u <credential> https://<url>/rest/api/1.0/projects/EDP/repos/<repo nam
 curl -ks -u <credential> https://git.qa.tpp.com/rest/api/1.0/projects/EDP/repos/tedp-devops/browse/provisioning/edp-docker/images?at=release/1.0
 
 
-curl -ks -u jlim:2018Amj! https://git.qa.tpp.com/rest/api/1.0/projects/EDP/repos/tedp-devops/browse/provisioning/edp-docker/images/exclude.conf?at=release/1.0&raw
+curl -ks -u jlim:2019Son!! https://git.qa.tpp.com/rest/api/1.0/projects/EDP/repos/tedp-devops/browse/provisioning/edp-docker/images/exclude.conf?at=release/1.0&raw
 curl -ks -u jlim:2018Amj! https://git.qa.tpp.com/rest/api/1.0/projects/EDP/repos/tedp-devops/browse/provisioning/edp-docker/images/exclude.conf?at=release/1.0 | jq
 
 Get raw file

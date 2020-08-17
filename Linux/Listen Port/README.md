@@ -1,4 +1,9 @@
 
+-k - keep open for continuous connectivity
+-l - listen
+-v - verbose
+
+nc -kvl <ip> <port>
 
 Nice and verbose! From the man pages.
 Single port:

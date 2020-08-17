@@ -2,6 +2,11 @@
 
 https://maprdocs.mapr.com/home/AdministratorGuide/ClstrAdminOverview.html
 
+## Too many containers
+  ### count containers per node
+  sudo /opt/mapr/server/mrconfig info dumpcontainers | wc -l  
+  maprcli config save -values {"pernode.numcntrs.alarm.thr":"<number>"}
+
 ## Checking Ace Support
 
     # maprcli config load -json | grep "mfs.feature.db.ace.support" 
@@ -19,6 +24,10 @@ OS Version | MapR 6.1.0 | MapR 6.0.1 | MapR 6.0.0 | MapR 5.2.2
 --- | --- | --- | --- | ---
 RHEL 7.5 |Yes |No | No | Yes
 RHEL 7.4 |Yes |Yes |Yes | Yes
+
+
+- maprcli node services -filter ["csvc==nfs"] -nfs restart
+- maprcli node services -filter ["csvc==nfs"] -name <service> -action restart
 
 - Stop al MapR eco packages services, hs2, oozie, hue
 

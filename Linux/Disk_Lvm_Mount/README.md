@@ -1,6 +1,34 @@
 ## List all mounts
-  
-    sudo systemctl --type mount
+
+  sudo systemctl --type mount
+  cat /proc/mounts
+  cat /etc/mtab
+  findmnt
+  mount
+
+## Where and Mount path
+
+Where=/mnt/backups
+
+Filename needs to be mnt-backups.mount
+
+## Mount file (mapr.mount)
+
+/usr/lib/systemd/system
+
+[Unit]
+Description=MapR NFS mount DEV
+Requires=network-online.target
+After=network-online.target
+
+[Mount]
+What=10.32.48.39:/mapr
+Where=/mapr
+Options=rw,nolock,hard
+Type=nfs
+
+[Install]
+WantedBy=multi-user.target
 
 
 ## Mounting via Systemd

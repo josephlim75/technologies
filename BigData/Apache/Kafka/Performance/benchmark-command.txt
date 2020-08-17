@@ -38,6 +38,11 @@ bootstrap.servers=10.123.128.25:9092,10.123.128.28:9092,10.123.128.23:9092,10.12
 -------------------------------------------------------------------------------------------------------------------------------------------------
 ## Consumer
 
+bin/kafka-consumer-perf-test.sh --print-metrics --show-detailed-stats --group perf_001 --topic perf_uncomp_r3 \
+--timeout 30000 --messages 1000000000 --fetch-size 204800 --threads 90 --num-fetch-threads 2 \
+--broker-list $BROKER_SERVERS
+
+
 nohup bin/kafka-consumer-perf-test.sh --print-metrics --show-detailed-stats --group benchmark_360_snp_1Bx2K_001 --topic benchmark_360_snp_1Bx2K_ACK \
 --timeout 30000 --messages 1000000000 --fetch-size 204800 --threads 90 --num-fetch-threads 2 \
 --broker-list 10.123.128.22:9092,10.123.128.25:9092,10.123.128.28:9092,10.123.128.23:9092,10.123.128.26:9092,10.123.128.29:9092 &> consumer_360_snp_1Bx2K_ACK.out&

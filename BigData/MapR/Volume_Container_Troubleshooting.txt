@@ -1,0 +1,107 @@
+Number of containers in volumes
+===============================
+$ /opt/mapr/server/mrconfig info containerlist volume1
+Volume containers
+2050
+
+Number of threads 
+=====================
+Display information about MapR-FS threads on a local node
+  /opt/mapr/server/mrconfig info threads
+
+Display information about MapR-FS threads on a remote node with an IP address of xx.xx.xx.xx
+  /opt/mapr/server/mrconfig -h xx.xx.xx.xx info threads
+  
+mrconfig info containers
+
+The mrconfig info containers command displays information about containers.
+
+Example:
+
+$ /opt/mapr/server/mrconfig info containers rw
+RW containers: 1 2049 2050
+$ /opt/mapr/server/mrconfig info containers resync
+$ /opt/mapr/server/mrconfig info containers snapshot
+Snapshot containers: 256000049
+See mrconfig for instructions about running mrconfig commands.
+
+Syntax
+
+/opt/mapr/server/mrconfig [-h <host>] [-p <port>] info containers <container-type> [path]
+
+    <container-type>
+    [path]
+Parameters
+
+Parameter
+
+Description
+
+-h
+
+host IP address; default 127.0.0.1
+
+-p
+
+The MapR-FS port; default 5660
+
+container-type
+
+When specified, lists only containers of the specified type. Possible values:
+
+  rw
+  resync
+  snapshot
+  path
+
+The path to a service pool (obtained with mrconfig sp list ). When specified, lists only containers on the specified service pool.
+
+Examples
+
+Display a list of read/write containers on a local node
+  /opt/mapr/server/mrconfig info containers rw
+Display a list of read/write containers on a remote node with an IP address of xx.xx.xx.xx
+  /opt/mapr/server/mrconfig -h xx.xx.xx.xx info containers rw  
+  
+
+mrconfig info dumpcontainers
+
+The mrconfig info dumpcontainers command displays information about containers including container identifiers, volume identifiers, storage pools, etc.
+
+Example:
+
+$ /opt/mapr/server/mrconfig info dumpcontainers
+cid:1 volid:1 sp:SP1:/tmp/mapr-scratch/v2.0/clst.TestVol.5660.img spid:f0bbcc261673adf800505808f20016fe prev:0 next:0 issnap:0 isclone:0 deleteinprog:0 fixedbyfsck:0 stale:0 querycldb:0 resyncinprog:0 shared:0 owned:35 logical:35 snapusage:0 snapusageupdated:1 
+
+cid:65 volid:0 sp:SP1:/tmp/mapr-scratch/v2.0/clst.TestVol.5660.img spid:f0bbcc261673adf800505808f20016fe prev:0 next:0 issnap:0 isclone:0 deleteinprog:0 fixedbyfsck:0 stale:0 querycldb:0 resyncinprog:0 shared:0 owned:8 logical:8 snapusage:0 snapusageupdated:0 
+
+cid:2049 volid:177916405 sp:SP1:/tmp/mapr-scratch/v2.0/clst.TestVol.5660.img spid:f0bbcc261673adf800505808f20016fe prev:0 next:0 issnap:0 isclone:0 deleteinprog:0 fixedbyfsck:0 stale:0 querycldb:0 resyncinprog:0 shared:0 owned:10 logical:10 snapusage:0 snapusageupdated:1 
+
+cid:2050 volid:37012938 sp:SP1:/tmp/mapr-scratch/v2.0/clst.TestVol.5660.img spid:f0bbcc261673adf800505808f20016fe prev:256000049 next:0 issnap:0 isclone:0 deleteinprog:0 fixedbyfsck:0 stale:0 querycldb:0 resyncinprog:0 shared:2 owned:9 logical:11 snapusage:10 snapusageupdated:1 
+
+cid:256000049 volid:37012938 sp:SP1:/tmp/mapr-scratch/v2.0/clst.TestVol.5660.img spid:f0bbcc261673adf800505808f20016fe prev:0 next:2050 issnap:1 isclone:0 deleteinprog:0 fixedbyfsck:0 stale:0 querycldb:0 resyncinprog:0 shared:0 owned:10 logical:10 snapusage:0 snapusageupdated:0 
+See mrconfig for instructions about running mrconfig commands.
+
+Syntax
+
+/opt/mapr/server/mrconfig [-h <host>] [-p <port>] info dumpcontainers
+Parameters
+
+Parameter
+
+Description
+
+-h
+
+host IP address; default 127.0.0.1
+
+-p
+
+The MapR-FS port; default 5660
+
+Examples
+
+Display information about containers on a local node
+/opt/mapr/server/mrconfig info dumpcontainers
+Display information about containers on a remote node with an IP address of xx.xx.xx.xx
+/opt/mapr/server/mrconfig -h xx.xx.xx.xx info dumpcontainers

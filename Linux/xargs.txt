@@ -1,0 +1,7 @@
+echo $'a.txt\nb.txt\nc.txt' | xargs -n 3 sh -c '
+   echo my-program --file="$1" --file="$2" --file="$3"
+' argv0
+
+cat input.txt | sed 's/^/--file=/g' | xargs -n3 my-program
+
+cat input.txt | xargs -n 2 | xargs -I{} sh -c 'V="{}"; my-program -file=${V% *} -file=${V#* }'

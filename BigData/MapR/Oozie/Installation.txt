@@ -1,5 +1,13 @@
 ## MapR Oozie Installation
 
+## If submitting Oozie job and we get SSL error
+Error: IO_ERROR : java.io.IOException: Error while connecting Oozie server. No of retries = 1. 
+Exception = sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: 
+unable to find valid certification path to requested target
+
+  Add the MapR ssl truststore into java cacert
+  keytool -importcert -file /etc/pki/tls/certs/ssl_truststore.pem -alias maprtls2 -noprompt -keystore /etc/pki/java/cacerts -storepass changeit
+
 ## Oozie example test
 
 cd /opt/mapr/oozie/oozie-<version>

@@ -1,0 +1,111 @@
+drill.exec: {
+  cluster-id: "drill13-qa-cluster",
+  zk.connect: "lxvdatlkqmprc1:5181,lxvdatlkqmprc2:5181,lxvdatlkqmprc3:5181",
+  options.store.parquet.block-size = 268435456,
+  http.ssl_enabled: true,
+  impersonation: {
+    enabled: true,
+    max_chained_user_hops: 3
+  },
+  security: {
+    auth.mechanisms : ["PLAIN","MAPRSASL"],
+    user.auth.enabled: true,
+    user.auth.packages += "org.apache.drill.exec.rpc.user.security",
+    user.auth.impl: "pam",
+    user.auth.pam_profiles: [ "sudo", "login" ],
+    user.encryption.sasl.enabled: true,
+    bit.auth.enabled: true,
+    bit.auth.mechanism: "MAPRSASL",
+    bit.encryption.sasl.enabled: true
+  },
+  http.auth.mechanisms:[ "FORM" ]
+}
+#http.auth.mechanisms:[ "FORM" ]
+
+
+------------------
+drill.exec: {
+  cluster-id: "qa-red-drillbits",
+  zk.connect: "localhost:5181",
+  rpc.user.client.threads: "4",
+  options.store.parquet.block-size: "268435456",
+  sys.store.provider.zk.blobroot: "maprfs:///apps/drill",
+  spill.directories: [ "/tmp/drill/spill" ],
+  spill.fs: "maprfs:///",
+  storage.action_on_plugins_override_file: "rename"
+
+  zk.apply_secure_acl: true,
+
+  impersonation.enabled: true,
+  impersonation.max_chained_user_hops: 3,
+  options.exec.impersonation.inbound_policies: "[{proxy_principals:{users:[\"mapr\"]},target_principals:{users:[\"*\"]}}]",
+
+  security.auth.mechanisms: ["MAPRSASL", "PLAIN"],
+  security.user.auth.enabled: true,
+  security.user.auth.packages += "org.apache.drill.exec.rpc.user.security",
+  security.user.auth.impl: "pam4j",
+  security.user.auth.pam_profiles: ["sudo", "login"],
+  security.user.encryption.sasl.enabled: true,
+
+  security.bit.auth.enabled: true,
+  security.bit.auth.mechanism: "MAPRSASL",
+  security.bit.encryption.sasl.enabled: true,
+
+  http.ssl_enabled: true,
+  ssl.useHadoopConfig: true,
+
+}
+-----------------
+
+drill.exec: {
+  cluster-id: "drill13-qa-cluster",
+  zk.connect: "lxvdatlkqmprc1:5181,lxvdatlkqmprc2:5181,lxvdatlkqmprc3:5181",
+  rpc.user.client.threads: "4",
+  options.store.parquet.block-size: "268435456",
+  sys.store.provider.zk.blobroot: "maprfs:///apps/drill",
+  spill.directories: [ "/tmp/drill/spill" ],
+  spill.fs: "maprfs:///",
+  storage.action_on_plugins_override_file: "rename",
+  http.ssl_enabled: true,
+  impersonation.enabled: true,
+  impersonation.max_chained_user_hops: 3,
+  options.exec.impersonation.inbound_policies: "[{proxy_principals:{users:[\"mapr\"]},target_principals:{users:[\"*\"]}}]",
+  security.auth.mechanisms : ["MAPRSASL","PLAIN"],
+  security.user.auth.enabled: true,
+  security.user.auth.packages += "org.apache.drill.exec.rpc.user.security",
+  security.user.auth.impl: "pam4j",
+  security.user.auth.pam_profiles: [ "sudo", "login" ],
+  security.user.encryption.sasl.enabled: true,
+  security.bit.auth.enabled: true,
+  security.bit.auth.mechanism: "MAPRSASL",
+  security.bit.encryption.sasl.enabled: true,
+  ssl.useHadoopConfig: true
+}
+
+
+-----------------
+
+jdbc:drill:drillbit=<drillbit-node>:31010;auth=MAPRSASL
+"jdbc:drill:zk=lxvdatlkqmprc1:5181,lxvdatlkqmprc2:5181,lxvdatlkqmprc3:5181/drill/drill-qa-cluster;auth=MAPRSASL"
+jdbc:drill:drillbit=10.32.48.134:31010;auth=MAPRSASL
+
+drill-env.sh
+===============
+export DRILLBIT_JAVA_OPTS="-Djava.library.path=/opt/pam/"
+export DRILL_JAVA_LIB_PATH="/opt/pam/libjpam.so"
+
+
+
+select * from dfs.`/tsys/qa/internal/data/maprdb/tenants` limit 2;
+
+-------------------------------
+
+Feb  5 13:31:54 lxvdatlkqmprd9 adclient[47987]: INFO  AUDIT_TRAIL|Centrify Suite|PAM|1.0|100|PAM authentication granted|5|user=jlim(type:ad,JLim@TSYS.TSS.NET) pid=1513 utc=1549391514561 centrifyEventID=24100 status=GRANTED service=sudo tty=(none) client=(none)
+Feb  5 13:31:54 lxvdatlkqmprd9 adclient[47987]: INFO  AUDIT_TRAIL|Centrify Suite|PAM|1.0|200|PAM set credentials granted|5|user=jlim(type:ad,JLim@TSYS.TSS.NET) pid=1513 utc=1549391514564 centrifyEventID=24200 status=GRANTED service=sudo tty=(none) client=(none)
+Feb  5 13:31:54 lxvdatlkqmprd9 adclient[47987]: INFO  AUDIT_TRAIL|Centrify Suite|PAM|1.0|100|PAM authentication granted|5|user=jlim(type:ad,JLim@TSYS.TSS.NET) pid=1513 utc=1549391514641 centrifyEventID=24100 status=GRANTED service=login tty=(none) client=(none)
+Feb  5 13:31:54 lxvdatlkqmprd9 adclient[47987]: INFO  AUDIT_TRAIL|Centrify Suite|PAM|1.0|200|PAM set credentials granted|5|user=jlim(type:ad,JLim@TSYS.TSS.NET) pid=1513 utc=1549391514645 centrifyEventID=24200 status=GRANTED service=login tty=(none) client=(none)
+
+
+
+Feb  5 13:34:48 lxvdatlkqmprd11 adclient[1681]: INFO  AUDIT_TRAIL|Centrify Suite|PAM|1.0|301|PAM account management denied|5|user=jlim(type:ad,JLim@TSYS.TSS.NET) pid=5448 utc=1549391688532 centrifyEventID=24301 status=DENIED service=sudo tty=(none) client=(none) reason=Permission denied
+

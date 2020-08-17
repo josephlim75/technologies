@@ -1,3 +1,9 @@
+## Checking Proxy over HTTPS url
+
+ncat --proxy <proxy>:<proxy port> --ssl -vv <url> <url port>
+
+  Should return code 200
+  
 ## Proxy Password with Special Characters
 
 https://www.cyberciti.biz/faq/unix-linux-export-variable-http_proxy-with-special-characters/

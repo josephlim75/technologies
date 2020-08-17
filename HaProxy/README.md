@@ -1,3 +1,21 @@
+## Reference website
+https://huinn.wordpress.com/2012/01/02/keepalived-2-active-servers/
+https://stackoverflow.com/questions/31503936/keepalived-and-two-active-servers
+https://stackoverflow.com/questions/41722348/getting-ip-floating-right-for-haproxy-keepalived
+https://www.howtoforge.com/setting-up-a-high-availability-load-balancer-with-haproxy-keepalived-on-debian-lenny
+https://docs.oracle.com/cd/E37670_01/E41138/html/section_sm3_svy_4r.html
+https://dasunhegoda.com/how-to-setup-haproxy-with-keepalived/833/
+https://stackoverflow.com/questions/35482083/how-to-create-floating-ip-and-use-it-to-configure-haproxy
+https://www.unixmen.com/configure-high-available-load-balancer-haproxy-keepalived/
+
+https://serverfault.com/questions/473445/haproxy-switch-only-in-case-of-server-down
+https://stackoverflow.com/questions/39016291/haproxy-loadbalancing-tcp-traffic
+https://medium.com/@pawilon/tuning-your-linux-kernel-and-haproxy-instance-for-high-loads-1a2105ea553e
+https://blog.codeship.com/performance-tuning-haproxy/
+https://serverfault.com/questions/776582/haproxy-nbproc-2-high-cpu
+https://www.haproxy.com/blog/truly-seamless-reloads-with-haproxy-no-more-hacks/
+https://engineeringblog.yelp.com/2015/04/true-zero-downtime-haproxy-reloads.html
+
 ## Hot reconfigure haproxy without restart
 
 If you don’t want to loose all of your current connections, you need to get haproxy to reload the new configuration without stopping and starting.

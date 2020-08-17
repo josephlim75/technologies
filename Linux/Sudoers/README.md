@@ -1,3 +1,6 @@
+## Reference
+https://www.howtoforge.com/tutorial/how-to-let-users-securely-edit-files-using-sudoedit/
+
 ## Adding AD group
 
 - Adding entries to /etc/sudoers

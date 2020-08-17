@@ -1,0 +1,49 @@
+select count(1) from adf_raw_bank2220.aaamembership_20180331;
+sudo vi /opt/mapr/hadoop/hadoop-2.7.0/etc/hadoop/yarn-site.xml
+
+
+Install mapr-timelineserver in one of the nodes
+
+Then add the following in all nodes at yarn-site.xml
+<!-- BEGIN Ansible generated config - tez ui -->
+<property>
+  <description>Indicate to clients whether Timeline service is enabled or not.
+  If enabled, the TimelineClient library used by end-users will post entities
+  and events to the Timeline server.</description>
+  <name>yarn.timeline-service.enabled</name>
+  <value>true</value>
+</property>
+<property>
+  <name>yarn.timeline-service.hostname</name>
+  <value>lxvdatlkqmprc3.tsysdev.net</value>
+</property>
+<property>
+  <description>The setting that controls whether yarn system metrics is
+  published on the timeline server or not by RM.</description>
+  <name>yarn.resourcemanager.system-metrics-publisher.enabled</name>
+  <value>true</value>
+</property>
+<property>
+  <name>yarn.timeline-service.http-cross-origin.enabled</name>
+  <value>true</value>
+</property>
+<!-- END Ansible generated config - tez ui -->
+
+Run the configuration on the timelineserver
+sudo /opt/mapr/server/configure.sh -R -TL lxvdatlkqmprc3.tsysdev.net
+
+Restart resourcemanager and timelineserver from maprcli node services
+
+<!-- BEGIN Ansible generated config - tez ui -->
+<property>
+  <description>Enable Tez to use the Timeline Server for History Logging</description>
+  <name>tez.history.logging.service.class</name>
+<value>org.apache.tez.dag.history.logging.ats.ATSHistoryLoggingService</value>
+</property>
+
+<property>
+  <description>URL for where the Tez UI is hosted</description>
+  <name>tez.tez-ui.history-url.base</name>
+  <value>http://lxvdatlkdmprn03.tsysdev.net:9383/tez-ui/</value>
+</property>
+<!-- END Ansible generated config - tez ui -->

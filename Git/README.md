@@ -46,7 +46,7 @@ Amending the Last Commit
 ==============================
 To change the last commit, you can simply commit again, using the --amend flag:
 
-$ git commit --amend -m "New and correct message"
+$ git commit --amend -m "EDPD-289: Split Confluent schemaregistry and Landoop UI to separate container"
 Simply put, this overwrites your last commit with a new one. This also means that you're not limited to 
 just editing the commit's message: you could also add another couple of changes you forgot.
 

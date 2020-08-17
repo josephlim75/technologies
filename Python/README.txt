@@ -1,3 +1,29 @@
+Install site-package into specific Python version
+==================================================
+This will force to use python3 pip.  Package will be install into /usr/lib/<python version>/site-packages
+  python3 -m pip install <SomePackage>
+
+
+
+Find where package module is located
+===================================
+
+pip show <modulename>
+  pip show hvac
+  
+which pip 
+cat /usr/bin/pip
+
+PIP Conflicts
+================
+
+Pip install in /usr/bin or /usr/local/bin.  
+
+Make sure use only one of the path, otherwise, there will be conflict, Eg
+
+  /usr/bin/pip3   /usr/local/bin/pip3, depending on the PATH, it will always use /usr/local/bin first
+
+
 Find python path
 ==================
 

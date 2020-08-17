@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?><!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+--><configuration>
+  <property>
+    <name>hive.server2.webui.use.pam</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.server2.webui.use.ssl</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.server2.webui.keystore.path</name>
+    <value>/opt/mapr/conf/ssl_keystore</value>
+  </property>
+  <property>
+    <name>hive.server2.webui.keystore.password</name>
+    <value>mapr123</value>
+  </property>
+  <!-- BEGIN Ansible generated config - hive impersonation -->
+  <property>
+    <name>hive.metastore.sasl.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.server2.thrift.sasl.qop</name>
+    <value>auth-conf</value>
+  </property>
+  <property>
+    <name>hive.exec.scratchdir</name>
+    <value>/tmp</value>
+  </property>
+  <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>false</value>
+    <description>Set this property to enable impersonation in Hive Server 2</description>
+  </property>
+  <property>
+    <name>hive.metastore.execute.setugi</name>
+    <value>true</value>
+    <description>Set this property to enable Hive Metastore service impersonation in unsecure mode. In unsecure mode, setting this property to true will cause the metastore to execute DFS operations
+  using the client's reported user and group permissions. Note that this property must be set on both the client and server sides. If the client sets it to true and the server sets it to false, the cli
+  ent setting will be ignored.</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://10.32.49.193:3306/metastore?createDatabaseIfNotExist=true</value>
+    <description>JDBC connect string for a JDBC metastore</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.jdbc.Driver</value>
+    <description>Driver class name for a JDBC metastore</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>hive</value>
+    <description>username to use against metastore database</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>mapr</value>
+    <description>password to use against metastore database</description>
+  </property>
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://10.32.49.195:9083</value>
+  </property>
+  <property>
+    <name>hive.users.in.admin.role</name>
+    <value>hive,mapr</value>
+  </property>
+  <property>
+    <name>hive.security.authorization.enabled</name>
+    <value>true</value>
+    <description>enable or disable the hive client authorization</description>
+  </property>
+  <property>
+    <name>hive.security.authorization.createtable.owner.grants</name>
+    <value>SELECT,INSERT,UPDATE,DELETE</value>
+    <description>the privileges automatically granted to the owner whenever a table gets created.
+     An example like "select,drop" will grant select and drop privilege to the owner of the   table</description>
+  </property>
+  <!--property>
+    <name>hive.metastore.authorization.storage.checks</name>
+    <value>true</value>
+    <description>Should the metastore do authorization checks against the underlying storage
+    for operations like drop-partition (disallow the drop-partition if the user in
+    question doesn't have permissions to delete the corresponding directory
+    on the storage).</description>
+  </property-->
+  <!-- END Ansible generated config - hive impersonation -->
+  <property>
+    <name>hive.execution.engine</name>
+    <value>tez</value>
+  </property>
+<!-- Metastore filter hook for filter `show database` command -->
+  <property>
+    <name>hive.sentry.subject.name</name>
+    <value>mapr</value>
+  </property>
+
+  <property>
+    <name>hive.metastore.filter.hook</name>
+    <value>org.apache.sentry.binding.metastore.SentryMetaStoreFilterHook</value>
+  </property>
+
+  <property>
+    <name>hive.internal.ss.authz.settings.applied.marker</name>
+    <value>true</value>
+  </property>
+
+<!-- SQL Base Authorization -->
+
+  <property>
+    <name>hive.security.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory</value>
+  </property>
+
+<!-- Storage Base Authorization -->
+  <property>
+    <name>hive.security.metastore.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
+    <description>authorization manager class name to be used in the metastore for authorization.
+    The user defined authorization class should implement interface
+    org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider.
+    org.apache.hadoop.hive.ql.security.authorization.MetaStoreAuthzAPIAuthorizerEmbedOnly
+    DefaultHiveMetastoreAuthorizationProvider OR StorageBasedAuthorizationProvider</description>
+  </property>
+  <property>
+    <name>hive.security.metastore.authenticator.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
+    <description>authenticator manager class name to be used in the metastore for authentication.
+    The user defined authenticator should implement interface
+    org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider.</description>
+  </property>
+  <property>
+    <name>hive.metastore.pre.event.listeners</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener</value>
+    <description>pre-event listener classes to be loaded on the metastore side to run code
+    whenever databases, tables, and partitions are created, altered, or dropped.
+    Set to org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener
+    if metastore-side authorization is desired.</description>
+  </property>
+  <property>
+    <name>hive.security.metastore.authorization.auth.reads</name>
+    <value>true</value>
+    <description>If this is true, metastore authorizer authorizes read actions on database,
+    table</description>
+  </property>
+</configuration>
