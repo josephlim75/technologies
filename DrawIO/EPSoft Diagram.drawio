@@ -1,4 +1,4 @@
-<mxfile modified="2020-09-23T12:41:48.501Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="eMFmSZkRD3B3eTkwdSSK" version="13.7.4" type="github" pages="2">
+<mxfile modified="2020-09-23T12:45:34.667Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="x68eNTa7tpf4drK45DOW" version="13.7.4" type="github" pages="2">
   <diagram id="d1ab7348-05c3-a1e3-ca4d-12c340fd6b49" name="Page-1">
     <mxGraphModel dx="1426" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
       <root>
@@ -88,7 +88,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="YKn3jUYvfeeyg0Uo9QDq" name="Page-2">
-    <mxGraphModel dx="2887" dy="1203" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2546" dy="991" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="wycD591nMWxJo0nDUt0m-0" />
         <mxCell id="wycD591nMWxJo0nDUt0m-1" parent="wycD591nMWxJo0nDUt0m-0" />
@@ -354,7 +354,7 @@
           <mxGeometry x="50" y="24" width="100" height="20" as="geometry" />
         </mxCell>
         <mxCell id="KWQ4xnJLnPjV0gg7NQpi-138" value="" style="fillColor=#28A8E0;verticalLabelPosition=bottom;html=1;strokeColor=#ffffff;verticalAlign=top;align=center;points=[[0.145,0.145,0],[0.5,0,0],[0.855,0.145,0],[1,0.5,0],[0.855,0.855,0],[0.5,1,0],[0.145,0.855,0],[0,0.5,0]];pointerEvents=1;shape=mxgraph.cisco_safe.compositeIcon;bgIcon=ellipse;resIcon=mxgraph.cisco_safe.capability.email_security;fontFamily=Roboto;fontSize=10;fontColor=#666666;" vertex="1" parent="KWQ4xnJLnPjV0gg7NQpi-126">
-          <mxGeometry x="9" y="10" width="37" height="37" as="geometry" />
+          <mxGeometry x="9" y="10" width="33" height="33" as="geometry" />
         </mxCell>
         <mxCell id="KWQ4xnJLnPjV0gg7NQpi-131" value="" style="group" vertex="1" connectable="0" parent="wycD591nMWxJo0nDUt0m-1">
           <mxGeometry x="615" y="1156" width="240" height="68" as="geometry" />
