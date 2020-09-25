@@ -1,4 +1,4 @@
-<mxfile modified="2020-09-25T14:25:54.131Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="z8K3gdxYmPyxs9TkYpOc" version="13.7.4" type="github" pages="3">
+<mxfile modified="2020-09-25T14:27:03.628Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="kmfCaEJQH6n5NpLuk45-" version="13.7.4" type="github" pages="3">
   <diagram id="d1ab7348-05c3-a1e3-ca4d-12c340fd6b49" name="Page-1">
     <mxGraphModel dx="1426" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
       <root>
@@ -828,21 +828,21 @@
         </mxCell>
         <mxCell id="44q9pswLuj0Itx3JAFXP-0" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=blockThin;endFill=1;rounded=0;strokeWidth=2;endSize=4;startSize=4;strokeColor=#EA4335;dashed=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="wycD591nMWxJo0nDUt0m-1">
           <mxGeometry width="100" relative="1" as="geometry">
-            <mxPoint x="31" y="1380" as="sourcePoint" />
-            <mxPoint x="98" y="1380" as="targetPoint" />
+            <mxPoint x="-255" y="1376" as="sourcePoint" />
+            <mxPoint x="-188" y="1376" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="44q9pswLuj0Itx3JAFXP-1" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=10;html=1;endArrow=blockThin;endFill=1;rounded=0;strokeWidth=2;endSize=4;startSize=4;dashed=0;strokeColor=#4284F3;startArrow=none;startFill=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="wycD591nMWxJo0nDUt0m-1">
           <mxGeometry width="100" relative="1" as="geometry">
-            <mxPoint x="30" y="1415" as="sourcePoint" />
-            <mxPoint x="97" y="1415" as="targetPoint" />
+            <mxPoint x="-256" y="1411" as="sourcePoint" />
+            <mxPoint x="-189" y="1411" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="44q9pswLuj0Itx3JAFXP-2" value="non-CHD Request/Response" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="119" y="1405" width="165" height="18" as="geometry" />
+          <mxGeometry x="-167" y="1401" width="165" height="18" as="geometry" />
         </mxCell>
         <mxCell id="44q9pswLuj0Itx3JAFXP-3" value="CHD (Card Holder Data)" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="119" y="1370" width="141" height="18" as="geometry" />
+          <mxGeometry x="-167" y="1366" width="141" height="18" as="geometry" />
         </mxCell>
         <mxCell id="44q9pswLuj0Itx3JAFXP-4" value="Logging &amp;amp; Monitoring" style="points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];rounded=1;absoluteArcSize=1;arcSize=2;html=1;strokeColor=none;gradientColor=none;shadow=0;dashed=0;fontSize=12;fontColor=#9E9E9E;align=left;verticalAlign=top;spacing=10;spacingTop=-4;fillColor=#F3E5F5;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
           <mxGeometry x="-208.5" y="1059" width="254" height="231" as="geometry" />
@@ -886,22 +886,22 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="xD7bzvogPF5TrTREFcAF-4" value="" style="points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];rounded=1;absoluteArcSize=1;arcSize=2;html=1;gradientColor=none;shadow=0;dashed=0;fontSize=12;fontColor=#9E9E9E;align=left;verticalAlign=top;spacing=10;spacingTop=-4;fillColor=#E1F5FE;strokeWidth=1;strokeColor=#3399FF;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="27" y="1453" width="63" height="39" as="geometry" />
+          <mxGeometry x="-259" y="1449" width="63" height="39" as="geometry" />
         </mxCell>
         <mxCell id="xD7bzvogPF5TrTREFcAF-5" value="" style="points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];rounded=1;absoluteArcSize=1;arcSize=2;html=1;gradientColor=none;shadow=0;dashed=0;fontSize=12;fontColor=#9E9E9E;align=left;verticalAlign=top;spacing=10;spacingTop=-4;fillColor=#E0F2F1;strokeColor=#317A56;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="27" y="1566" width="63" height="39" as="geometry" />
+          <mxGeometry x="-259" y="1562" width="63" height="39" as="geometry" />
         </mxCell>
         <mxCell id="xD7bzvogPF5TrTREFcAF-6" value="" style="points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];rounded=1;absoluteArcSize=1;arcSize=2;html=1;gradientColor=none;shadow=0;dashed=0;fontSize=12;fontColor=#9E9E9E;align=left;verticalAlign=top;spacing=10;spacingTop=-4;fillColor=#E6E6E6;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="27" y="1509.5" width="63" height="39" as="geometry" />
+          <mxGeometry x="-259" y="1505.5" width="63" height="39" as="geometry" />
         </mxCell>
         <mxCell id="xD7bzvogPF5TrTREFcAF-7" value="Docker Cluster - PCI In-Scope" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="117" y="1463.5" width="171" height="18" as="geometry" />
+          <mxGeometry x="-169" y="1459.5" width="171" height="18" as="geometry" />
         </mxCell>
         <mxCell id="xD7bzvogPF5TrTREFcAF-8" value="VM/Baremetal - PCI In-Scope" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="119" y="1520" width="168" height="18" as="geometry" />
+          <mxGeometry x="-167" y="1516" width="168" height="18" as="geometry" />
         </mxCell>
         <mxCell id="xD7bzvogPF5TrTREFcAF-9" value="3rd External - PCI Out-Scope" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="wycD591nMWxJo0nDUt0m-1">
-          <mxGeometry x="118" y="1578.5" width="166" height="18" as="geometry" />
+          <mxGeometry x="-168" y="1574.5" width="166" height="18" as="geometry" />
         </mxCell>
         <mxCell id="3f_tm2Fqv3tXSdYVA0A4-0" value="" style="group" vertex="1" connectable="0" parent="wycD591nMWxJo0nDUt0m-1">
           <mxGeometry x="-177" y="546" width="190" height="68" as="geometry" />
