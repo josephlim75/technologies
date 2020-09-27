@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-09-27T19:03:22.448Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="qxaD0mAINE4BMK-QvsDF" version="13.7.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-27T23:15:17.535Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="QybRbtRbS_mxtB4SPJbv" version="13.7.5" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
-    <mxGraphModel dx="983" dy="581" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -112,6 +112,9 @@
         </mxCell>
         <mxCell id="YRFJyDTuSlXsrxVGdm0f-2287" value="Arris&lt;br&gt;Modem" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="127.5" y="230" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YRFJyDTuSlXsrxVGdm0f-2288" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.users.mobile_user;" vertex="1" parent="1">
+          <mxGeometry x="420" y="400" width="32" height="24" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
