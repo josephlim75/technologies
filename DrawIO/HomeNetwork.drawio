@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-10-18T19:23:29.299Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="SdnhPd6YQwlBvvSDfUuj" version="13.7.7" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-18T23:55:09.186Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="1CsdAPFpgAz7wA-EwaUS" version="13.7.7" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
     <mxGraphModel dx="1422" dy="914" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -104,8 +104,8 @@
         <mxCell id="2rs4OhzrvlzL48_qCDJS-11" value="" style="shape=mxgraph.cisco.modems_and_phones.cable_modem;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="90" y="170" width="74" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="2rs4OhzrvlzL48_qCDJS-17" value="Ubiquit Firewall" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="175" y="240" width="100" height="20" as="geometry" />
+        <mxCell id="2rs4OhzrvlzL48_qCDJS-17" value="Ubiquiti SG Firewall" style="text;html=1;resizable=0;autosize=1;align=left;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="175" y="240" width="120" height="20" as="geometry" />
         </mxCell>
         <mxCell id="2rs4OhzrvlzL48_qCDJS-20" value="" style="shape=mxgraph.cisco.modems_and_phones.modem;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="210" y="420" width="110" height="27" as="geometry" />
